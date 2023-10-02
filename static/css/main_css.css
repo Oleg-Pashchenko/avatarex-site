@@ -1,0 +1,91 @@
+
+.gradient-text_cyan {
+    font-size: 6vw;
+    background: linear-gradient(90deg, white, cyan);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+
+.button {
+    background-color: black;
+    color: white;
+    border-radius: 20px;
+    border: 1px solid white;
+    padding: 12px;
+    margin: 5px;
+    width: 150px;
+}
+.button:hover {
+    text-decoration: none;
+    color: white;
+    cursor: default;
+    border: 2px solid white;
+}
+
+.container-el {
+    margin-left: 40%;
+    width: 10em;
+    height: 10em;
+    border: 2px white;
+    transform-style: preserve-3d;
+    animation: rotate 7s infinite linear;
+}
+
+.side {
+    position: absolute;
+    width: 10em;
+    height: 10em;
+    border: 1px solid rgb(114, 119, 240);
+    opacity: 0.7;
+}
+
+.back {
+    transform: translateZ(-5em);
+    background: black;
+}
+
+.left {
+    transform: translateX(-5em) rotateY(90deg);
+    background: black;
+}
+
+.right {
+    transform: translateX(5em) rotateY(90deg);
+    background: black;
+}
+
+.top {
+    transform: translateY(-5em) rotateX(90deg);
+    background: black;
+}
+
+.bottom {
+    transform: translateY(5em) rotateX(90deg);
+    background: black;
+}
+
+.front {
+    transform: translateZ(5em);
+    background: black;
+}
+
+@keyframes rotate {
+    100% {
+        transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
+    }
+}
+
+
+/* Additional CSS to arrange 16 cells in a 4x4 grid on each side */
+.side {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+}
+
+.cell {
+    background: black;
+    border: 1px solid white;
+}

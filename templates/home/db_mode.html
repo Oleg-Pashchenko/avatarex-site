@@ -1,0 +1,32 @@
+{% extends "core/base.html" %}
+
+{% block head %}
+    {{ block.super }}
+{% endblock %}
+{% block content %}
+    <a href="{% url 'home' %}" class="m-3">Вернуться на главную без сохранения</a>
+
+    <h4 class="m-3">Ваши настройки режима работы с базой данных:</h4>
+    <form method="post">
+        {% csrf_token %}
+        <div class="container">
+            <div>
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Файл XLSX с базой данных:</span>
+                    <label class="input-group-text custom-file-upload">Нажмите сюда для выбора файла{{ form.filename }}</label>
+                </div>
+            </div>
+            <div class="mt-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Условие для столбца Дата:</span>
+                    {{ form.work_rule }}
+                </div>
+            </div>
+        </div>
+        <div class="widget-container text-white rounded p-2">
+            <p class="d-inline-block m-0">После внесения изменений нажмите на кнопку.</p>
+            <button id="save-button" class="btn btn-light ml-2">Сохранить</button>
+        </div>
+    </form>
+
+{% endblock content %}

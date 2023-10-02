@@ -1,0 +1,153 @@
+
+textarea {
+    width: 100%;
+}
+
+input {
+    width: 100%;
+}
+
+select {
+    width: 100%;
+}
+
+.input-group-text {
+    margin-right: 5px;
+    background-color: rgb(38, 47, 60);
+    color: white;
+    border-color: rgb(114, 119, 240);
+}
+
+.rounded-value {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+body {
+    background-color: rgb(25, 33, 42);
+    color: white;
+}
+
+.widget-container {
+    background-color: rgb(114, 119, 240);
+    position: fixed;
+    z-index: 99999;
+    bottom: 3%;
+    left: 25%;
+    width: 50%;
+    color: white;
+    text-align: center;
+    border-top-left-radius: 50px; /* Полукруглые края слева */
+    border-top-right-radius: 50px; /* Полукруглые края справа */
+}
+
+/* Стили для содержимого виджета */
+
+
+/* Стили для кнопки */
+#save-button {
+    background-color: midnightblue; /* Цвет кнопки */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+#save-button:hover {
+    background-color: #004a9a; /* Цвет кнопки при наведении */
+}
+
+
+.header-container {
+    border: 1px solid rgb(114, 119, 240);
+    background-color: rgb(38, 47, 60);
+    z-index: 99999;
+    margin-top: 15px;
+    color: white;
+    border-top-left-radius: 50px; /* Полукруглые края слева */
+    border-top-right-radius: 50px; /* Полукруглые края справа */
+}
+
+.header-item {
+    color: white;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.header-item:hover {
+    text-decoration: none;
+    color: rgb(114, 119, 240);
+    cursor: default;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload {
+    border: 1px solid white;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.change-work-mode {
+    border: 2px solid rgb(114, 119, 240);
+    border-radius: 5px;
+    margin-right: 5px;
+    padding: 15px;
+    background-color: rgb(38, 47, 60);
+    color: white;
+    text-align: center;
+    display: inline-block;
+}
+
+.change-work-mode:hover {
+
+    text-decoration: none;
+    color: white;
+    cursor: default;
+    border: 2px solid white;
+}
+
+.pipeline-item {
+    border: 1px solid rgb(114, 119, 240);
+    border-radius: 5px;
+    margin: 5px;
+    padding: 10px;
+    background-color: rgb(38, 47, 60);
+    color: white;
+}
+
+.pipeline-item:hover {
+    text-decoration: none;
+    color: white;
+    cursor: default;
+    border: 2px solid white;
+}
+
+.selected-pipeline {
+    background-color: rgb(114, 119, 240);
+}
+
+.stage {
+    border: 1px solid rgb(114, 119, 240);
+    border-radius: 5px;
+    margin: 5px;
+    padding: 10px;
+    background-color: rgb(38, 47, 60);
+    color: white;
+}
+
+.stage:hover {
+    text-decoration: none;
+    color: white;
+    cursor: default;
+    border: 2px solid white;
+}
+
+
+.selected-stage {
+    background-color: rgb(114, 119, 240);
+}
+
+
