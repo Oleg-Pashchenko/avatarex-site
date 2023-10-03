@@ -127,12 +127,20 @@ def db_mode(request):
                 first_row_data = list(row)
             else:
                 second_row_data = list(row)
-
+    rules = pipeline.work_rule
+    rules_view = []
+    for k in first_row_data:
+        if k in rules.keys():
+            rules_view.append({'t': k, 'v': rules[k]})
+        else:
+            rules_view.append({'t': k, 'v': ''})
+    print(rules_view)
     return render(request, 'home/db_mode.html',
                   {'filename': pipeline.filename,
                    'has_file': has_file,
                    'names': first_row_data,
-                   'items': second_row_data})
+                   'items': second_row_data,
+                   'rules': rules_view})
 
 
 @login_required
@@ -233,3 +241,18 @@ def tomorrow(request):
 
 def profile(request):
     pass
+
+
+@login_required()
+@csrf_exempt
+def update_db_rules(request):
+    data = json.loads(request.body.decode('utf-8'))
+    print(data)
+    pipeline = data['currentUrl'].split('?pipeline=')[1]
+    pipeline_obj = Pipelines.objects.get(id=pipeline, user=request.user)
+    del data['currentUrl']
+    print(data)
+    pipeline_obj.work_rule = data
+    pipeline_obj.save()
+    messages.success(request, "Данные обновлены!")
+    return 'ok'

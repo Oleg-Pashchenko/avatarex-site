@@ -18,4 +18,5 @@ urlpatterns = [
     path('api/v1/home/update-mode/', views.update_mode, name='update_mode'),
     path('api/v1/home/update-token', views.update_token, name='update_token'),
     path('api/v1/home/syncronize-amo', views.syncronize_amo, name='syncronize_amo'),
+    path('api/v1/home/update-db-rules/', views.update_db_rules, name='update_db_rules')
 ]
