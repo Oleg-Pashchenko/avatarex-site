@@ -8,7 +8,10 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 DEBUG = True
 LOGIN_REDIRECT_URL = '/'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['45.93.136.245',
+                 '127.0.0.1',
+                 'avatarex.net'
+                 ]
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -32,6 +35,8 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+SESSION_COOKIE_AGE = 3600  # Время жизни сессии в секундах
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_URL = '/auth/login/'

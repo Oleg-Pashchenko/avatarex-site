@@ -247,11 +247,9 @@ def profile(request):
 @csrf_exempt
 def update_db_rules(request):
     data = json.loads(request.body.decode('utf-8'))
-    print(data)
     pipeline = data['currentUrl'].split('?pipeline=')[1]
     pipeline_obj = Pipelines.objects.get(id=pipeline, user=request.user)
     del data['currentUrl']
-    print(data)
     pipeline_obj.work_rule = data
     pipeline_obj.save()
     messages.success(request, "Данные обновлены!")
