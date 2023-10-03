@@ -59,7 +59,7 @@ def update_pipelines(host, mail, password, user):
                            headers=headers).json()['response']['pipelines']
     ids, s_ids = set(), set()
 
-    existing_pipelines = {pipeline.id: pipeline for pipeline in Pipelines.objects.filter(user=user)}
+    existing_pipelines = {pipeline.p_id: pipeline for pipeline in Pipelines.objects.filter(user=user)}
 
     for v in response.values():
         id = v['id']
@@ -75,7 +75,7 @@ def update_pipelines(host, mail, password, user):
         else:
             # Создаем новый pipeline
             pipeline = Pipelines.objects.create(
-                id=id,
+                p_id=id,
                 name=name,
                 order_number=sort,
                 user=user

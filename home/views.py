@@ -43,7 +43,7 @@ def get_stages_by_pipeline(request):
     selected_mode = Pipelines.objects.get(user=request.user, p_id=pipeline).chosen_work_mode
     disabled_mode = 'With database' if selected_mode == 'Standart' else 'Standart'
     stages = list(
-        Statuses.objects.all().filter(pipeline_id_p_id=pipeline, is_exists=True).order_by('order_number').values())
+        Statuses.objects.all().filter(pipeline_id__p_id=pipeline, is_exists=True).order_by('order_number').values())
 
     return JsonResponse({
         'stages': stages,
@@ -56,7 +56,7 @@ def get_stages_by_pipeline(request):
 @csrf_exempt
 def set_stage_by_pipeline(request):
     d = dict(request.GET.items())
-    status = Statuses.objects.get(pipeline_id_id=d['pipeline'], status_id=d['status'])
+    status = Statuses.objects.get(pipeline_id__p_id=d['pipeline'], status_id=d['status'])
     status.is_active = False if status.is_active else True
     status.save()
     messages.success(request, 'Статус обновлен!')
@@ -66,7 +66,7 @@ def set_stage_by_pipeline(request):
 @login_required
 def update_mode(request):
     d = dict(request.GET.items())
-    pipeline = Pipelines.objects.get(id=d['pipeline'])
+    pipeline = Pipelines.objects.get(p_id=d['pipeline'])
     pipeline.chosen_work_mode = 'Standart' if pipeline.chosen_work_mode == 'With database' else 'With database'
     pipeline.save()
     messages.success(request, 'Режим работы изменен!')
@@ -119,7 +119,7 @@ def db_mode(request):
 
     first_row_data = []
     second_row_data = []
-    if has_file:
+    if has_file and pipeline.filename:
         workbook = openpyxl.load_workbook('uploads/' + pipeline.filename)
         sheet = workbook.active
         for row in sheet.iter_rows(min_row=1, max_row=2, values_only=True):
@@ -128,6 +128,8 @@ def db_mode(request):
             else:
                 second_row_data = list(row)
     rules = pipeline.work_rule
+    if rules is None:
+        rules = {}
     rules_view = []
     for k in first_row_data:
         if k in rules.keys():
@@ -154,7 +156,7 @@ def syncronize_amo(request):
 @login_required
 def default_mode(request):
     d = dict(request.GET.items())
-    instance = Pipelines.objects.get(user=request.user, id=d['pipeline'])
+    instance = Pipelines.objects.get(user=request.user, p_id=d['pipeline'])
     if request.method == 'GET':
         form = GptDefaultMode(initial=
                               {'context': instance.text,
