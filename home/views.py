@@ -40,10 +40,10 @@ def get_stages_by_pipeline(request):
         return redirect(home)
 
     pipeline = form_dict['pipeline']
-    selected_mode = Pipelines.objects.get(user=request.user, id=pipeline).chosen_work_mode
+    selected_mode = Pipelines.objects.get(user=request.user, p_id=pipeline).chosen_work_mode
     disabled_mode = 'With database' if selected_mode == 'Standart' else 'Standart'
     stages = list(
-        Statuses.objects.all().filter(pipeline_id_id=pipeline, is_exists=True).order_by('order_number').values())
+        Statuses.objects.all().filter(pipeline_id_p_id=pipeline, is_exists=True).order_by('order_number').values())
 
     return JsonResponse({
         'stages': stages,
@@ -106,7 +106,7 @@ def db_mode(request):
 
         # Write the uploaded file to the server
         file_path = uploaded_file.name
-        pipeline = Pipelines.objects.get(user=request.user, id=pipeline)
+        pipeline = Pipelines.objects.get(user=request.user, p_id=pipeline)
         pipeline.filename = file_path
         pipeline.save()
         with open("uploads/" + file_path, 'wb') as destination:
@@ -114,7 +114,7 @@ def db_mode(request):
                 destination.write(chunk)
         messages.success(request, 'Файл успешно загружен!')
         return redirect(home)
-    pipeline = Pipelines.objects.get(user=request.user, id=pipeline)
+    pipeline = Pipelines.objects.get(user=request.user, p_id=pipeline)
     has_file = True if pipeline.filename != '' else False
 
     first_row_data = []
@@ -249,7 +249,7 @@ def profile(request):
 def update_db_rules(request):
     data = json.loads(request.body.decode('utf-8'))
     pipeline = data['currentUrl'].split('?pipeline=')[1]
-    pipeline_obj = Pipelines.objects.get(id=pipeline, user=request.user)
+    pipeline_obj = Pipelines.objects.get(p_id=pipeline, user=request.user)
     del data['currentUrl']
     pipeline_obj.work_rule = data
     pipeline_obj.save()
