@@ -18,6 +18,13 @@ select {
     border-color: rgb(114, 119, 240);
 }
 
+.input-group-text:hover {
+    text-decoration: none;
+    color: white;
+    cursor: default;
+    border: 2px solid white;
+}
+
 .rounded-value {
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -80,10 +87,6 @@ body {
     cursor: default;
 }
 
-input[type="file"] {
-    display: none;
-}
-
 .custom-file-upload {
     border: 1px solid white;
     display: inline-block;
@@ -132,10 +135,10 @@ input[type="file"] {
 .stage {
     border: 1px solid rgb(114, 119, 240);
     border-radius: 5px;
-    margin: 5px;
-    padding: 10px;
     background-color: rgb(38, 47, 60);
     color: white;
+    margin-top: 10px; /* Устанавливаем вертикальный отступ по вашему выбору */
+
 }
 
 .stage:hover {
@@ -147,7 +150,16 @@ input[type="file"] {
 
 
 .selected-stage {
+
     background-color: rgb(114, 119, 240);
 }
 
+
+.input-group-button {
+    background-color: rgb(114, 119, 240);
+}
+
+.input-group-select {
+    background-color: white;
+}
 

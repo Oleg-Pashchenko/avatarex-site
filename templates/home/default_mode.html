@@ -6,6 +6,8 @@
 {% block content %}
     <a href="{% url 'home' %}" class="m-3">Вернуться на главную без сохранения</a>
     <h4 class="m-3">Ваши настройки стандартного режима:</h4>
+
+    <legend class="border-bottom mb-4"></legend>
     <form method="post">
         {% csrf_token %}
         <div class="container">

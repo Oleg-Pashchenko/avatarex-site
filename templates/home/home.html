@@ -5,12 +5,26 @@
 {% endblock %}
 {% block content %}
     <h3>Настройки приложения:</h3>
+    <legend class="border-bottom mb-4"></legend>
+
     <div class="mt-3">
         <div class="input-group-prepend">
             <span class="input-group-text">OpenAI API KEY:</span>
-            <input type="text">
+            <input type="text" id="gpt-token" value="{{ gpt_token }}">
+            <button class="input-group-text input-group-button" onclick="updateToken();">Обновить</button>
         </div>
     </div>
+    <div class="mt-3">
+        <div class="input-group-prepend">
+            <a class="input-group-text" href="/api/v1/home/syncronize-amo">Синхронизировать воронки с AmoCRM</a>
+            <select id="mySelect" class="input-group-select">
+                <option value="{{ selected_mode }}">{{ selected_mode }}</option>
+                <option value="{{ disabled_mode }}">{{ disabled_mode }}</option>
+            </select>
+            <button class="input-group-text input-group-button" onclick="changeMode();">Обновить</button>
+        </div>
+    </div>
+
     <h4 class="mt-3">Выберите воронку:</h4>
     <div class="row mt-4 ml-1">
         <div class="pipeline-bar">
@@ -26,16 +40,18 @@
         <div class="statuses-bar">
         </div>
     </div>
-    <h4 class="mt-3">Режим работы:</h4>
-    <div class="mt-3">
-        <div class="input-group-prepend">
 
-            <a class="change-work-mode col-6 mr-3" href="{% url 'default_mode' %}">Настроить стандартный режим работы</a>
-            <a class="change-work-mode col-6" href="{% url 'db_mode' %}">Настроить режим работы с внешней базой данных</a>
-        </div>
-        <div class="widget-container text-white rounded p-2">
-            <p class="d-inline-block m-0">После внесения изменений нажмите на кнопку.</p>
-            <button id="save-button" class="btn btn-light ml-2">Сохранить</button>
+    <div class="col-12 mt-5">
+        <div class="mt-3">
+            <div class="input-group-prepend">
+
+                <a class="change-work-mode col-6 mr-3" id="default-mode-settings" href="{% url 'default_mode' %}">Настроить
+                    стандартный режим
+                    работы</a>
+                <a class="change-work-mode col-6" id="database-mode-settings" href="{% url 'db_mode' %}">Настроить режим
+                    работы с внешней базой
+                    данных</a>
+            </div>
         </div>
     </div>
 
@@ -44,9 +60,26 @@
     <script>
         const pipelineLinks = document.querySelectorAll('.pipeline-item');
 
+
+        function updateToken() {
+            tokenEl = document.getElementById('gpt-token');
+            fetch(`/api/v1/home/update-token?token=${tokenEl.value}`);
+        }
+
+        function changeMode() {
+            pipeline = document.querySelector('.selected-pipeline');
+            pipelineId = pipeline.getAttribute('data-pipeline');
+            fetch(`/api/v1/home/update-mode?pipeline=${pipelineId}`);
+        }
+
         function getStages(link) {
             const pipelineId = link.getAttribute('data-pipeline');
             const data = {pipeline: pipelineId};
+            var link1 = document.getElementById('default-mode-settings');
+            var link2 = document.getElementById('database-mode-settings');
+            link1.setAttribute("href", `/default-mode?pipeline=${pipelineId}`);
+            link2.setAttribute("href", `/database-mode?pipeline=${pipelineId}`);
+
             const requestOptions = {
                 method: 'POST',
                 headers: {
@@ -70,27 +103,37 @@
                     var statusesBar = document.querySelector(".statuses-bar");
                     statusesBar.innerHTML = "";
                     var statusesList = document.createElement("ul");
-                    statusesList.classList.add("list-inline"); // Добавляем класс Bootstrap для горизонтального списка
+                    statusesList.classList.add("list-inline", "row"); // Добавляем класс Bootstrap для горизонтального списка
+
+
+                    var selectElement = document.getElementById('mySelect');
+
+                    var newOption1 = new Option(jsonResponse.selected_mode, 'selected_mode');
+                    var newOption2 = new Option(jsonResponse.disabled_mode, 'disabled_mode');
+
+                    while (selectElement.options.length > 0) {
+                        selectElement.options.remove(0);
+                    }
+                    selectElement.add(newOption1);
+                    selectElement.add(newOption2);
+
 
                     jsonResponse.stages.forEach(function (status) {
 
-                        var listItem = document.createElement("li");
-                        listItem.classList.add("list-inline-item"); // Добавляем класс Bootstrap для элемента списка
-
                         var link = document.createElement("a");
-                        link.classList.add("a", "stage", "pipeline");
-
-                        if (status.active) {
-                            link.classList.add("selected-stage"); // Добавляем класс "btn-primary" для активных статусов
+                        if (status.is_active) {
+                            link.classList.add("a", "selected-stage"); // Добавляем класс "btn-primary" для активных статусов
                             link.style.color = "white";
                         }
+                        link.classList.add("a", "stage");
+                        link.classList.add("a", "input-group-text");
 
-                        link.href = `/api/v1/home/set_stage_by_pipeline?status=${status.id}&pipeline=${pipelineId}`;
+
+                        link.href = `/api/v1/home/set_stage_by_pipeline?status=${status.status_id}&pipeline=${pipelineId}`;
                         link.setAttribute("data-pipeline", status.id);
                         link.textContent = status.name;
 
-                        listItem.appendChild(link);
-                        statusesList.appendChild(listItem);
+                        statusesList.appendChild(link);
                     });
                     statusesBar.appendChild(statusesList);
 

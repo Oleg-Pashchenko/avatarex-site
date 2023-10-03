@@ -15,8 +15,8 @@ class GptDefaultMode(forms.Form):
     )
 
     VOICE_CHOICES = (
-        ('active', True),
-        ('passive', False)
+        (True, 'active'),
+        (False, 'passive')
     )
 
     context = forms.CharField(widget=forms.Textarea(attrs={'class': 'rounded-value',
@@ -33,14 +33,9 @@ class GptDefaultMode(forms.Form):
                                                                                  }
                                                                           ))
     voice_message_detection = forms.ChoiceField(required=True, choices=VOICE_CHOICES,
+
                                                 widget=forms.Select(attrs={'class': 'rounded-value'}))
     model = forms.ChoiceField(choices=CONTEXT_CHOICES, required=True,
                               widget=forms.Select(attrs={'class': 'rounded-value'}))
     fine_tunel_model_id = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'rounded-value',
                                                                                         'placeholder': 'Если вы хотите использовать собственную модель укажите ее ID'}))
-
-
-class GptDatabaseMode(forms.Form):
-    filename = forms.FileField(required=True, widget=forms.FileInput(attrs={'accept': '.xlsx',
-                                                                        }))
-    work_rule = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'rounded-value'}))
