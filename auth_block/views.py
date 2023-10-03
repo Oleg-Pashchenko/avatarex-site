@@ -1,6 +1,8 @@
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from django.contrib import messages
+
+from home.views import home
 from .forms import UserRegisterForm, UserLoginForm
 
 
@@ -11,7 +13,8 @@ def register(request):
             form.save()
             username = form.cleaned_data.get('username')
             messages.success(request, f'Создан аккаунт {username}!')
-            return redirect('home')
+            form.clean()
+            return redirect(home)
         else:
             messages.warning(request, "Ошибка заполнения формы!")
     else:
@@ -19,7 +22,7 @@ def register(request):
     return render(request, 'auth/register.html', {'form': form})
 
 
-def login(request):
+def login_view(request):
     if request.method == 'POST':
         form = UserLoginForm(request.POST)
         if not form.is_valid():
@@ -27,14 +30,15 @@ def login(request):
         else:
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
-
+            print(username, password)
             if username and password:
-                user = authenticate(username=username, password=password)
+                user = authenticate(request, username=username, password=password)
                 if not user:
                     messages.warning(request, 'Ошибка входа!')
                 else:
                     messages.success(request, 'Вход успешен!')
-                    return redirect('home')
+                    login(request, user)
+                    return redirect(home)
     else:
         form = UserLoginForm()
     return render(request, 'auth/login.html', {'form': form})

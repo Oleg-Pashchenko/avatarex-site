@@ -240,7 +240,8 @@ def tomorrow(request):
 
 
 def profile(request):
-    pass
+    messages.info(request, 'Дата запуска раздела: 04.10.2023')
+    return render(request, 'home/404.html')
 
 
 @login_required()
