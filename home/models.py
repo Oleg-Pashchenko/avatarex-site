@@ -16,7 +16,8 @@ class GptApiKey(models.Model):
 
 
 class Pipelines(models.Model):
-    id = models.BigIntegerField(primary_key=True)
+    id_id = models.IntegerField(primary_key=True)
+    id = models.BigIntegerField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.CharField(max_length=250000, null=True, blank=True)
     model = models.CharField(max_length=100, null=True)
