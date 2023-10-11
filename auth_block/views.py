@@ -12,6 +12,9 @@ def register(request):
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password1')
+            user = authenticate(request, username=username, password=password)
+            login(request, user)
             messages.success(request, f'Создан аккаунт {username}!')
             form.clean()
             return redirect(home)
@@ -41,6 +44,7 @@ def login_view(request):
                     return redirect(home)
     else:
         form = UserLoginForm()
+
     return render(request, 'auth/login.html', {'form': form})
 
 

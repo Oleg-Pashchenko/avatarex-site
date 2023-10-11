@@ -5,8 +5,9 @@ import openpyxl
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 
 from . import amo_auth
@@ -17,6 +18,8 @@ from .models import AmoConnect, Pipelines, Statuses, GptApiKey, UploadedFile
 @login_required
 def home(request):
     instance = AmoConnect.objects.filter(user=request.user).first()
+
+    current_pipeline = '' if 'current_pipeline' not in request.GET.dict() else request.GET.dict()['current_pipeline']
     if instance:
         # amo_auth.update_pipelines(instance.host, instance.email, instance.password, request.user)
         pipelines = Pipelines.objects.all().filter(user=request.user, is_exists=True).order_by('order_number')
@@ -25,9 +28,12 @@ def home(request):
         if not gpt_token_instance:
             gpt_token = ''
         else:
+
             gpt_token = GptApiKey.objects.get(user=request.user).key
+        print(current_pipeline)
         return render(request, 'home/home.html', {'pipelines': pipelines,
-                                                  'gpt_token': gpt_token})
+                                                  'gpt_token': gpt_token,
+                                                  'current_pipeline': current_pipeline})
     else:
         return redirect(amo_register)
 
@@ -61,17 +67,21 @@ def set_stage_by_pipeline(request):
     status.is_active = False if status.is_active else True
     status.save()
     messages.success(request, 'Статус обновлен!')
-    return redirect(home)
+    return redirect(f'/home/?current_pipeline={d["pipeline"]}')
 
 
 @login_required
 def update_mode(request):
     d = dict(request.GET.items())
+    print(d)
     pipeline = Pipelines.objects.get(p_id=d['pipeline'])
-    pipeline.chosen_work_mode = 'Standart' if pipeline.chosen_work_mode == 'With database' else 'With database'
-    pipeline.save()
-    messages.success(request, 'Режим работы изменен!')
-    return redirect(home)
+    if d['mode'] != 'Standart' and d['mode'] != 'With database':
+        messages.warning(request, "Ошибка обновления режима работы!")
+    else:
+        pipeline.chosen_work_mode = d['mode']
+        pipeline.save()
+        messages.success(request, 'Обновление режима работы прошло успешно!')
+    return redirect(f'/home/?current_pipeline={d["pipeline"]}')
 
 
 @login_required

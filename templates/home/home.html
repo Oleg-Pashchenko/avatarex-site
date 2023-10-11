@@ -18,8 +18,8 @@
         <div class="input-group-prepend">
             <a class="input-group-text" href="/api/v1/home/syncronize-amo">Синхронизировать воронки с AmoCRM</a>
             <select id="mySelect" class="input-group-select">
-                <option value="{{ selected_mode }}">{{ selected_mode }}</option>
-                <option value="{{ disabled_mode }}">{{ disabled_mode }}</option>
+                <option name="{{ selected_mode }}">{{ selected_mode }}</option>
+                <option name="{{ disabled_mode }}">{{ disabled_mode }}</option>
             </select>
             <button class="input-group-text input-group-button" onclick="changeMode();">Обновить</button>
         </div>
@@ -68,8 +68,9 @@
 
         function changeMode() {
             pipeline = document.querySelector('.selected-pipeline');
+            mode = document.getElementById('mySelect').value;
             pipelineId = pipeline.getAttribute('data-pipeline');
-            fetch(`/api/v1/home/update-mode?pipeline=${pipelineId}`);
+            fetch(`/api/v1/home/update-mode?pipeline=${pipelineId}&mode=${mode}`);
         }
 
         function getStages(link) {
@@ -108,8 +109,8 @@
 
                     var selectElement = document.getElementById('mySelect');
 
-                    var newOption1 = new Option(jsonResponse.selected_mode, 'selected_mode');
-                    var newOption2 = new Option(jsonResponse.disabled_mode, 'disabled_mode');
+                    var newOption1 = new Option(jsonResponse.selected_mode, jsonResponse.selected_mode);
+                    var newOption2 = new Option(jsonResponse.disabled_mode, jsonResponse.disabled_mode);
 
                     while (selectElement.options.length > 0) {
                         selectElement.options.remove(0);
@@ -142,8 +143,19 @@
                     console.error('Произошла ошибка:', error);
                 });
         }
+        {% if current_pipeline == "" %}
+            getStages(pipelineLinks[0]);
+        {% else %}
+            let targetLink = null;
 
-        getStages(pipelineLinks[0]);
+            pipelineLinks.forEach(link => {
+                const dataPipeline = link.getAttribute('data-pipeline');
+                if (dataPipeline === '{{ current_pipeline }}') {
+                    targetLink = link;
+                }
+            });
+            getStages(targetLink);
+        {% endif %}
         pipelineLinks.forEach(link => {
             link.addEventListener('click', function () {
                 getStages(link);
