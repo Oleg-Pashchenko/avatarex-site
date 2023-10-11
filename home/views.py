@@ -4,6 +4,7 @@ import openpyxl
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
@@ -202,15 +203,14 @@ def amo_register(request):
             status = amo_auth.try_auth(host, email, password, 3)
             amo_auth.update_pipelines(host, email, password, request.user)
 
-            instance = AmoConnect.objects.filter(user=request.user).first()
+            instance = AmoConnect.objects.filter(email=email).first()
             if status:
                 if instance:
-                    instance = AmoConnect.objects.get(user=request.user)
-                    instance.email = email
-                    instance.host = host
-                    instance.password = password
-                    instance.account_chat_id = account_chat_id
-                    instance.save()
+                    user_email = User.objects.get(id=instance.id).email
+                    messages.warning(request,
+                                     f"Ошибка. Данный аккаунт Amocrm уже привязан к другому аккаунту "
+                                     f"Avatarex! ({user_email})")
+                    return redirect(amo_register)
                 else:
                     AmoConnect(
                         email=email,
@@ -219,8 +219,8 @@ def amo_register(request):
                         account_chat_id=account_chat_id,
                         user=request.user
                     ).save()
-                messages.success(request, 'Интеграция произведена успешно!')
-                return redirect(home)
+                    messages.success(request, 'Интеграция произведена успешно!')
+                    return redirect(home)
             else:
                 messages.warning(request, 'Проверьте данные! Ошибка интеграции.')
 

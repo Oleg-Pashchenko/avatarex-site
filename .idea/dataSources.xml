@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="avatarex_db@94.198.218.2" uuid="eb1f92d2-e619-4314-9027-15a637bf2ee0">
+    <data-source source="LOCAL" name="avatarex_db@94.198.218.2" uuid="f0003c0b-3f1c-471e-9d98-3e14342b0fb1">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>

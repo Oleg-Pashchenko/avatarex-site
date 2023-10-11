@@ -8,9 +8,45 @@
                 <legend class="border-bottom mb-4">Привязать аккаунт AmoCRM</legend>
                 {{ form|crispy }}
             </fieldset>
-            <div class="form-group">
-                <button class="btn btn-outline-primary" type="submit">Привязать</button>
-            </div>
-        </form>
+
+            <fieldset class="form-group mt-3">
+                <legend class="border-bottom mb-4">Где найти параметр ChatID?</legend>
+                Перейдите по  <a id="link" href="" target="_blank">ссылке</a> и возьмите параметр amojo_id (он будет выглядеть примерно так: 123ab456-b4a6-4e66-9088-2837f8752be3)
+            </fieldset>
+
+            <fieldset class="form-group mt-3">
+                <div class="description-block">
+                    <legend class="border-bottom mb-4">Простая настройка подключения в 3 шага:</legend>
+
+                    <h6>1) Перейдите в Amo Market</h6>
+                    <h6>2) В правом верхнем углу нажмите на кнопку `+ WEB HOOKS` и в поле адрес укажите
+                        http://92.255.110.149:8000/{{ request.user.id }}</h6>
+                    <h6>3) В том же меню выберите события для обработки:</h6>
+                    <ul>
+                        <li>Сделка добавлена</li>
+                        <li>Неразобранное добавлено</li>
+                        <li>Входящее сообщение добавлено</li>
+                        <li>Сделка изменена</li>
+                        <li>Сделка удалена</li>
+                        <li>Неразобранное удалено</li>
+                    </ul>
+            </fieldset>
     </div>
+    <div class="form-group">
+        <button class="btn btn-primary" type="submit">Привязать</button>
+    </div>
+    </form>
+    </div>
+    <script>
+        function updateFormAction() {
+            element = document.getElementById('link');
+            element.href = host.value + 'api/v4/account?with=amojo_id';
+
+        }
+
+        host = document.getElementById('id_host');
+        host.addEventListener('input', function () {
+            updateFormAction();
+        });
+    </script>
 {% endblock content %}
