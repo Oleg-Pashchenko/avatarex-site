@@ -211,8 +211,6 @@ def amo_register(request):
             password = form.cleaned_data.get('password')
             account_chat_id = form.cleaned_data.get('account_chat_id')
             status = amo_auth.try_auth(host, email, password, 3)
-            amo_auth.update_pipelines(host, email, password, request.user)
-
             instance = AmoConnect.objects.filter(email=email).first()
             if status:
                 if instance:
@@ -222,6 +220,7 @@ def amo_register(request):
                                      f"Avatarex! ({user_email})")
                     return redirect(amo_register)
                 else:
+                    amo_auth.update_pipelines(host, email, password, request.user)
                     AmoConnect(
                         email=email,
                         host=host,
