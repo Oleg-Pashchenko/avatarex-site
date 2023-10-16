@@ -150,10 +150,17 @@ def db_mode(request):
     print(rules_view)
     return render(request, 'home/db_mode.html',
                   {'filename': pipeline.filename,
+                   'file_link': pipeline.file_link,
                    'has_file': has_file,
                    'names': first_row_data,
                    'items': second_row_data,
-                   'rules': rules_view})
+                   'rules': rules_view,
+                   'pipeline': pipeline.p_id,
+                   'hi_message': pipeline.hi_message,
+                   'openai_error_message': pipeline.openai_error_message,
+                   'db_error_message': pipeline.db_error_message,
+                   'success_message': pipeline.success_message
+                   })
 
 
 @login_required
@@ -259,10 +266,37 @@ def profile(request):
 @csrf_exempt
 def update_db_rules(request):
     data = json.loads(request.body.decode('utf-8'))
+    print(data)
     pipeline = data['currentUrl'].split('?pipeline=')[1]
     pipeline_obj = Pipelines.objects.get(p_id=pipeline, user=request.user)
     del data['currentUrl']
+    pipeline_obj.hi_message = data['hi_message']
+    pipeline_obj.db_error_message = data['db_error_message']
+    pipeline_obj.openai_error_message = data['openai_error_message']
+    pipeline_obj.success_message = data['success_message']
     pipeline_obj.work_rule = data
     pipeline_obj.save()
     messages.success(request, "Данные обновлены!")
     return 'ok'
+
+
+@login_required()
+@csrf_exempt
+def update_db_file(request):
+    pipeline = request.GET.dict()['pipeline']
+
+    import gdown
+
+    google_drive_url = request.POST.dict()['filename']
+    file_id = google_drive_url.split("/")[-2]
+
+    download_url = f"https://drive.google.com/uc?id={file_id}"
+    output_path = f"uploads/{file_id}.xlsx"
+    gdown.download(download_url, output_path, quiet=True)
+    pipeline = Pipelines.objects.get(user=request.user, p_id=pipeline)
+    pipeline.filename = output_path.split('/')[1]
+    pipeline.file_link = download_url
+    pipeline.save()
+    messages.success(request, 'Данные обновлены!')
+    return redirect(home)
+

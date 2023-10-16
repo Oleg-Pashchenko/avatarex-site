@@ -28,8 +28,13 @@ class Pipelines(models.Model):
     order_number = models.IntegerField(null=True)
     chosen_work_mode = models.CharField(auto_created='Standart', default='Standart', null=False)
     filename = models.CharField(null=True)
+    file_link = models.CharField(null=True)
     work_rule = models.JSONField(null=True)
     is_exists = models.BooleanField(default=True)
+    db_error_message = models.TextField(null=True)
+    openai_error_message = models.TextField(null=True)
+    hi_message = models.TextField(null=True)
+    success_message = models.TextField(null=True)
 
 
 class Statuses(models.Model):

@@ -12,18 +12,16 @@
 
     {% csrf_token %}
     <div class="container">
-        <form method="post" enctype="multipart/form-data">
+        <form method="post" action="/api/v1/home/update-db-file?pipeline={{ pipeline }}">
             {% csrf_token %}
             <div class="input-group-prepend">
                 <span class="input-group-text">Файл XLSX с базой данных:</span>
-                <label class="input-group-text custom-file-upload">Нажмите сюда для выбора
-                    файла <input type="file" name="file" accept=".xlsx"> <!-- Add the desired file types -->
-                </label>
-                <button type="submit" class="input-group-text">Загрузить</button>
+                <input name="filename" value="{{ file_link }}">
+                <button type="submit" class="input-group-text">Обновить</button>
             </div>
         </form>
 
-        {% if has_file %}
+        {% if filename is not None and has_file %}
 
             <h4 class="mt-4">Выбрана база: {{ filename }}</h4>
 
@@ -44,11 +42,30 @@
             {% for rule in rules %}
                 <div class="mt-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">Условие для столбца {{ rule.t }}:</span>
+                        <span class="input-group-text">Введенный параметр {{ rule.t }} должен быть</span>
                         <input name="{{ rule.t }}" class="rule input-group-text" value="{{ rule.v }}">
+                        <span class="input-group-text">Database Param</span>
                     </div>
                 </div>
             {% endfor %}
+
+            <h4 class="mt-4 mb-4">Условия отображения ответа:</h4>
+            <h5>Приветственное сообщение:</h5>
+            <legend class="border-bottom mb-4"></legend>
+            <textarea style="min-height: 100px" name="hi_message" id="hi-message">{{ hi_message }}</textarea>
+
+            <h5>Сообщение при ошибке распознавания текста:</h5>
+            <legend class="border-bottom mb-4"></legend>
+            <textarea style="min-height: 100px" name="openai_error_message" id="openai-error-message">{{ openai_error_message }}</textarea>
+
+            <h5>Сообщение при отстутствии информации по запросу в базе данных:</h5>
+            <legend class="border-bottom mb-4"></legend>
+            <textarea style="min-height: 100px" name="db_error_message" id="db-error-message">{{ db_error_message }}</textarea>
+
+            <h5>Сообщение при успешном исходе перед информацией из базы данных:</h5>
+            <legend class="border-bottom mb-4"></legend>
+            <textarea style="min-height: 100px" name="success_message" id="success-message">{{ success_message }}</textarea>
+
             </div>
         {% endif %}
     <div class="widget-container text-white rounded p-2">
@@ -62,10 +79,12 @@
     <script>
         function saveData() {
             elements = document.querySelectorAll(".rule");
-
             var dataObject = {};
             dataObject["currentUrl"] = window.location.href;
-
+            dataObject["hi_message"] = document.getElementById("hi-message").value;
+            dataObject["db_error_message"] = document.getElementById("db-error-message").value;
+            dataObject["openai_error_message"] = document.getElementById("openai-error-message").value;
+            dataObject["success_message"] = document.getElementById("success-message").value;
             elements.forEach(function (element) {
                 var name = element.getAttribute("name");
                 var value = element.value;
