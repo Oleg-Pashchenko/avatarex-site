@@ -290,9 +290,13 @@ def update_db_file(request):
     google_drive_url = request.POST.dict()['filename']
     file_id = google_drive_url.split("/")[-2]
 
-    download_url = f"https://drive.google.com/uc?id={file_id}"
-    output_path = f"uploads/{file_id}.xlsx"
-    gdown.download(download_url, output_path, quiet=True)
+    try:
+        download_url = f"https://drive.google.com/uc?id={file_id}"
+        output_path = f"uploads/{file_id}.xlsx"
+        gdown.download(download_url, output_path, quiet=True)
+    except:
+        messages.warning(request, 'Не удалось сохранить данные!')
+        return redirect(home)
     pipeline = Pipelines.objects.get(user=request.user, p_id=pipeline)
     pipeline.filename = output_path.split('/')[1]
     pipeline.file_link = download_url
