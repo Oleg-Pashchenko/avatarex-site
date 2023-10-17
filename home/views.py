@@ -253,12 +253,12 @@ def main(request):
 
 
 def tomorrow(request):
-    messages.info(request, 'Дата запуска раздела: 04.10.2023')
+    messages.info(request, 'Дата запуска раздела: 18.10.2023')
     return render(request, 'home/404.html')
 
 
 def profile(request):
-    messages.info(request, 'Дата запуска раздела: 04.10.2023')
+    messages.info(request, 'Дата запуска раздела: 18.10.2023')
     return render(request, 'home/404.html')
 
 
