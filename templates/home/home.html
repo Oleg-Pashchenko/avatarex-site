@@ -26,14 +26,12 @@
     </div>
 
     <h4 class="mt-3">Выберите воронку:</h4>
-    <div class="row mt-4 ml-1">
-        <div class="pipeline-bar">
+    <div class="row">
             {% for pipeline in pipelines %}
-                <a class="pipeline-item col" href="#"
+                <a class="pipeline-item" href="#"
                    data-pipeline="{{ pipeline.p_id }}"> {{ pipeline.name }}</a>
 
             {% endfor %}
-        </div>
     </div>
     <h4 class="mt-5">На каких стадиях принимать сообщения:</h4>
     <div class="row mt-4 ml-1">

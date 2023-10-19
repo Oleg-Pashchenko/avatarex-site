@@ -111,14 +111,14 @@ body {
     cursor: default;
     border: 2px solid white;
 }
-
 .pipeline-item {
     border: 1px solid rgb(114, 119, 240);
     border-radius: 5px;
     margin: 5px;
-    padding: 10px;
+    padding: 7px;
     background-color: rgb(38, 47, 60);
     color: white;
+    margin-bottom: 10px; /* Выберите желаемое значение отступа */
 }
 
 .pipeline-item:hover {

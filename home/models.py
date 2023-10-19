@@ -35,7 +35,7 @@ class Pipelines(models.Model):
     openai_error_message = models.TextField(null=True)
     hi_message = models.TextField(null=True)
     success_message = models.TextField(null=True)
-
+    view_rule = models.CharField(null=True)
 
 class Statuses(models.Model):
     status_id = models.IntegerField()

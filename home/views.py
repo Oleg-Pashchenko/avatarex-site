@@ -1,5 +1,7 @@
 import json
 import os
+
+import gdown
 import openpyxl
 
 from django.contrib import messages
@@ -131,6 +133,16 @@ def db_mode(request):
     first_row_data = []
     second_row_data = []
     if has_file and pipeline.filename:
+        if not os.path.exists('uploads/' + pipeline.filename):
+            try:
+                download_url = pipeline.file_link
+                print(download_url)
+                output_path = f"uploads/{pipeline.filename}"
+                gdown.download(download_url, output_path, quiet=True)
+            except Exception as e:
+                print(e)
+                messages.warning(request, 'Не удалось сохранить данные!')
+
         workbook = openpyxl.load_workbook('uploads/' + pipeline.filename)
         sheet = workbook.active
         for row in sheet.iter_rows(min_row=1, max_row=2, values_only=True):
@@ -159,7 +171,8 @@ def db_mode(request):
                    'hi_message': pipeline.hi_message,
                    'openai_error_message': pipeline.openai_error_message,
                    'db_error_message': pipeline.db_error_message,
-                   'success_message': pipeline.success_message
+                   'success_message': pipeline.success_message,
+                   'view_rule': pipeline.view_rule
                    })
 
 
@@ -274,6 +287,7 @@ def update_db_rules(request):
     pipeline_obj.db_error_message = data['db_error_message']
     pipeline_obj.openai_error_message = data['openai_error_message']
     pipeline_obj.success_message = data['success_message']
+    pipeline_obj.view_rule = data['view_rule']
     pipeline_obj.work_rule = data
     pipeline_obj.save()
     messages.success(request, "Данные обновлены!")
