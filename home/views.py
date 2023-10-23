@@ -196,7 +196,7 @@ def update_new_db_file(request):
         return redirect(home)
     try:
         q_m = QualificationMode.objects.get(p_id=pipeline)
-        q_m.file_link = download_url
+        q_m.file_link = google_drive_url
         q_m.save()
     except:
         QualificationMode(p_id=pipeline, file_link=download_url).save()
