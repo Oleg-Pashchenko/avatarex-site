@@ -25,6 +25,18 @@ select {
     border: 2px solid white;
 }
 
+.input-group-input {
+    margin-right: 5px;
+    color: white;
+    border-color: rgb(114, 119, 240);
+}
+.input-group-input:hover {
+    text-decoration: none;
+    color: white;
+    cursor: default;
+    border: 2px solid white;
+}
+
 .rounded-value {
     border: 1px solid #ccc;
     border-radius: 5px;

@@ -36,6 +36,21 @@ class Pipelines(models.Model):
     hi_message = models.TextField(null=True)
     success_message = models.TextField(null=True)
     view_rule = models.CharField(null=True)
+    results_count = models.IntegerField(auto_created=1)
+
+
+class QualificationMode(models.Model):
+    p_id = models.BigIntegerField()
+    qualification_rules = models.JSONField(null=True)
+    qualification_repeat_time = models.IntegerField(default=30)
+    qualification_repeat_count = models.IntegerField(default=2)
+    gpt_not_qualified_message_time = models.IntegerField(default=60)
+    gpt_not_qualified_question_time = models.IntegerField(default=60)
+    file_link = models.CharField(null=True)
+    hi_message = models.CharField(null=True)
+    openai_error_message = models.CharField(null=True)
+    db_error_message = models.CharField(null=True)
+
 
 class Statuses(models.Model):
     status_id = models.IntegerField()

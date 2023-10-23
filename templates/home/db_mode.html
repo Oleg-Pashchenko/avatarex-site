@@ -70,6 +70,10 @@
             <legend class="border-bottom mb-4"></legend>
             <textarea style="min-height: 100px" name="view_rule" id="view-rule">{{ view_rule }}</textarea>
 
+            <h5>Количество отображаемых строк результата:</h5>
+            <legend class="border-bottom mb-4"></legend>
+            <textarea style="min-height: 100px" name="results_count" id="results-count">{{ results_count }}</textarea>
+
             </div>
         {% endif %}
     <div class="widget-container text-white rounded p-2">
@@ -90,6 +94,7 @@
             dataObject["openai_error_message"] = document.getElementById("openai-error-message").value;
             dataObject["success_message"] = document.getElementById("success-message").value;
             dataObject["view_rule"] = document.getElementById("view-rule").value;
+            dataObject["results_count"] = document.getElementById("results-count").value;
             elements.forEach(function (element) {
                 var name = element.getAttribute("name");
                 var value = element.value;

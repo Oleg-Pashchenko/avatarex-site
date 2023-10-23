@@ -1,0 +1,159 @@
+{% extends "core/base.html" %}
+
+{% block head %}
+    {{ block.super }}
+{% endblock %}
+{% block content %}
+    <a href="{% url 'home' %}" class="m-3">Вернуться на главную без сохранения</a>
+
+    <h4 class="m-3">Ваши настройки нового режима работы с базой данных:</h4>
+
+    <legend class="border-bottom mb-4"></legend>
+
+    {% csrf_token %}
+    <div class="container">
+        <form method="post" action="/api/v1/home/update-new-db-file?pipeline={{ pipeline }}">
+            {% csrf_token %}
+            <div class="input-group-prepend">
+                <span class="input-group-text">Файл XLSX с базой данных:</span>
+                <input name="filename" value="{{ file_link }}">
+                <button type="submit" class="input-group-text">Обновить</button>
+            </div>
+        </form>
+
+        {% if file_link is not None %}
+
+            <h5 class="mt-5">Поля AmoCRM для заполнения:</h5>
+            <legend class="border-bottom mb-4"></legend>
+
+            {% for k, v in qualification_rules.items %}
+                <div class="rule input-group-prepend">
+                    <div class="col-4 p-0">
+                        <input name="field-name" class="input-group-text" value="{{ k }}">
+                    </div>
+                    <div class="col-8 pt-1">
+                        <input name="field-value" value="{{ v }}">
+                    </div>
+                </div>
+            {% endfor %}
+            <div id="added-elements"></div>
+
+            <button class="input-group-text mt-2" id="plus_field" onclick="addInputField()">Добавить поле</button>
+
+
+            <legend class="border-bottom mt-4"></legend>
+            <div class="input-group-prepend mt-5">
+                <div class="col">
+                    <span class="input-group-text">Повторить квалифицирующий вопрос через:</span>
+                    <input id="qualification_repeat_time" value="{{ qualification_repeat_time }}">
+                </div>
+                <div class="col">
+                    <span class="input-group-text">Количество повторов квалифицирующего вопроса:</span>
+                    <input id="qualification_repeat_count" value="{{ qualification_repeat_count }}">
+                </div>
+            </div>
+
+            <div class="input-group-prepend mt-4">
+                <div class="col">
+                    <span class="input-group-text">Количество уточняющих вопросов, если ответ нераспознан:</span>
+                    <input class="input-group-input" style="color: black;" id="gpt_not_qualified_message_time"
+                           value="{{ gpt_not_qualified_message_time }}">
+                </div>
+                <div class="col">
+                    <span class="input-group-text">Количество уточняющих вопросов, если вопрос пользователя нераспознан:</span>
+                    <input class="input-group-input" style="color: black;" id="gpt_not_qualified_question_time"
+                           value="{{ gpt_not_qualified_question_time }}">
+                </div>
+            </div>
+
+
+
+            <h5 class="mt-5">Приветственное сообщение:</h5>
+            <legend class="border-bottom mb-4"></legend>
+            <textarea style="min-height: 100px; background-color: rgb(26, 24, 22); color: white;" name="hi_message"
+                      id="hi-message">{{ hi_message }}</textarea>
+
+            <h5 class="mt-3"> Сообщение при ошибке распознавания текста:</h5>
+            <legend class="border-bottom mb-4"></legend>
+            <textarea style="min-height: 100px;  background-color: rgb(26, 24, 22); color: white;"
+                      name="openai_error_message" id="openai-error-message">{{ openai_error_message }}</textarea>
+
+            <h5 class="mt-3">Сообщение при отстутствии информации по запросу в базе данных:</h5>
+            <legend class="border-bottom mb-4"></legend>
+            <textarea style="min-height: 100px; background-color: rgb(26, 24, 22); color: white;"
+                      name="db_error_message" id="db-error-message">{{ db_error_message }}</textarea>
+
+
+            </div>
+        {% endif %}
+    <div class="widget-container text-white rounded p-2">
+        <p class="d-inline-block m-0">После внесения изменений нажмите на кнопку.</p>
+        <button id="save-button" class="btn btn-light ml-2" onclick="saveData();">Сохранить</button>
+    </div>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <script>
+        function saveData() {
+            var elements = document.querySelectorAll(".rule");
+
+            var dataObject = {};
+            dataObject["currentUrl"] = window.location.href;
+            dataObject["hi_message"] = document.getElementById("hi-message").value;
+            dataObject["db_error_message"] = document.getElementById("db-error-message").value;
+            dataObject["openai_error_message"] = document.getElementById("openai-error-message").value;
+
+            dataObject['q_repeat_time'] = document.getElementById("qualification_repeat_time").value;
+            dataObject['q_repeat_count'] = document.getElementById("qualification_repeat_count").value;
+            dataObject['gpt_m_time'] = document.getElementById("gpt_not_qualified_message_time").value;
+            dataObject['gpt_q_time'] = document.getElementById("gpt_not_qualified_question_time").value;
+
+            elements.forEach(function (element) {
+                var fieldNameInput = element.querySelector('[name="field-name"]');
+                var fieldValueInput = element.querySelector('[name="field-value"]');
+
+                if (fieldNameInput && fieldValueInput) {
+                    var fieldName = fieldNameInput.value;
+                    var fieldValue = fieldValueInput.value;
+
+                    // Add to the dictionary
+                    dataObject[fieldName] = fieldValue;
+                }
+            });
+            console.log(dataObject);
+            const requestOptions = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(dataObject),
+            };
+            fetch(`/api/v1/home/update-new-db-rules/`, requestOptions).then(response => {
+                    window.location.href = '/home/';
+                }
+            )
+        }
+    </script>
+
+
+
+    <script>
+        function addInputField() {
+            var container = document.getElementById("added-elements");
+
+            var newInputField = document.createElement("div");
+            newInputField.className = "rule input-group-prepend";
+            newInputField.innerHTML = `
+                    <div class="col-4 p-0">
+                        <input name="field-name" class="input-group-text" value="Название поля">
+                    </div>
+                    <div class="col-8 pt-1">
+                        <input name="field-value" value="Вопрос который нужно задать клиенту">
+                    </div>
+            `;
+            container.appendChild(newInputField);
+        }
+    </script>
+
+{% endblock content %}

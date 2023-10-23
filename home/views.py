@@ -14,7 +14,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from . import amo_auth
 from .forms import AmoRegisterForm, GptDefaultMode
-from .models import AmoConnect, Pipelines, Statuses, GptApiKey, UploadedFile
+from .models import AmoConnect, Pipelines, Statuses, GptApiKey, UploadedFile, QualificationMode
 
 
 @login_required
@@ -172,9 +172,59 @@ def db_mode(request):
                    'openai_error_message': pipeline.openai_error_message,
                    'db_error_message': pipeline.db_error_message,
                    'success_message': pipeline.success_message,
-                   'view_rule': pipeline.view_rule
+                   'view_rule': pipeline.view_rule,
+                   'results_count': pipeline.results_count
                    })
 
+
+@csrf_exempt
+@login_required
+def update_new_db_file(request):
+    pipeline = request.GET.dict()['pipeline']
+
+    import gdown
+
+    google_drive_url = request.POST.dict()['filename']
+    file_id = google_drive_url.split("/")[-2]
+
+    try:
+        download_url = f"https://drive.google.com/uc?id={file_id}"
+        output_path = f"uploads/{file_id}.xlsx"
+        gdown.download(download_url, output_path, quiet=True)
+    except:
+        messages.warning(request, 'Не удалось сохранить данные!')
+        return redirect(home)
+    try:
+        q_m = QualificationMode.objects.get(p_id=pipeline)
+        q_m.file_link = download_url
+        q_m.save()
+    except:
+        QualificationMode(p_id=pipeline, file_link=download_url).save()
+
+    messages.success(request, 'Данные обновлены!')
+    return redirect(home)
+
+
+@login_required
+def new_db_mode(request):
+    d = dict(request.GET.items())
+    pipeline = d['pipeline']
+    try:
+        q_m = QualificationMode.objects.get(p_id=pipeline)
+        print(q_m.qualification_rules)
+        return render(request, 'home/new_db_mode.html', {'pipeline': pipeline,
+                                                     'file_link': q_m.file_link,
+                                                     'qualification_rules': q_m.qualification_rules,
+                                                     'hi_message': q_m.hi_message,
+                                                     'openai_error_message': q_m.openai_error_message,
+                                                     'db_error_message': q_m.db_error_message,
+                                                     'qualification_repeat_time': q_m.qualification_repeat_time,
+                                                     'qualification_repeat_count': q_m.qualification_repeat_count,
+                                                     'gpt_not_qualified_message_time': q_m.gpt_not_qualified_message_time,
+                                                     'gpt_not_qualified_question_time': q_m.gpt_not_qualified_question_time
+                                                     })
+    except:
+        return render(request, 'home/new_db_mode.html', {'pipeline': pipeline})
 
 @login_required
 def syncronize_amo(request):
@@ -288,6 +338,13 @@ def update_db_rules(request):
     pipeline_obj.openai_error_message = data['openai_error_message']
     pipeline_obj.success_message = data['success_message']
     pipeline_obj.view_rule = data['view_rule']
+    pipeline_obj.results_count = data['results_count']
+    del data['hi_message']
+    del data['db_error_message']
+    del data['openai_error_message']
+    del data['success_message']
+    del data['view_rule']
+    del data['results_count']
     pipeline_obj.work_rule = data
     pipeline_obj.save()
     messages.success(request, "Данные обновлены!")
@@ -318,3 +375,32 @@ def update_db_file(request):
     messages.success(request, 'Данные обновлены!')
     return redirect(home)
 
+
+@login_required()
+@csrf_exempt
+def update_new_db_rules(request):
+    data = json.loads(request.body.decode('utf-8'))
+    pipeline = data['currentUrl'].split('?pipeline=')[1]
+    pipeline_obj = QualificationMode.objects.get(p_id=pipeline)
+    print(pipeline_obj)
+    print(data)
+    del data['currentUrl']
+    pipeline_obj.gpt_not_qualified_message_time = data['gpt_m_time']
+    pipeline_obj.gpt_not_qualified_question_time = data['gpt_q_time']
+    pipeline_obj.qualification_repeat_count = data['q_repeat_count']
+    pipeline_obj.qualification_repeat_time = data['q_repeat_time']
+    pipeline_obj.hi_message = data['hi_message']
+    pipeline_obj.db_error_message = data['db_error_message']
+    pipeline_obj.openai_error_message = data['openai_error_message']
+    del data['gpt_m_time']
+    del data['gpt_q_time']
+    del data['q_repeat_count']
+    del data['q_repeat_time']
+    del data['hi_message']
+    del data['db_error_message']
+    del data['openai_error_message']
+
+    pipeline_obj.qualification_rules = data
+    pipeline_obj.save()
+    messages.success(request, "Данные обновлены!")
+    return 'ok'
