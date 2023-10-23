@@ -52,27 +52,27 @@
             <h4 class="mt-4 mb-4">Условия отображения ответа:</h4>
             <h5>Приветственное сообщение:</h5>
             <legend class="border-bottom mb-4"></legend>
-            <textarea style="min-height: 100px" name="hi_message" id="hi-message">{{ hi_message }}</textarea>
+            <textarea style="min-height: 100px" class="blacked" name="hi_message" id="hi-message">{{ hi_message }}</textarea>
 
             <h5>Сообщение при ошибке распознавания текста:</h5>
             <legend class="border-bottom mb-4"></legend>
-            <textarea style="min-height: 100px" name="openai_error_message" id="openai-error-message">{{ openai_error_message }}</textarea>
+            <textarea style="min-height: 100px" class="blacked" name="openai_error_message" id="openai-error-message">{{ openai_error_message }}</textarea>
 
             <h5>Сообщение при отстутствии информации по запросу в базе данных:</h5>
             <legend class="border-bottom mb-4"></legend>
-            <textarea style="min-height: 100px" name="db_error_message" id="db-error-message">{{ db_error_message }}</textarea>
+            <textarea style="min-height: 100px" class="blacked" name="db_error_message" id="db-error-message">{{ db_error_message }}</textarea>
 
             <h5>Сообщение при успешном исходе перед информацией из базы данных:</h5>
             <legend class="border-bottom mb-4"></legend>
-            <textarea style="min-height: 100px" name="success_message" id="success-message">{{ success_message }}</textarea>
+            <textarea style="min-height: 100px" class="blacked" name="success_message" id="success-message">{{ success_message }}</textarea>
 
             <h5>Правило отображения результата:</h5>
             <legend class="border-bottom mb-4"></legend>
-            <textarea style="min-height: 100px" name="view_rule" id="view-rule">{{ view_rule }}</textarea>
+            <textarea style="min-height: 100px" class="blacked" name="view_rule" id="view-rule">{{ view_rule }}</textarea>
 
             <h5>Количество отображаемых строк результата:</h5>
             <legend class="border-bottom mb-4"></legend>
-            <textarea style="min-height: 100px" name="results_count" id="results-count">{{ results_count }}</textarea>
+            <textarea style="min-height: 100px" class="blacked" name="results_count" id="results-count">{{ results_count }}</textarea>
 
             </div>
         {% endif %}

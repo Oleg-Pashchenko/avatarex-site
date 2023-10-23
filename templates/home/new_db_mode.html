@@ -31,8 +31,8 @@
                     <div class="col-4 p-0 mb-2">
                         <input name="field-name" class="input-group-text" value="{{ k }}">
                     </div>
-                    <div class="col-8 pt-1">
-                        <input name="field-value" value="{{ v }}">
+                    <div class="col-8">
+                        <input class="form-control" name="field-value" value="{{ v }}">
                     </div>
                 </div>
             {% endfor %}
@@ -45,24 +45,24 @@
             <div class="row mt-5">
                 <div class="col">
 
-                    <span class="input-group-text mb-1" style="width: 100%">Повторить квалифицирующий вопрос через:</span>
+                    <span class="input-group-text mb-2" style="width: 100%">Повторить квалифицирующий вопрос через:</span>
                     <input class="form-control" id="qualification_repeat_time" value="{{ qualification_repeat_time }}">
 
                 </div>
                 <div class="col">
-                    <span class="input-group-text mb-1" style="width: 100%">Количество повторов квалифицирующего вопроса:</span>
+                    <span class="input-group-text mb-2" style="width: 100%">Количество повторов квалифицирующего вопроса:</span>
                     <input class="form-control" id="qualification_repeat_count" value="{{ qualification_repeat_count }}">
                 </div>
             </div>
 
             <div class="row mt-4">
                 <div class="col">
-                    <span class="input-group-text mb-1" style="width: 100%">Количество уточняющих вопросов, если ответ нераспознан:</span>
+                    <span class="input-group-text mb-2" style="width: 100%">Количество уточняющих вопросов, если ответ нераспознан:</span>
                     <input class="form-control" style="color: black;" id="gpt_not_qualified_message_time"
                            value="{{ gpt_not_qualified_message_time }}">
                 </div>
                 <div class="col">
-                    <span class="input-group-text mb-1" style="width: 100%">Количество уточняющих вопросов, если вопрос нераспознан:</span>
+                    <span class="input-group-text mb-2" style="width: 100%">Количество уточняющих вопросов, если вопрос нераспознан:</span>
                     <input  class="form-control" style="color: black;" id="gpt_not_qualified_question_time"
                            value="{{ gpt_not_qualified_question_time }}">
                 </div>
@@ -150,8 +150,8 @@
                     <div class="col-4 p-0 mb-2">
                         <input name="field-name" class="input-group-text" value="Название поля">
                     </div>
-                    <div class="col-8 pt-1">
-                        <input name="field-value" value="Вопрос который нужно задать клиенту">
+                    <div class="col-8">
+                        <input class="form-control" name="field-value" value="Вопрос который нужно задать клиенту">
                     </div>
             `;
             container.appendChild(newInputField);

@@ -87,6 +87,11 @@ body {
     border-top-right-radius: 50px; /* Полукруглые края справа */
 }
 
+.blacked {
+    color: white;
+    background-color: rgb(26, 24, 22);
+}
+
 .header-item {
     color: white;
     padding-top: 10px;
@@ -179,5 +184,5 @@ body {
 .description-block {
     border: 2px solid rgb(114, 119, 240);
     border-radius: 10px;
-    padding: 10px;
+    padding: 7px;
 }
