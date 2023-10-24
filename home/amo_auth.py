@@ -78,7 +78,8 @@ def update_pipelines(host, mail, password, user):
                 p_id=id,
                 name=name,
                 order_number=sort,
-                user=user
+                user=user,
+                results_count=1
             )
             print(f'Created pipeline {name}')
         existing_statuses = {status.status_id: status for status in Statuses.objects.filter(pipeline_id=pipeline)}
