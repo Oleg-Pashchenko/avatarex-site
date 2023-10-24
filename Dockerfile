@@ -1,5 +1,5 @@
-# Use an official Python 3.12 image as the base image
-FROM python:3.12
+# Use an official Python 3.11 image as the base image
+FROM python:3.11
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -10,7 +10,7 @@ WORKDIR /app
 
 # Copy your application code into the container
 COPY . /app
-
+RUN pip install --upgrade pip
 # Install any dependencies (e.g., Django, if not already in your requirements.txt)
 RUN pip install -r requirements.txt
 
