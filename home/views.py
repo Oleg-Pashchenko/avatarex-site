@@ -50,14 +50,21 @@ def get_stages_by_pipeline(request):
 
     pipeline = form_dict['pipeline']
     selected_mode = Pipelines.objects.get(user=request.user, p_id=pipeline).chosen_work_mode
-    disabled_mode = 'With database' if selected_mode == 'Standart' else 'Standart'
+    if selected_mode == 'Standart':
+        disabled_mode, disabled_mode2 = 'CardsDatabase', 'With database'
+    elif selected_mode == 'CardsDatabase':
+        disabled_mode, disabled_mode2 = 'Standart', 'With database'
+    else:
+        disabled_mode, disabled_mode2 = 'CardsDatabase', 'Standart'
+
     stages = list(
         Statuses.objects.all().filter(pipeline_id__p_id=pipeline, is_exists=True).order_by('order_number').values())
 
     return JsonResponse({
         'stages': stages,
         'selected_mode': selected_mode,
-        'disabled_mode': disabled_mode
+        'disabled_mode': disabled_mode,
+        'disabled_mode2': disabled_mode2
     })
 
 
@@ -77,7 +84,7 @@ def update_mode(request):
     d = dict(request.GET.items())
     print(d)
     pipeline = Pipelines.objects.get(p_id=d['pipeline'])
-    if d['mode'] != 'Standart' and d['mode'] != 'With database':
+    if d['mode'] != 'Standart' and d['mode'] != 'With database' and d['mode'] != 'CardsDatabase':
         messages.warning(request, "Ошибка обновления режима работы!")
     else:
         pipeline.chosen_work_mode = d['mode']

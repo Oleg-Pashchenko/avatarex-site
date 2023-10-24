@@ -20,6 +20,7 @@
             <select id="mySelect" class="input-group-select">
                 <option name="{{ selected_mode }}">{{ selected_mode }}</option>
                 <option name="{{ disabled_mode }}">{{ disabled_mode }}</option>
+                <option name="{{ disabled_mode2 }}">{{ disabled_mode2 }}</option>
             </select>
             <button class="input-group-text input-group-button" onclick="changeMode();">Обновить</button>
         </div>
@@ -126,12 +127,14 @@
 
                     var newOption1 = new Option(jsonResponse.selected_mode, jsonResponse.selected_mode);
                     var newOption2 = new Option(jsonResponse.disabled_mode, jsonResponse.disabled_mode);
+                    var newOption3 = new Option(jsonResponse.disabled_mode2, jsonResponse.disabled_mode2);
 
                     while (selectElement.options.length > 0) {
                         selectElement.options.remove(0);
                     }
                     selectElement.add(newOption1);
                     selectElement.add(newOption2);
+                    selectElement.add(newOption3);
 
 
                     jsonResponse.stages.forEach(function (status) {
