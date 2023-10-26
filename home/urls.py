@@ -1,4 +1,4 @@
-from home import views
+from home import views, api
 from django.urls import path
 
 
@@ -22,5 +22,22 @@ urlpatterns = [
     path('api/v1/home/update-token', views.update_token, name='update_token'),
     path('api/v1/home/syncronize-amo', views.syncronize_amo, name='syncronize_amo'),
     path('api/v1/home/update-db-rules/', views.update_db_rules, name='update_db_rules'),
-    path('api/v1/home/update-new-db-rules/', views.update_new_db_rules, name='update_new_db_rules')
+    path('api/v1/home/update-new-db-rules/', views.update_new_db_rules, name='update_new_db_rules'),
+
+    # New handlers
+    path('api/v1/database-mode/update/', api.database_mode_update, name='database_mode_update'),
+    path('api/v1/knowledge-mode/update/', api.knowledge_mode_update, name='knowledge_mode_update'),
+    path('api/v1/database-and-knowledge-mode/update/', api.d_k_m_update, name='d_k_m_update'),
+    path('api/v1/prompt-mode/update/', api.prompt_mode_update, name='prompt_mode_update'),
+
+    path('api/v1/database-mode/update-file-link/', api.database_mode_update_file_link, name='database_mode_update_file_link'),
+    path('api/v1/knowledge-mode/update-file-link/', api.knowledge_mode_update_file_link, name='knowledge_mode_update_file_link'),
+    path('api/v1/database-and-knowledge-mode/update-database-link/', api.d_k_m_update_database_link, name='d_k_m_update_database_link'),
+    path('api/v1/database-and-knowledge-mode/update-knowledge-link/', api.d_k_m_update_knowledge_link, name='d_k_m_update_knowledge_link'),
+
+    path('api/v1/home/update-openai-key/', api.update_openai_key, name='update_openai_key'),
+    path('api/v1/home/sync-amo-pipelines/', api.sync_amo_pipelines, name='sync_amo_pipelines'),
+    path('api/v1/home/update-working-mode/', api.update_working_mode, name='update_working_mode'),
+    path('api/v1/home/get-stages-by-pipeline/', api.get_stages_by_pipeline, name='get_stages_by_pipeline'),
+
 ]
