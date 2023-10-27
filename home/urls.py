@@ -1,7 +1,5 @@
-from home import views, api
+from home import views, api, new_views
 from django.urls import path
-
-
 
 urlpatterns = [
     path('', views.main, name='main'),
@@ -10,7 +8,7 @@ urlpatterns = [
     path('stats/', views.tomorrow, name='stats'),
     path('help/', views.tomorrow, name='help'),
     path('profile/', views.profile, name='profile'),
-    path('database-mode/', views.db_mode, name='db_mode'),
+    path('old-database-mode/', views.db_mode, name='db_mode'),
     path('new-database-mode/', views.new_db_mode, name='new_db_mode'),
     path('default-mode/', views.default_mode, name='default_mode'),
     path('amo-register/', views.amo_register, name='amo_register'),
@@ -25,15 +23,26 @@ urlpatterns = [
     path('api/v1/home/update-new-db-rules/', views.update_new_db_rules, name='update_new_db_rules'),
 
     # New handlers
+    # VIEWS
+    path('prompt-mode/', new_views.prompt_mode, name='prompt_mode_v1'),
+    path('database-mode/', new_views.database_mode, name='database_mode_v1'),
+    path('knowledge-mode/', new_views.knowledge_mode, name='knowledge_mode_v1'),
+    path('database-and-knowledge-mode/', new_views.database_and_knowledge_mode, name='database_and_knowledge_mode_v1'),
+
+    # API
     path('api/v1/database-mode/update/', api.database_mode_update, name='database_mode_update'),
     path('api/v1/knowledge-mode/update/', api.knowledge_mode_update, name='knowledge_mode_update'),
     path('api/v1/database-and-knowledge-mode/update/', api.d_k_m_update, name='d_k_m_update'),
     path('api/v1/prompt-mode/update/', api.prompt_mode_update, name='prompt_mode_update'),
 
-    path('api/v1/database-mode/update-file-link/', api.database_mode_update_file_link, name='database_mode_update_file_link'),
-    path('api/v1/knowledge-mode/update-file-link/', api.knowledge_mode_update_file_link, name='knowledge_mode_update_file_link'),
-    path('api/v1/database-and-knowledge-mode/update-database-link/', api.d_k_m_update_database_link, name='d_k_m_update_database_link'),
-    path('api/v1/database-and-knowledge-mode/update-knowledge-link/', api.d_k_m_update_knowledge_link, name='d_k_m_update_knowledge_link'),
+    path('api/v1/database-mode/update-file-link/', api.database_mode_update_file_link,
+         name='database_mode_update_file_link'),
+    path('api/v1/knowledge-mode/update-file-link/', api.knowledge_mode_update_file_link,
+         name='knowledge_mode_update_file_link'),
+    path('api/v1/database-and-knowledge-mode/update-database-link/', api.d_k_m_update_database_link,
+         name='d_k_m_update_database_link'),
+    path('api/v1/database-and-knowledge-mode/update-knowledge-link/', api.d_k_m_update_knowledge_link,
+         name='d_k_m_update_knowledge_link'),
 
     path('api/v1/home/update-openai-key/', api.update_openai_key, name='update_openai_key'),
     path('api/v1/home/sync-amo-pipelines/', api.sync_amo_pipelines, name='sync_amo_pipelines'),

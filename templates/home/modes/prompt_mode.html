@@ -1,0 +1,61 @@
+{% extends "core/base.html" %}
+
+{% block head %}
+    {{ block.super }}
+{% endblock %}
+{% block content %}
+
+    <a href="{% url 'home' %}" class="m-3">Вернуться на главную без сохранения</a>
+    <h4 class="m-3">Ваши настройки стандартного режима:</h4>
+
+    <legend class="border-bottom mb-4"></legend>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="container">
+
+            {{ form.context }}
+            <div class="row mt-3">
+                <div class="col-4">
+                <div class="description-block">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text pt-2 pb-0">{{ form.max_tokens.label_tag }}</span>
+                        {{ form.max_tokens }}
+                    </div>
+                </div>
+                    </div>
+                <div class="col-4">
+                <div class="description-block">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text pt-2 pb-0">{{ form.temperature.label_tag }}</span>
+                        {{ form.temperature }}
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-3">
+                    <div class="description-block">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text pt-2 pb-0">{{ form.model.label_tag }}</span>
+                            {{ form.model }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-9">
+                    <div class="description-block">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text pt-2 pb-0">{{ form.fine_tunel_model_id.label_tag }}</span>
+                            {{ form.fine_tunel_model_id }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="widget-container text-white rounded p-2">
+            <p class="d-inline-block m-0">После внесения изменений нажмите на кнопку.</p>
+            <button id="save-button" class="btn btn-light ml-2">Сохранить</button>
+        </div>
+    </form>
+
+{% endblock content %}

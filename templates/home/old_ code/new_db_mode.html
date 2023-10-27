@@ -1,0 +1,140 @@
+{% extends "core/base.html" %}
+
+{% block head %}
+    {{ block.super }}
+{% endblock %}
+{% block content %}
+    <a href="{% url 'home' %}" class="m-3">Вернуться на главную без сохранения</a>
+
+    <h4 class="m-3">Ваши настройки нового режима работы с базой данных:</h4>
+
+    <legend class="border-bottom mb-4"></legend>
+
+    {% csrf_token %}
+    <div class="container">
+        {% include "home/components/upload-file.html" %}
+
+        <form method="post" action="/api/v1/home/update-new-db-file?pipeline={{ pipeline }}">
+            {% csrf_token %}
+            <div class="input-group-prepend mt-2">
+                <span class="input-group-text">Файл XLSX с базой данных (поиск информации)</span>
+                <input name="filename" value="{{ file_link }}">
+                <button type="submit" class="input-group-text">Обновить</button>
+            </div>
+        </form>
+
+        {% if file_link is not None %}
+
+           {% include "home/components/qualification.html" %}
+
+
+            <h5 class="mt-5">Обработка критических случаев игнорирования ответа:</h5>
+            <legend class="border-bottom mt-1"></legend>
+
+            <div class="row mt-4">
+                <div class="col">
+
+                    <span class="input-group-text mb-2" style="width: 100%">Повторить квалифицирующий вопрос через:</span>
+                    <input class="form-control" id="qualification_repeat_time" value="{{ qualification_repeat_time }}">
+
+                </div>
+                <div class="col">
+                    <span class="input-group-text mb-2" style="width: 100%">Количество повторов квалифицирующего вопроса:</span>
+                    <input class="form-control" id="qualification_repeat_count" value="{{ qualification_repeat_count }}">
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col">
+                    <span class="input-group-text mb-2" style="width: 100%">Количество уточняющих вопросов, если ответ нераспознан:</span>
+                    <input class="form-control" style="color: black;" id="gpt_not_qualified_message_time"
+                           value="{{ gpt_not_qualified_message_time }}">
+                </div>
+                <div class="col">
+                    <span class="input-group-text mb-2" style="width: 100%">Количество уточняющих вопросов, если вопрос нераспознан:</span>
+                    <input  class="form-control" style="color: black;" id="gpt_not_qualified_question_time"
+                           value="{{ gpt_not_qualified_question_time }}">
+                </div>
+            </div>
+
+
+        {% include "home/components/bounded-situations.html" %}
+
+
+            </div>
+        {% endif %}
+    {% if file_database_link is not None %}
+    <h5 class="mt-5">Настройка подбора информации ботом:</h5>
+
+    {% endif %}
+    <div class="widget-container text-white rounded p-2">
+        <p class="d-inline-block m-0">После внесения изменений нажмите на кнопку.</p>
+        <button id="save-button" class="btn btn-light ml-2" onclick="saveData();">Сохранить</button>
+    </div>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <script>
+        function saveData() {
+            var elements = document.querySelectorAll(".rule");
+
+            var dataObject = {};
+            dataObject["currentUrl"] = window.location.href;
+            dataObject["hi_message"] = document.getElementById("hi-message").value;
+            dataObject["db_error_message"] = document.getElementById("db-error-message").value;
+            dataObject["openai_error_message"] = document.getElementById("openai-error-message").value;
+
+            dataObject['q_repeat_time'] = document.getElementById("qualification_repeat_time").value;
+            dataObject['q_repeat_count'] = document.getElementById("qualification_repeat_count").value;
+            dataObject['gpt_m_time'] = document.getElementById("gpt_not_qualified_message_time").value;
+            dataObject['gpt_q_time'] = document.getElementById("gpt_not_qualified_question_time").value;
+
+            elements.forEach(function (element) {
+                var fieldNameInput = element.querySelector('[name="field-name"]');
+                var fieldValueInput = element.querySelector('[name="field-value"]');
+
+                if (fieldNameInput && fieldValueInput) {
+                    var fieldName = fieldNameInput.value;
+                    var fieldValue = fieldValueInput.value;
+
+                    // Add to the dictionary
+                    dataObject[fieldName] = fieldValue;
+                }
+            });
+            console.log(dataObject);
+            const requestOptions = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(dataObject),
+            };
+            fetch(`/api/v1/home/update-new-db-rules/`, requestOptions).then(response => {
+                    window.location.href = '/home/';
+                }
+            )
+        }
+    </script>
+
+
+
+    <script>
+        function addInputField() {
+            var container = document.getElementById("added-elements");
+
+            var newInputField = document.createElement("div");
+            newInputField.className = "rule input-group-prepend";
+            newInputField.innerHTML = `
+                    <div class="col-4 p-0 mb-2">
+                        <input name="field-name" class="input-group-text" value="Название поля">
+                    </div>
+                    <div class="col-8">
+                        <input class="form-control" name="field-value" value="Вопрос который нужно задать клиенту">
+                    </div>
+            `;
+            container.appendChild(newInputField);
+        }
+    </script>
+
+{% endblock content %}

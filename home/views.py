@@ -30,7 +30,6 @@ def home(request):
         if not gpt_token_instance:
             gpt_token = ''
         else:
-
             gpt_token = GptApiKey.objects.get(user=request.user).key
         print(current_pipeline)
         return render(request, 'home/home.html', {'pipelines': pipelines,
@@ -117,23 +116,6 @@ def update_token(request):
 def db_mode(request):
     d = dict(request.GET.items())
     pipeline = d['pipeline']
-    if request.method == 'POST' and request.FILES['file']:
-        uploaded_file = request.FILES['file']
-
-        # Optional: Save the file to a model (if you have one)
-        file_instance = UploadedFile(file=uploaded_file)
-        file_instance.save()
-
-        # Write the uploaded file to the server
-        file_path = uploaded_file.name
-        pipeline = Pipelines.objects.get(user=request.user, p_id=pipeline)
-        pipeline.filename = file_path
-        pipeline.save()
-        with open("uploads/" + file_path, 'wb') as destination:
-            for chunk in uploaded_file.chunks():
-                destination.write(chunk)
-        messages.success(request, 'Файл успешно загружен!')
-        return redirect(home)
     pipeline = Pipelines.objects.get(user=request.user, p_id=pipeline)
     has_file = True if pipeline.filename != '' else False
 
@@ -167,7 +149,7 @@ def db_mode(request):
         else:
             rules_view.append({'t': k, 'v': ''})
     print(rules_view)
-    return render(request, 'home/db_mode.html',
+    return render(request, 'home/old_ code/db_mode.html',
                   {'filename': pipeline.filename,
                    'file_link': pipeline.file_link,
                    'has_file': has_file,
@@ -219,7 +201,7 @@ def new_db_mode(request):
     try:
         q_m = QualificationMode.objects.get(p_id=pipeline)
         print(q_m.qualification_rules)
-        return render(request, 'home/new_db_mode.html', {'pipeline': pipeline,
+        return render(request, 'home/old_ code/new_db_mode.html', {'pipeline': pipeline,
                                                      'file_link': q_m.file_link,
                                                      'qualification_rules': q_m.qualification_rules,
                                                      'hi_message': q_m.hi_message,
@@ -229,9 +211,9 @@ def new_db_mode(request):
                                                      'qualification_repeat_count': q_m.qualification_repeat_count,
                                                      'gpt_not_qualified_message_time': q_m.gpt_not_qualified_message_time,
                                                      'gpt_not_qualified_question_time': q_m.gpt_not_qualified_question_time
-                                                     })
+                                                                   })
     except:
-        return render(request, 'home/new_db_mode.html', {'pipeline': pipeline})
+        return render(request, 'home/old_ code/new_db_mode.html', {'pipeline': pipeline})
 
 @login_required
 def syncronize_amo(request):
@@ -254,7 +236,7 @@ def default_mode(request):
                                'model': instance.model,
                                'fine_tunel_model_id': instance.ftmodel
                                })
-        return render(request, 'home/default_mode.html', {'form': form})
+        return render(request, 'home/old_ code/default_mode.html', {'form': form})
     else:
         form = GptDefaultMode(request.POST)
         if form.is_valid():

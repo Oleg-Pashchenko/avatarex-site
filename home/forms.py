@@ -14,11 +14,6 @@ class GptDefaultMode(forms.Form):
         ('gpt-3.5-turbo-16k', 'gpt-3.5-turbo-16k'),
     )
 
-    VOICE_CHOICES = (
-        (True, 'active'),
-        (False, 'passive')
-    )
-
     context = forms.CharField(widget=forms.Textarea(attrs={'class': 'rounded-value blacked',
                                                            'placeholder': 'Введите ваш контекст запроса'
                                                            }))
@@ -32,9 +27,7 @@ class GptDefaultMode(forms.Form):
                                                                                  'placeholder': 'от 0 до 2'
                                                                                  }
                                                                           ))
-    voice_message_detection = forms.ChoiceField(required=True, choices=VOICE_CHOICES,
 
-                                                widget=forms.Select(attrs={'class': 'rounded-value blacked'}))
     model = forms.ChoiceField(choices=CONTEXT_CHOICES, required=True,
                               widget=forms.Select(attrs={'class': 'rounded-value blacked'}))
     fine_tunel_model_id = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'rounded-value blacked',
