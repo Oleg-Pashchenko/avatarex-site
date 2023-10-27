@@ -14,7 +14,7 @@
     <div class="container">
         {% include "home/components/upload-file.html" %}
 
-        {% if filename is not None %}
+        {% if filename != '' %}
 
             {% include "home/components/database-settings.html" %}
 

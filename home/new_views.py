@@ -107,3 +107,8 @@ def prompt_mode(request):
         else:
             messages.warning(request, 'Не удалось обновить!')
     return render(request, 'home/modes/prompt_mode.html', {'form': form})
+
+
+@login_required
+def payment(request):
+    return render(request, 'home/payment.html')
