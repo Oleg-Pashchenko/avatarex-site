@@ -2,6 +2,45 @@ from django.contrib.auth.models import User
 from django.db import models
 
 
+class ModeMessages(models.Model):
+    hi_message = models.CharField(default="")
+    openai_error_message = models.CharField(default='')
+    database_error_message = models.CharField(default='')
+    service_settings_error_message = models.CharField(default='')
+
+
+class ModeQualification(models.Model):
+    value = models.JSONField(default={})
+
+
+class SearchMode(models.Model):
+    qualification = models.ForeignKey(ModeQualification, on_delete=models.CASCADE)
+    mode_messages = models.ForeignKey(ModeMessages, on_delete=models.CASCADE)
+    database_link = models.CharField(default="")
+    search_rules = models.JSONField(default=[])
+    view_rule = models.CharField(default="")
+    results_count = models.IntegerField(default=1)
+
+
+class KnowledgeMode(models.Model):
+    qualification = models.ForeignKey(ModeQualification, on_delete=models.CASCADE)
+    mode_messages = models.ForeignKey(ModeMessages, on_delete=models.CASCADE)
+    database_link = models.CharField(default='')
+
+
+class SearchAndKnowledgeMode(models.Model):
+    search_mode = models.ForeignKey(SearchMode, on_delete=models.CASCADE)
+    knowledge_mode = models.ForeignKey(KnowledgeMode, on_delete=models.CASCADE)
+
+
+class PromptMode(models.Model):
+    qualification = models.ForeignKey(ModeQualification, on_delete=models.CASCADE)
+    context = models.CharField(max_length=250000, default="")
+    model = models.CharField(max_length=100, default="gpt-3.5-turbo")
+    max_tokens = models.IntegerField(default=0)
+    temperature = models.FloatField(default=1)
+
+
 class AmoConnect(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     email = models.CharField()
@@ -18,38 +57,15 @@ class GptApiKey(models.Model):
 class Pipelines(models.Model):
     p_id = models.BigIntegerField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    text = models.CharField(max_length=250000, null=True, blank=True)
-    model = models.CharField(max_length=100, null=True)
-    ftmodel = models.CharField(max_length=100, null=True)
-    tokens = models.IntegerField(null=True)
-    temperature = models.FloatField(null=True)
-    voice = models.BooleanField(null=True)
+    voice_message_detection = models.BooleanField(null=True, default=True)
     name = models.CharField(max_length=255, null=True)
     order_number = models.IntegerField(null=True)
-    chosen_work_mode = models.CharField(auto_created='Standart', default='Standart', null=False)
-    filename = models.CharField(null=True)
-    file_link = models.CharField(null=True)
-    work_rule = models.JSONField(null=True)
     is_exists = models.BooleanField(default=True)
-    db_error_message = models.TextField(null=True)
-    openai_error_message = models.TextField(null=True)
-    hi_message = models.TextField(null=True)
-    success_message = models.TextField(null=True)
-    view_rule = models.CharField(null=True)
-    results_count = models.IntegerField(auto_created=1)
-
-
-class QualificationMode(models.Model):
-    p_id = models.BigIntegerField()
-    qualification_rules = models.JSONField(null=True)
-    qualification_repeat_time = models.IntegerField(default=30)
-    qualification_repeat_count = models.IntegerField(default=2)
-    gpt_not_qualified_message_time = models.IntegerField(default=60)
-    gpt_not_qualified_question_time = models.IntegerField(default=60)
-    file_link = models.CharField(null=True)
-    hi_message = models.CharField(null=True)
-    openai_error_message = models.CharField(null=True)
-    db_error_message = models.CharField(null=True)
+    chosen_work_mode = models.CharField(default='Prompt mode')
+    prompt_mode = models.ForeignKey(PromptMode, on_delete=models.CASCADE)
+    search_mode = models.ForeignKey(SearchMode, on_delete=models.CASCADE)
+    knowledge_mode = models.ForeignKey(KnowledgeMode, on_delete=models.CASCADE)
+    knowledge_and_search_mode = models.ForeignKey(SearchAndKnowledgeMode, on_delete=models.CASCADE)
 
 
 class Statuses(models.Model):
@@ -59,8 +75,3 @@ class Statuses(models.Model):
     is_active = models.BooleanField(default=True)
     pipeline_id = models.ForeignKey(Pipelines, on_delete=models.CASCADE)
     is_exists = models.BooleanField(default=True)
-
-
-class UploadedFile(models.Model):
-    file = models.FileField(upload_to='uploads/')
-    uploaded_at = models.DateTimeField(auto_now_add=True)

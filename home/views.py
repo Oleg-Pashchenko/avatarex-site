@@ -14,7 +14,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from . import amo_auth
 from .forms import AmoRegisterForm, GptDefaultMode
-from .models import AmoConnect, Pipelines, Statuses, GptApiKey, UploadedFile, QualificationMode
+from .models import AmoConnect, Pipelines, Statuses, GptApiKey
 
 
 @login_required

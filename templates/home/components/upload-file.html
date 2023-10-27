@@ -1,0 +1,8 @@
+<form method="post" action="/api/v1/home/update-new-db-file?pipeline={{ pipeline }}">
+    {% csrf_token %}
+    <div class="input-group-prepend">
+        <span class="input-group-text">Файл XLSX с базой знаний (вопрос / ответ)</span>
+        <input name="filename" value="{{ file_link }}">
+        <button type="submit" class="input-group-text">Обновить</button>
+    </div>
+</form>

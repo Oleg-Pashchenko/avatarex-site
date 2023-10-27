@@ -1,0 +1,23 @@
+<h5 class="mt-5">Поля AmoCRM для квалификации клиента:</h5>
+<legend class="border-bottom mb-4"></legend>
+
+{% for k, v in qualification_rules.items %}
+    <div class="rule input-group-prepend">
+        <div class="col-3 p-0 pr-1 mb-2">
+            <input name="field-name" class="input-group-text" value="{{ k }}">
+        </div>
+        <div  class="form-group">
+            <select style="font-size: 100%;" class=" col-15 pr-1 form-control input-group-text " id="exampleFormControlSelect1" >
+                <option  style="text-align: left" class="input-group-text" value="число">Число</option>
+                <option  style="text-align: left" class="input-group-text" value="строка">Строка</option>
+            </select>
+        </div>
+        <div class=" pl-1 pr-0 col-7">
+            <input class="form-control q" name="field-value" value="{{ v }}">
+        </div>
+        <button type="button" class=" ml-1 ml-0 h-50 btn btn-outline-danger">Удалить</button>
+    </div>
+{% endfor %}
+<div id="added-elements"></div>
+
+<button class="input-group-text mt-2" id="plus_field" onclick="addInputField()">Добавить поле</button>

@@ -1,0 +1,27 @@
+.input-group-text {
+    margin-right: 5px;
+    background-color: rgb(38, 47, 60);
+    color: white;
+    border-color: rgb(114, 119, 240);
+}
+
+.input-group-text :hover {
+    text-decoration: none;
+    color: white;
+    cursor: default;
+    border: 2px solid white;
+}
+
+.input-group-input  {
+    margin-right: 5px;
+    color: white;
+    border-color: rgb(114, 119, 240);
+}
+.input-group-input :hover {
+    text-decoration: none;
+    color: white;
+    cursor: default;
+    border: 2px solid white;
+}
+
+

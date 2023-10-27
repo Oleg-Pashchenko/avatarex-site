@@ -1,0 +1,18 @@
+<h5 class="mt-5">Настройка стандартных сценариев поведения бота:</h5>
+<legend class="border-bottom mt-1"></legend>
+
+<h6 class="mt-3">Приветственное сообщение:</h6>
+<textarea style="min-height: 100px; background-color: rgb(26, 24, 22); color: white;" name="hi_message" class="mt-2"
+          id="hi-message">{{ hi_message }}</textarea>
+
+<h6 class="mt-3"> Сообщение при ошибке распознавания текста:</h6>
+<textarea style="min-height: 100px;  background-color: rgb(26, 24, 22); color: white;"
+          name="openai_error_message" class="mt-2" id="openai-error-message">{{ openai_error_message }}</textarea>
+
+<h6 class="mt-3">Сообщение при отстутствии информации по запросу в базе данных:</h6>
+<textarea style="min-height: 100px; background-color: rgb(26, 24, 22); color: white;" class="mt-2"
+          name="db_error_message" id="db-error-message">{{ db_error_message }}</textarea>
+
+<h6 class="mt-3">Ошибка настроек сервиса:</h6>
+<textarea style="min-height: 100px; background-color: rgb(26, 24, 22); color: white;" class="mt-2"
+          name="service_settings_error_message" id="service_settings_error_message">{{ service_settings_error_message }}</textarea>

@@ -74,12 +74,34 @@ def update_pipelines(host, mail, password, user):
             print(f'Updated pipeline {name}')
         else:
             # Создаем новый pipeline
+            q1 = ModeQualification.objects.create()
+            q2 = ModeQualification.objects.create()
+            q3 = ModeQualification.objects.create()
+            q4 = ModeQualification.objects.create()
+            q5 = ModeQualification.objects.create()
+
+            mm1 = ModeMessages.objects.create()
+            mm2 = ModeMessages.objects.create()
+            mm3 = ModeMessages.objects.create()
+            mm4 = ModeMessages.objects.create()
+
+            prompt_mode = PromptMode.objects.create(qualification=q1)
+            search_mode = SearchMode.objects.create(qualification=q2, mode_messages=mm1)
+            search_mode2 = SearchMode.objects.create(qualification=q3, mode_messages=mm2)
+            knowledge_mode = KnowledgeMode.objects.create(qualification=q4, mode_messages=mm3)
+            knowledge_mode2 = KnowledgeMode.objects.create(qualification=q5, mode_messages=mm4)
+            knowledge_and_search_mode = SearchAndKnowledgeMode.objects.create(search_mode=search_mode2,
+                                                                              knowledge_mode=knowledge_mode2)
+
             pipeline = Pipelines.objects.create(
                 p_id=id,
                 name=name,
                 order_number=sort,
                 user=user,
-                results_count=1
+                prompt_mode=prompt_mode,
+                search_mode=search_mode,
+                knowledge_mode=knowledge_mode,
+                knowledge_and_search_mode=knowledge_and_search_mode
             )
             print(f'Created pipeline {name}')
         existing_statuses = {status.status_id: status for status in Statuses.objects.filter(pipeline_id=pipeline)}
