@@ -92,24 +92,6 @@ def update_mode(request):
     return redirect(f'/home/?current_pipeline={d["pipeline"]}')
 
 
-@login_required
-def update_token(request):
-    d = dict(request.GET.items())
-
-    instance = GptApiKey.objects.filter(user=request.user).first()
-
-    if instance:
-        inst = GptApiKey.objects.get(user=request.user)
-        inst.key = d['token']
-        inst.save()
-    else:
-        GptApiKey(
-            user=request.user,
-            key=d['token']
-        ).save()
-
-    messages.success(request, 'Обновление токена прошло успешно!')
-    return redirect(home)
 
 
 @login_required

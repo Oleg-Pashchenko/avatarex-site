@@ -4,12 +4,12 @@
     {{ block.super }}
 {% endblock %}
 {% block content %}
-    <a href="{% url 'home' %}" class="m-3">Вернуться на главную без сохранения</a>
+    <a href="{% url 'home' %}" class="m-3">Вернуться на главную</a>
 
     <h4 class="m-3">Ваши настройки режима работы с базой данных:</h4>
 
     <legend class="border-bottom mb-4"></legend>
-
+{% include "home/components/youtube-video.html" %}
     {% csrf_token %}
     <div class="container">
         {% include "home/components/upload-file.html" %}

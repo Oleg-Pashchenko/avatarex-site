@@ -1,11 +1,14 @@
 import json
 
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 
-from home.models import Pipelines
+from home.models import Pipelines, GptApiKey
 
 import gdown
+
+from home.views import home
 
 
 @login_required
@@ -152,8 +155,16 @@ def d_k_m_update_knowledge_link(request):
 
 
 @login_required
-def update_openai_key(request):
-    pass
+def update_token(request):
+    d = dict(request.GET.items())
+    instance = GptApiKey.objects.filter(user=request.user).first()
+    if instance:
+        inst = GptApiKey.objects.get(user=request.user)
+        inst.key = d['token']
+        inst.save()
+    else:
+        GptApiKey(user=request.user, key=d['token']).save()
+
 
 
 @login_required

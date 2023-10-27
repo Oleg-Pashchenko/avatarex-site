@@ -1,9 +1,13 @@
 .input-group-text {
     margin-right: 5px;
-    background-color: rgb(38, 47, 60);
     color: white;
+    background-color: rgb(38, 47, 60);
     border-color: rgb(114, 119, 240);
 }
+
+
+
+
 
 .input-group-text :hover {
     text-decoration: none;

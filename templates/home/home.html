@@ -5,6 +5,7 @@
 {% endblock %}
 {% block content %}
     <h3>Настройки приложения:</h3>
+    {% include "home/components/youtube-video.html" %}
     <legend class="border-bottom mb-4"></legend>
 
     <div class="mt-3">
@@ -25,13 +26,15 @@
                 <option name="{{ disabled_mode }}">{{ disabled_mode }}</option>
                 <option name="{{ disabled_mode2 }}">{{ disabled_mode2 }}</option>
             </select>
-            <button class="input-group-text input-group-button btn btn-light ml-1 " onclick="changeMode();">Обновить</button>
+            <button class="input-group-text input-group-button btn btn-light ml-1 " onclick="changeMode();">Обновить
+            </button>
         </div>
     </div>
 
     <div class="mt-3">
         <div class="input-group-prepend">
-            <button style="height: 50%" class="input-group-text btn btn-light " href="/api/v1/home/syncronize-amo"> Распознавать голосовые сообщения
+            <button style="height: 50%" class="input-group-text btn btn-light " href="/api/v1/home/syncronize-amo">
+                Распознавать голосовые сообщения
             </button>
             <div style="width: 100%; width: 100%;" class="form-group">
                 <select class="custom-select" required>
@@ -40,7 +43,9 @@
                 </select>
             </div>
 
-            <button style="height: 50%" class="input-group-text input-group-button btn btn-light ml-1 " onclick="changeMode();">Обновить</button>
+            <button style="height: 50%" class="input-group-text input-group-button btn btn-light ml-1 "
+                    onclick="changeMode();">Обновить
+            </button>
         </div>
     </div>
 
@@ -63,34 +68,42 @@
         </div>
     </div>
 
-    <div style="display: flex; justify-content: center; " class="pl-3 pr-3 mt-3 mb-3 ">
-        {% include "home/components/youtube-video.html" %}
-    </div>
+
+
+
 
 
     <legend class="border-bottom mt-4"></legend>
-    <div class="row mt-5">
+    <div class="row mt-3">
         <div class="col">
             <a class="change-work-mode" id="default-mode-settings" href="{% url 'prompt_mode_v1' %}">Настроить
-                стандартный режим
-                работы по контексту</a>
+                режим
+                работы по вашему контексту</a>
         </div>
 
         <div class="col">
             <a class="change-work-mode" id="database-mode-settings" href="{% url 'db_mode' %}">Настроить режим
-                работы с внешней базой
+                работы с вашей базой
                 данных</a>
         </div>
 
         <div class="col">
-            <a class="change-work-mode" id="new-database-mode-settings" href="{% url 'new_db_mode' %}">Настроить новый
-                режим
-                работы с внешней базой
-                данных</a>
+            <a class="change-work-mode" id="knowledge-mode-settings" href="{% url 'new_db_mode' %}">Настроить
+                работы с вашей базой знаний</a>
+        </div>
+        <div class="col">
+            <a class="change-work-mode" id="database-and-knowledge-mode-settings" href="{% url 'new_db_mode' %}">Настроить
+                режим работы с базой данных и знаний</a>
         </div>
 
     </div>
+    <div class="row mt-4">
 
+    </div>
+
+    <br/>
+    <br/>
+    <br/>
 
 
 
@@ -100,7 +113,10 @@
 
         function updateToken() {
             tokenEl = document.getElementById('gpt-token');
-            fetch(`/api/v1/home/update-token?token=${tokenEl.value}`);
+            fetch(`/api/v1/home/update-token?token=${tokenEl.value}`)
+                .then(function (response) {
+                    window.location.reload();
+                })
         }
 
         function changeMode() {
@@ -115,10 +131,12 @@
             const data = {pipeline: pipelineId};
             var link1 = document.getElementById('default-mode-settings');
             var link2 = document.getElementById('database-mode-settings');
-            var link3 = document.getElementById('new-database-mode-settings');
-            link1.setAttribute("href", `/default-mode?pipeline=${pipelineId}`);
+            var link3 = document.getElementById('knowledge-mode-settings');
+            var link4 = document.getElementById('database-and-knowledge-mode-settings');
+            link1.setAttribute("href", `/prompt-mode?pipeline=${pipelineId}`);
             link2.setAttribute("href", `/database-mode?pipeline=${pipelineId}`);
-            link3.setAttribute("href", `/new-database-mode?pipeline=${pipelineId}`);
+            link3.setAttribute("href", `/knowledge-mode?pipeline=${pipelineId}`);
+            link4.setAttribute("href", `/database-and-knowledge-mode?pipeline=${pipelineId}`);
 
             const requestOptions = {
                 method: 'POST',
@@ -163,12 +181,15 @@
                     jsonResponse.stages.forEach(function (status) {
 
                         var link = document.createElement("a");
+
+
+                        link.classList.add("a", "input-group-text");
+                        link.classList.add("a", "stage");
                         if (status.is_active) {
                             link.classList.add("a", "selected-stage"); // Добавляем класс "btn-primary" для активных статусов
                             link.style.color = "white";
+                            link.style.backgroundColor = "rgb(114, 119, 240)";
                         }
-                        link.classList.add("a", "stage");
-                        link.classList.add("a", "input-group-text");
 
 
                         link.href = `/api/v1/home/set_stage_by_pipeline?status=${status.status_id}&pipeline=${pipelineId}`;

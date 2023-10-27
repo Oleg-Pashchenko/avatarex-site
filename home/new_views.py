@@ -1,3 +1,4 @@
+import json
 import os
 
 import gdown
@@ -10,15 +11,17 @@ from home.forms import GptDefaultMode
 from home.models import Pipelines
 
 
-def download_file(filename, request):
+def download_file(filename, request) -> bool:
     file_id = filename.split("/")[-2]
     if not os.path.exists('uploads/' + file_id + '.xlsx'):
         try:
             download_url = filename
             output_path = f"uploads/{file_id}.xlsx"
             gdown.download(download_url, output_path, quiet=True)
-        except Exception as e:
+        except Exception:
             messages.warning(request, 'Не удалось сохранить данные!')
+            return False
+    return True
 
 
 @login_required
@@ -30,15 +33,19 @@ def database_mode(request):
 
     first_row_data, second_row_data = [], []
     if db_mode.database_link != "":
-        download_file(db_mode.database_link, request)
-        file_id = db_mode.database_link.split("/")[-2] + '.xlsx'
-        workbook = openpyxl.load_workbook('uploads/' + file_id)
-        sheet = workbook.active
-        for row in sheet.iter_rows(min_row=1, max_row=2, values_only=True):
-            if not first_row_data:
-                first_row_data = list(row)
-            else:
-                second_row_data = list(row)
+        all_is_ok = download_file(db_mode.database_link, request)
+        db_mode.database_link = ''
+        db_mode.save()
+        if all_is_ok:
+            file_id = db_mode.database_link.split("/")[-2] + '.xlsx'
+            workbook = openpyxl.load_workbook('uploads/' + file_id)
+            sheet = workbook.active
+            for row in sheet.iter_rows(min_row=1, max_row=2, values_only=True):
+                if not first_row_data:
+                    first_row_data = list(row)
+                else:
+                    second_row_data = list(row)
+
     rules = db_mode.search_rules
     rules_view = []
     for k in first_row_data:
@@ -89,6 +96,14 @@ def prompt_mode(request):
     if request.method == 'POST':
         form = GptDefaultMode(request.POST)
         if form.is_valid():
+            field_names = request.POST.getlist('field-name')
+            field_values = request.POST.getlist('field-value')
+            fields = {}
+            for field_index in range(len(field_names)):
+                if field_names[field_index] != '':
+                    fields[field_names[field_index]] = field_values[field_index]
+            instance.prompt_mode.qualification.value = fields
+            instance.prompt_mode.qualification.save()
             messages.success(request, 'Настройки обновлены!')
             context = form.cleaned_data.get('context')
             max_tokens = form.cleaned_data.get('max_tokens')
@@ -98,15 +113,18 @@ def prompt_mode(request):
             instance.prompt_mode.context = context
             instance.prompt_mode.max_tokens = max_tokens
             instance.prompt_mode.temperature = temperature
+
             if fine_tunel_model_id == '':
                 instance.prompt_mode.model = model
             else:
                 instance.prompt_mode.model = fine_tunel_model_id
             instance.prompt_mode.save()
-            instance.save()
+
         else:
             messages.warning(request, 'Не удалось обновить!')
-    return render(request, 'home/modes/prompt_mode.html', {'form': form})
+    return render(request, 'home/modes/prompt_mode.html', {'form': form,
+                                                           'qualification_rules': instance.prompt_mode.qualification
+                                                           })
 
 
 @login_required

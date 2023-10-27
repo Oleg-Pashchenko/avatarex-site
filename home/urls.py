@@ -17,7 +17,7 @@ urlpatterns = [
     path('api/v1/home/update-mode/', views.update_mode, name='update_mode'),
     path('api/v1/home/update-db-file', views.update_db_file, name='update_db_file'),
     path('api/v1/home/update-new-db-file', views.update_new_db_file, name='update_new_db_file'),
-    path('api/v1/home/update-token', views.update_token, name='update_token'),
+    path('api/v1/home/update-token', api.update_token, name='update_token'),  # NEW
     path('api/v1/home/syncronize-amo', views.syncronize_amo, name='syncronize_amo'),
     path('api/v1/home/update-db-rules/', views.update_db_rules, name='update_db_rules'),
     path('api/v1/home/update-new-db-rules/', views.update_new_db_rules, name='update_new_db_rules'),
@@ -44,7 +44,6 @@ urlpatterns = [
     path('api/v1/database-and-knowledge-mode/update-knowledge-link/', api.d_k_m_update_knowledge_link,
          name='d_k_m_update_knowledge_link'),
 
-    path('api/v1/home/update-openai-key/', api.update_openai_key, name='update_openai_key'),
     path('api/v1/home/sync-amo-pipelines/', api.sync_amo_pipelines, name='sync_amo_pipelines'),
     path('api/v1/home/update-working-mode/', api.update_working_mode, name='update_working_mode'),
     path('api/v1/home/get-stages-by-pipeline/', api.get_stages_by_pipeline, name='get_stages_by_pipeline'),

@@ -118,23 +118,4 @@
     </script>
 
 
-
-    <script>
-        function addInputField() {
-            var container = document.getElementById("added-elements");
-
-            var newInputField = document.createElement("div");
-            newInputField.className = "rule input-group-prepend";
-            newInputField.innerHTML = `
-                    <div class="col-4 p-0 mb-2">
-                        <input name="field-name" class="input-group-text" value="Название поля">
-                    </div>
-                    <div class="col-8">
-                        <input class="form-control" name="field-value" value="Вопрос который нужно задать клиенту">
-                    </div>
-            `;
-            container.appendChild(newInputField);
-        }
-    </script>
-
 {% endblock content %}
