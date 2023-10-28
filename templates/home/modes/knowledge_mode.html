@@ -1,10 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "core/base.html" %}
 
-</body>
-</html>
+{% block head %}
+    {{ block.super }}
+{% endblock %}
+{% block content %}
+    <a href="{% url 'home' %}" class="m-3">Вернуться на главную</a>
+
+    <h4 class="m-3">Ваши настройки режима работы с базой знаний:</h4>
+
+    <legend class="border-bottom mb-4"></legend>
+{% include "home/components/youtube-video.html" %}
+    {% csrf_token %}
+    <div class="container">
+        {% include "home/components/upload-file.html" %}
+
+        {% if file_link != '' %}
+            {% include "home/components/qualification.html" %}
+            {% include "home/components/bounded-situations.html" %}
+            </div>
+        {% endif %}
+    <div class="widget-container text-white rounded p-2">
+        <p class="d-inline-block m-0">После внесения изменений нажмите на кнопку.</p>
+        <button id="save-button" class="btn btn-light ml-2" onclick="saveData('knowledge', {{ pipeline_id }});">Сохранить</button>
+    </div>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+
+{% endblock content %}

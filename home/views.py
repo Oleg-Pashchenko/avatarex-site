@@ -33,6 +33,7 @@ def home(request):
             gpt_token = GptApiKey.objects.get(user=request.user).key
         print(current_pipeline)
         return render(request, 'home/home.html', {'pipelines': pipelines,
+                                                  'youtube_video': 'https://www.youtube.com/embed/HSpYul7FYzw?si=UzabLVRlrN-83k12',
                                                   'gpt_token': gpt_token,
                                                   'current_pipeline': current_pipeline})
     else:

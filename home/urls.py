@@ -27,25 +27,10 @@ urlpatterns = [
     path('prompt-mode/', new_views.prompt_mode, name='prompt_mode_v1'),
     path('database-mode/', new_views.database_mode, name='database_mode_v1'),
     path('knowledge-mode/', new_views.knowledge_mode, name='knowledge_mode_v1'),
-    path('database-and-knowledge-mode/', new_views.database_and_knowledge_mode, name='database_and_knowledge_mode_v1'),
+    path('database-and-knowledge-mode/', new_views.database_and_knowledge_mode, name='database_and_knowledge_mode'),
 
     # API
-    path('api/v1/database-mode/update/', api.database_mode_update, name='database_mode_update'),
-    path('api/v1/knowledge-mode/update/', api.knowledge_mode_update, name='knowledge_mode_update'),
-    path('api/v1/database-and-knowledge-mode/update/', api.d_k_m_update, name='d_k_m_update'),
-    path('api/v1/prompt-mode/update/', api.prompt_mode_update, name='prompt_mode_update'),
-
-    path('api/v1/database-mode/update-file-link/', api.database_mode_update_file_link,
-         name='database_mode_update_file_link'),
-    path('api/v1/knowledge-mode/update-file-link/', api.knowledge_mode_update_file_link,
-         name='knowledge_mode_update_file_link'),
-    path('api/v1/database-and-knowledge-mode/update-database-link/', api.d_k_m_update_database_link,
-         name='d_k_m_update_database_link'),
-    path('api/v1/database-and-knowledge-mode/update-knowledge-link/', api.d_k_m_update_knowledge_link,
-         name='d_k_m_update_knowledge_link'),
-
-    path('api/v1/home/sync-amo-pipelines/', api.sync_amo_pipelines, name='sync_amo_pipelines'),
-    path('api/v1/home/update-working-mode/', api.update_working_mode, name='update_working_mode'),
-    path('api/v1/home/get-stages-by-pipeline/', api.get_stages_by_pipeline, name='get_stages_by_pipeline'),
+    path('api/v1/update-mode/', api.update_mode, name='update_mode'),
+    path('api/v1/update-mode-file-link/', api.update_mode_file_link, name='update_mode_file_link')
 
 ]

@@ -8,3 +8,4 @@ urlpatterns = [
     path('subscriptions/', views.subscriptions, name='subscriptions'),
     path('translations/', views.translations, name='translations')
 ]
+

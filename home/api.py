@@ -1,83 +1,124 @@
 import json
 
-from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect
 
 from home.models import Pipelines, GptApiKey
 
 import gdown
 
-from home.views import home
-
 
 @login_required
-def database_mode_update(request):
+def update_mode(request):
     data = json.loads(request.body.decode('utf-8'))
 
     qualification_fields = data['qualification_fields']
     bounded_situations_fields = data['bounded_situations_fields']
     database_mode_fields = data['database_mode_fields']
-    view_rule = data['view_rule']
-    result_count = int(data['result_count'])
+    mode = data['mode']
+    if mode != 'knowledge':
+        view_rule = data['view_rule']
+        result_count = int(data['result_count'])
     pipeline_id = int(data['pipeline_id'])
-
     pipeline = Pipelines.objects.get(p_id=pipeline_id)
-    pipeline.search_mode.qualification.value = qualification_fields
-    pipeline.search_mode.mode_messages.hi_message = bounded_situations_fields['hi_message']
-    pipeline.search_mode.mode_messages.openai_error_message = bounded_situations_fields['openai_error_message']
-    pipeline.search_mode.mode_messages.database_error_message = bounded_situations_fields['database_error_message']
-    pipeline.search_mode.mode_messages.service_settings_error_message = bounded_situations_fields[
-        'service_settings_error_message']
-    pipeline.search_mode.search_rules = database_mode_fields
-    pipeline.search_mode.view_rule = view_rule
-    pipeline.search_mode.results_count = result_count
-    pipeline.save()
-    return redirect(f"/database-mode/?pipeline_id={pipeline_id}")
+    if mode == 'd_k':
+        pipeline.knowledge_and_search_mode.search_mode.qualification.value = qualification_fields
+        pipeline.knowledge_and_search_mode.search_mode.mode_messages.hi_message = bounded_situations_fields[
+            'hi_message']
+        pipeline.knowledge_and_search_mode.search_mode.mode_messages.openai_error_message = bounded_situations_fields[
+            'openai_error_message']
+        pipeline.knowledge_and_search_mode.search_mode.mode_messages.database_error_message = bounded_situations_fields[
+            'database_error_message']
+        pipeline.knowledge_and_search_mode.search_mode.mode_messages.service_settings_error_message = \
+            bounded_situations_fields[
+                'service_settings_error_message']
+
+        pipeline.knowledge_and_search_mode.search_mode.search_rules = database_mode_fields
+        pipeline.knowledge_and_search_mode.search_mode.view_rule = view_rule
+        pipeline.knowledge_and_search_mode.search_mode.results_count = result_count
+
+    elif mode == 'database':
+
+        pipeline.search_mode.qualification.value = qualification_fields
+        pipeline.search_mode.mode_messages.hi_message = bounded_situations_fields[
+            'hi_message']
+        pipeline.search_mode.mode_messages.openai_error_message = bounded_situations_fields[
+            'openai_error_message']
+        pipeline.search_mode.mode_messages.database_error_message = bounded_situations_fields[
+            'database_error_message']
+        pipeline.search_mode.mode_messages.service_settings_error_message = \
+            bounded_situations_fields[
+                'service_settings_error_message']
+
+        pipeline.search_mode.search_rules = database_mode_fields
+        pipeline.search_mode.view_rule = view_rule
+        pipeline.search_mode.results_count = result_count
+
+    elif mode == 'knowledge':
+        pipeline.knowledge_mode.qualification.value = qualification_fields
+        pipeline.knowledge_mode.mode_messages.hi_message = bounded_situations_fields[
+            'hi_message']
+        pipeline.knowledge_mode.mode_messages.openai_error_message = bounded_situations_fields[
+            'openai_error_message']
+        pipeline.knowledge_mode.mode_messages.database_error_message = bounded_situations_fields[
+            'database_error_message']
+        pipeline.knowledge_mode.mode_messages.service_settings_error_message = \
+            bounded_situations_fields[
+                'service_settings_error_message']
+
+    pipeline.search_mode.qualification.save()
+    pipeline.search_mode.mode_messages.save()
+    pipeline.search_mode.save()
+
+    pipeline.knowledge_mode.qualification.save()
+    pipeline.knowledge_mode.mode_messages.save()
+    pipeline.knowledge_mode.save()
+
+    pipeline.knowledge_and_search_mode.search_mode.mode_messages.save()
+    pipeline.knowledge_and_search_mode.search_mode.qualification.save()
+    pipeline.knowledge_and_search_mode.search_mode.save()
+    pipeline.knowledge_and_search_mode.knowledge_mode.save()
+    return redirect(f'/home')
 
 
 @login_required
-def knowledge_mode_update(request):
-    data = json.loads(request.body.decode('utf-8'))
-    qualification_fields = data['qualification_fields']
-    bounded_situations_fields = data['bounded_situations_fields']
-    pipeline_id = int(data['pipeline_id'])
-    pipeline = Pipelines.objects.get(p_id=pipeline_id)
-    pipeline.knowledge_mode.qualification.value = qualification_fields
-    pipeline.knowledge_mode.mode_messages.hi_message = bounded_situations_fields['hi_message']
-    pipeline.knowledge_mode.mode_messages.openai_error_message = bounded_situations_fields['openai_error_message']
-    pipeline.knowledge_mode.mode_messages.database_error_message = bounded_situations_fields['database_error_message']
-    pipeline.knowledge_mode.mode_messages.service_settings_error_message = bounded_situations_fields[
-        'service_settings_error_message']
-    pipeline.save()
-    return redirect(f"/knowledge-mode/?pipeline_id={pipeline_id}")
+def update_mode_file_link(request):
+    """Get pipeline_id, mode_name, redirect urls params and filename string data"""
 
+    data = request.GET.dict()
+    pipeline_id = data['pipeline_id']
+    mode_name = data['mode_name']
+    redirect_url = data['redirect_url']
 
-@login_required
-def d_k_m_update(request):
-    data = json.loads(request.body.decode('utf-8'))
-
-    qualification_fields = data['qualification_fields']
-    bounded_situations_fields = data['bounded_situations_fields']
-    database_mode_fields = data['database_mode_fields']
-    view_rule = data['view_rule']
-    result_count = int(data['result_count'])
-    pipeline_id = int(data['pipeline_id'])
+    google_drive_url = request.POST.dict()['filename']
+    file_id = google_drive_url.replace('https://docs.google.com/spreadsheets/d/', '')
+    file_id = file_id.split('/')[0]
+    try:
+        download_url = f"https://drive.google.com/uc?id={file_id}"
+        output_path = f"uploads/{file_id}.xlsx"
+        gdown.download(download_url, output_path, quiet=True)
+    except:
+        return redirect(redirect_url)
 
     pipeline = Pipelines.objects.get(p_id=pipeline_id)
-    pipeline.knowledge_and_search_mode.qualification.value = qualification_fields
-    pipeline.knowledge_and_search_mode.mode_messages.hi_message = bounded_situations_fields['hi_message']
-    pipeline.knowledge_and_search_mode.mode_messages.openai_error_message = bounded_situations_fields[
-        'openai_error_message']
-    pipeline.knowledge_and_search_mode.mode_messages.database_error_message = bounded_situations_fields[
-        'database_error_message']
-    pipeline.knowledge_and_search_mode.mode_messages.service_settings_error_message = bounded_situations_fields[
-        'service_settings_error_message']
-    pipeline.knowledge_and_search_mode.search_rules = database_mode_fields
-    pipeline.knowledge_and_search_mode.view_rule = view_rule
-    pipeline.knowledge_and_search_mode.results_count = result_count
-    pipeline.save()
-    return redirect(f"/database-and-knowledge-mode/?pipeline_id={pipeline_id}")
+    if mode_name == 'search':
+        pipeline.search_mode.database_file_id = file_id
+        pipeline.search_mode.database_link = google_drive_url
+    elif mode_name == 'knowledge':
+        pipeline.knowledge_mode.database_file_id = file_id
+        pipeline.knowledge_mode.database_link = google_drive_url
+    elif mode_name == 'knowledge-and-search-update-knowledge':
+        pipeline.knowledge_and_search_mode.knowledge_mode.database_link = file_id
+        pipeline.knowledge_and_search_mode.knowledge_mode.database_link = google_drive_url
+    elif mode_name == 'knowledge-and-search-update-search':
+        pipeline.knowledge_and_search_mode.search_mode.database_file_id = file_id
+        pipeline.knowledge_and_search_mode.search_mode.database_link = google_drive_url
+
+    pipeline.search_mode.save()
+    pipeline.knowledge_mode.save()
+    pipeline.knowledge_and_search_mode.search_mode.save()
+    pipeline.knowledge_and_search_mode.knowledge_mode.save()
+    return redirect(redirect_url)
 
 
 @login_required
@@ -101,60 +142,6 @@ def prompt_mode_update(request):
 
 
 @login_required
-def database_mode_update_file_link(request):
-    data = json.loads(request.body.decode('utf-8'))
-
-    pipeline_id = data['pipeline_id']
-    google_drive_url = request.POST.dict()['filename']
-    file_id = google_drive_url.split("/")[-2]
-
-    try:
-        download_url = f"https://drive.google.com/uc?id={file_id}"
-        output_path = f"uploads/{file_id}.xlsx"
-        gdown.download(download_url, output_path, quiet=True)
-    except:
-        return redirect(f'/database-mode/?pipeline_id={pipeline_id}')
-
-    pipeline = Pipelines.objects.get(p_id=pipeline_id)
-    pipeline.search_mode.database_link = output_path.split('/')[1]
-    pipeline.save()
-    # messages.success(request, 'Данные обновлены!')
-    return redirect(f'/database-mode/?pipeline_id={pipeline_id}')
-
-
-@login_required
-def knowledge_mode_update_file_link(request):
-    data = json.loads(request.body.decode('utf-8'))
-
-    pipeline_id = data['pipeline_id']
-    google_drive_url = request.POST.dict()['filename']
-    file_id = google_drive_url.split("/")[-2]
-
-    try:
-        download_url = f"https://drive.google.com/uc?id={file_id}"
-        output_path = f"uploads/{file_id}.xlsx"
-        gdown.download(download_url, output_path, quiet=True)
-    except:
-        return redirect(f'/database-mode/?pipeline_id={pipeline_id}')
-
-    pipeline = Pipelines.objects.get(p_id=pipeline_id)
-    pipeline.knowledge_mode.database_link = output_path.split('/')[1]
-    pipeline.save()
-    # messages.success(request, 'Данные обновлены!')
-    return redirect(f'/database-mode/?pipeline_id={pipeline_id}')
-
-
-@login_required
-def d_k_m_update_database_link(request):
-    pass
-
-
-@login_required
-def d_k_m_update_knowledge_link(request):
-    pass
-
-
-@login_required
 def update_token(request):
     d = dict(request.GET.items())
     instance = GptApiKey.objects.filter(user=request.user).first()
@@ -164,19 +151,3 @@ def update_token(request):
         inst.save()
     else:
         GptApiKey(user=request.user, key=d['token']).save()
-
-
-
-@login_required
-def sync_amo_pipelines(request):
-    pass
-
-
-@login_required
-def update_working_mode(request):
-    pass
-
-
-@login_required
-def get_stages_by_pipeline(request):
-    pass

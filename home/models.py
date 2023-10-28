@@ -17,6 +17,7 @@ class SearchMode(models.Model):
     qualification = models.ForeignKey(ModeQualification, on_delete=models.CASCADE)
     mode_messages = models.ForeignKey(ModeMessages, on_delete=models.CASCADE)
     database_link = models.CharField(default="")
+    database_file_id = models.CharField(default='')
     search_rules = models.JSONField(default=[])
     view_rule = models.CharField(default="")
     results_count = models.IntegerField(default=1)
@@ -26,6 +27,7 @@ class KnowledgeMode(models.Model):
     qualification = models.ForeignKey(ModeQualification, on_delete=models.CASCADE)
     mode_messages = models.ForeignKey(ModeMessages, on_delete=models.CASCADE)
     database_link = models.CharField(default='')
+    database_file_id = models.CharField(default='')
 
 
 class SearchAndKnowledgeMode(models.Model):

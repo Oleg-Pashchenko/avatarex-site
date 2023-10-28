@@ -1,27 +1,11 @@
-import json
-import os
-
-import gdown
 import openpyxl
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
+from home import misc
 from home.forms import GptDefaultMode
 from home.models import Pipelines
-
-
-def download_file(filename, request) -> bool:
-    file_id = filename.split("/")[-2]
-    if not os.path.exists('uploads/' + file_id + '.xlsx'):
-        try:
-            download_url = filename
-            output_path = f"uploads/{file_id}.xlsx"
-            gdown.download(download_url, output_path, quiet=True)
-        except Exception:
-            messages.warning(request, 'Не удалось сохранить данные!')
-            return False
-    return True
 
 
 @login_required
@@ -31,49 +15,46 @@ def database_mode(request):
     pipeline = Pipelines.objects.get(user=request.user, p_id=pipeline)
     db_mode = pipeline.search_mode
 
-    first_row_data, second_row_data = [], []
-    if db_mode.database_link != "":
-        all_is_ok = download_file(db_mode.database_link, request)
-        db_mode.database_link = ''
-        db_mode.save()
-        if all_is_ok:
-            file_id = db_mode.database_link.split("/")[-2] + '.xlsx'
-            workbook = openpyxl.load_workbook('uploads/' + file_id)
-            sheet = workbook.active
-            for row in sheet.iter_rows(min_row=1, max_row=2, values_only=True):
-                if not first_row_data:
-                    first_row_data = list(row)
-                else:
-                    second_row_data = list(row)
-
-    rules = db_mode.search_rules
-    rules_view = []
-    for k in first_row_data:
-        if k in rules.keys():
-            rules_view.append({'t': k, 'v': rules[k]})
-        else:
-            rules_view.append({'t': k, 'v': ''})
-    print(rules_view)
     return render(request, 'home/modes/database_mode.html',
-                  {'filename': db_mode.database_link,
-                   'names': first_row_data,
-                   'items': second_row_data,
-                   'rules': rules_view,
-                   'pipeline': pipeline.p_id,
-                   'mode_messages': db_mode.mode_messages,
-                   'view_rule': db_mode.view_rule,
-                   'results_count': db_mode.results_count
-                   })
+                  {
+                      'pipeline_id': pipeline.p_id,
+                      'results_count': db_mode.results_count,
+                      'youtube_video': 'https://www.youtube.com/embed/HSpYul7FYzw?si=UzabLVRlrN-83k12',
+
+                      'file_link': db_mode.database_link,
+                      'upload_file_inputs': [
+                          {'action': f'/api/v1/update-mode-file-link/?pipeline_id={pipeline.p_id}&mode_name='
+                                     f'search&redirect_url=/database-mode/?pipeline={pipeline.p_id}',
+                           'text': 'Ссылка на базу данных', 'file_link': db_mode.database_link},
+                      ],
+                      'search_rules': misc.get_search_rules(file_id=db_mode.database_file_id,
+                                                            search_rules=db_mode.search_rules),
+                      'qualification_rules': db_mode.qualification,
+                      'bounded_situations': db_mode.mode_messages,
+                      'view_rule': db_mode.view_rule
+                  })
 
 
 @login_required
 def knowledge_mode(request):
-    pass
+    d = dict(request.GET.items())
+    pipeline = d['pipeline']
+    pipeline = Pipelines.objects.get(user=request.user, p_id=pipeline)
+    knowledge_mode = pipeline.knowledge_mode
 
-
-@login_required
-def database_and_knowledge_mode(request):
-    pass
+    return render(request, 'home/modes/knowledge_mode.html',
+                  {
+                      'youtube_video': 'https://www.youtube.com/embed/HSpYul7FYzw?si=UzabLVRlrN-83k12',
+                      'pipeline_id': pipeline.p_id,
+                      'qualification_rules': knowledge_mode.qualification,
+                      'file_link': knowledge_mode.database_link,
+                      'upload_file_inputs': [
+                          {'action': f'/api/v1/update-mode-file-link/?pipeline_id={pipeline.p_id}&mode_name='
+                                     f'knowledge&redirect_url=/knowledge-mode/?pipeline={pipeline.p_id}',
+                           'text': 'Ссылка на базу знаний', 'file_link': knowledge_mode.database_link},
+                      ],
+                      'bounded_situations': knowledge_mode.mode_messages,
+                  })
 
 
 @login_required
@@ -123,8 +104,40 @@ def prompt_mode(request):
         else:
             messages.warning(request, 'Не удалось обновить!')
     return render(request, 'home/modes/prompt_mode.html', {'form': form,
+                                                           'youtube_video': 'https://www.youtube.com/embed/HSpYul7FYzw?si=UzabLVRlrN-83k12',
                                                            'qualification_rules': instance.prompt_mode.qualification
                                                            })
+
+
+@login_required
+def database_and_knowledge_mode(request):
+    d = dict(request.GET.items())
+    pipeline = d['pipeline']
+    pipeline = Pipelines.objects.get(user=request.user, p_id=pipeline)
+    d_k_mode = pipeline.knowledge_and_search_mode
+
+    return render(request, 'home/modes/database_and_knowledge_mode.html',
+                  {
+                      'youtube_video': 'https://www.youtube.com/embed/HSpYul7FYzw?si=UzabLVRlrN-83k12',
+                      'pipeline_id': pipeline.p_id,
+                      'file_link': d_k_mode.search_mode.database_link,
+                      'results_count': d_k_mode.search_mode.results_count,
+                      'qualification_rules': d_k_mode.search_mode.qualification,
+
+                      'upload_file_inputs': [
+                          {'action': f'/api/v1/update-mode-file-link/?pipeline_id={pipeline.p_id}&mode_name='
+                                     f'knowledge-and-search-update-search&redirect_url=/database-and-knowledge-mode/?pipeline={pipeline.p_id}',
+                           'text': 'Ссылка на базу данных', 'file_link': d_k_mode.search_mode.database_link},
+
+                          {'action': f'/api/v1/update-mode-file-link/?pipeline_id={pipeline.p_id}&mode_name='
+                                     f'knowledge-and-search-update-knowledge&redirect_url=/database-and-knowledge-mode/?pipeline={pipeline.p_id}',
+                           'text': 'Ссылка на базу знаний', 'file_link': d_k_mode.knowledge_mode.database_link}
+                      ],
+                      'search_rules': misc.get_search_rules(file_id=d_k_mode.search_mode.database_file_id,
+                                                            search_rules=d_k_mode.search_mode.search_rules),
+                      'bounded_situations': d_k_mode.search_mode.mode_messages,
+                      'view_rule': d_k_mode.search_mode.view_rule
+                  })
 
 
 @login_required
