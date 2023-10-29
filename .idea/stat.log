@@ -3762,3 +3762,7 @@
 {"ts":1698586934040,"action":"FILE_OPENED","file":"/.github/workflows/action.yml","tags":{"FILE_LINE_OF_CODE":"0"}}
 {"ts":1698586954118,"action":"FILE_CLOSED","file":"/.github/workflows/action.yml","tags":{"FILE_LINE_OF_CODE":"21"}}
 {"ts":1698586954118,"action":"FILE_OPENED","file":"/Dockerfile","tags":{"FILE_LINE_OF_CODE":"24"}}
+{"ts":1698586979601,"action":"IDE_DEACTIVATED"}
+{"ts":1698587068313,"action":"IDE_ACTIVATED"}
+{"ts":1698587068721,"action":"IDE_DEACTIVATED"}
+{"ts":1698587073543,"action":"IDE_ACTIVATED"}
