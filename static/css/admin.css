@@ -1,0 +1,12 @@
+.navbar {
+    background-color:  rgb(10, 40, 50);
+}
+
+.navbar a {
+    color: #ffffff;
+}
+
+
+.navbar a.active {
+    color: #007bff;
+}
