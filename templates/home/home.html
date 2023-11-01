@@ -33,18 +33,18 @@
 
     <div class="mt-3">
         <div class="input-group-prepend">
-            <button style="height: 50%" class="input-group-text btn btn-light " href="/api/v1/home/syncronize-amo">
+            <button style="height: 50%" class="input-group-text btn btn-light ">
                 Распознавать голосовые сообщения
             </button>
             <div style="width: 100%; width: 100%;" class="form-group">
-                <select class="custom-select" required>
-                    <option value="0">Да</option>
-                    <option value="1">Нет</option>
+                <select id="voiceSelect" class="custom-select" required>
+                <option name="{{ selected_voice_mode }}">{{ selected_voice_mode }}</option>
+                <option name="{{ disabled_voice_mode }}">{{ disabled_voice_mode }}</option>
                 </select>
             </div>
 
             <button style="height: 50%" class="input-group-text input-group-button btn btn-light ml-1 "
-                    onclick="changeMode();">Обновить
+                    onclick="updateVoice();">Обновить
             </button>
         </div>
     </div>
@@ -119,6 +119,15 @@
                 })
         }
 
+        function updateVoice() {
+            pipeline = document.querySelector('.selected-pipeline');
+            pipelineId = pipeline.getAttribute('data-pipeline');
+            voice = document.getElementById('voiceSelect').value;
+            fetch(`/api/v1/home/update-voice?pipeline=${pipelineId}&voice=${voice}`);
+        }
+
+
+
         function changeMode() {
             pipeline = document.querySelector('.selected-pipeline');
             mode = document.getElementById('mySelect').value;
@@ -169,14 +178,28 @@
                     var newOption1 = new Option(jsonResponse.selected_mode, jsonResponse.selected_mode);
                     var newOption2 = new Option(jsonResponse.disabled_mode, jsonResponse.disabled_mode);
                     var newOption3 = new Option(jsonResponse.disabled_mode2, jsonResponse.disabled_mode2);
+                    var newOption4 = new Option(jsonResponse.disabled_mode3, jsonResponse.disabled_mode3);
 
                     while (selectElement.options.length > 0) {
                         selectElement.options.remove(0);
                     }
+
                     selectElement.add(newOption1);
                     selectElement.add(newOption2);
                     selectElement.add(newOption3);
+                    selectElement.add(newOption4);
 
+
+                    var voiceElement = document.getElementById('voiceSelect');
+
+                    var option1 = new Option(jsonResponse.selected_voice, jsonResponse.selected_voice);
+                    var option2 = new Option(jsonResponse.disabled_voice, jsonResponse.disabled_voice);
+
+                    while (voiceElement.options.length > 0) {
+                        voiceElement.options.remove(0);
+                    }
+                    voiceElement.add(option1);
+                    voiceElement.add(option2);
 
                     jsonResponse.stages.forEach(function (status) {
 
