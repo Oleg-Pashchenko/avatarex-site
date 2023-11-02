@@ -64,11 +64,15 @@ def update_pipelines(host, mail, password, user):
     for p in existing_pipelines:
         fl = False
         for v in response.values():
+            print(v)
             if int(p) == int(v['id']):
-                fl = True
+                if not v['is_archive']:
+                    fl = True
                 break
         if not fl:
             ids.add(p)
+
+    print('IDS to delete: ', ids)
 
     for v in response.values():
         id = v['id']
