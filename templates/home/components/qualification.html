@@ -2,23 +2,30 @@
     <h5 class="mt-5">Если вы хотите проводить квалификацию клиента, пожалуйста, добавьте поля:</h5>
     <legend class="border-bottom mb-4"></legend>
     <div id="loaded-elements">
-    {% for k, v in qualification_rules.value.items %}
-        <div class="rule input-group-prepend">
-            <div class="col-3 p-0 pr-1 mb-2">
-                <input name="field-name" class="input-group-text" value="{{ k }}">
+        {% for k, v in qualification_rules.value.items %}
+            <div class="rule input-group-prepend">
+                <div class="col-3 p-0 pr-1 mb-2">
+                    <input name="field-name" class="input-group-text" value="{{ k }}">
+                </div>
+                <div class=" pl-1 pr-0 col-8">
+                    <input class="form-control q" name="field-value" value="{{ v }}">
+                </div>
+                <button type="button" class="ml-1 ml-0 h-50 btn btn-outline-danger"
+                        onclick="deleteLoadedQualificationField(this.parentNode);">Удалить
+                </button>
             </div>
-            <div class=" pl-1 pr-0 col-8">
-                <input class="form-control q" name="field-value" value="{{ v }}">
-            </div>
-            <button type="button" class="ml-1 ml-0 h-50 btn btn-outline-danger" onclick="deleteLoadedQualificationField(this.parentNode);">Удалить</button>
-        </div>
-    {% endfor %}
+        {% endfor %}
     </div>
     <div id="added-elements"></div>
 
     <button class="input-group-text mt-2" type="button" id="plus_field" onclick="addQualificationField();">Добавить
         поле
     </button>
+
+    <h6 class="mt-5">Сообщение после прохождения квалификации:</h6>
+    <textarea style="min-height: 100px; background-color: rgb(26, 24, 22); color: white;" name="qualificationFinished" class="mt-2"
+              id="qualificationFinished">{{ qualification_rules.qualification_finished }}</textarea>
+
 </div>
 
 
