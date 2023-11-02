@@ -61,6 +61,15 @@ def update_pipelines(host, mail, password, user):
 
     existing_pipelines = {pipeline.p_id: pipeline for pipeline in Pipelines.objects.filter(user=user)}
 
+    for p in existing_pipelines:
+        fl = False
+        for v in response.values():
+            if int(p) == int(v['id']):
+                fl = True
+                break
+        if not fl:
+            ids.add(p)
+
     for v in response.values():
         id = v['id']
         name, sort, statuses = v['name'], v['sort'], v['statuses']
@@ -124,15 +133,15 @@ def update_pipelines(host, mail, password, user):
                     pipeline_id=pipeline
                 )
                 print(f'Created status {s_name}')
-
+    print(ids)
     for id in ids:
-        pipeline = Pipelines.objects.all().get(id=id)
+        pipeline = Pipelines.objects.all().get(p_id=id)
+        pip_id = pipeline.id
         pipeline.is_exists = False
         pipeline.save()
         print(f'Pipeline {pipeline.name} disabled!')
-
-        for s in s_ids:
-            status = Statuses.objects.all().get(status_id=s, pipeline_id=id)
+        statuses = Statuses.objects.all().filter(pipeline_id=pip_id)
+        for status in statuses:
             status.is_exists = False
             status.save()
             print(f"Status {status.name} disabled!")
