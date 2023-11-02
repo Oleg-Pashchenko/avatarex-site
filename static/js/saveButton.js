@@ -6,7 +6,7 @@ function saveData(mode, pipeline_id) {
     dataObject['mode'] = mode;
     dataObject['pipeline_id'] = pipeline_id;
     dataObject['qualificationFinished'] = document.getElementById("qualificationFinished").value;
-
+    console.log(dataObject);
     boundedSituationsFields["hi_message"] = document.getElementById("hi-message").value;
     boundedSituationsFields["database_error_message"] = document.getElementById("db-error-message").value;
     boundedSituationsFields["openai_error_message"] = document.getElementById("openai-error-message").value;
