@@ -1,10 +1,83 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% block title %}Профиль пользователя{% endblock %}
+{% block head %}
+    <style>
+        input[type="text"] {
+            border: none;
+            background-color: transparent;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+        }
+    </style>
+    {{ block.super }}
+{% endblock %}
+{% block content %}
 
-</body>
-</html>
+    <h1>Профиль пользователя</h1>
+    {% if error_alert %}
+            <div class="alert alert-danger" role="alert">
+                {{ error_alert }}
+            </div>
+        {% endif %}
+
+        {% if success_alert %}
+            <div class="alert alert-success" role="alert">
+                {{ success_alert }}
+            </div>
+        {% endif %}
+    <div class="row">
+        <div class="col-md-4">
+            <!-- Выводим фотографию пользователя -->
+            <img src="https://www.cats.org.uk/media/1500/our-strategy-cover-image.jpg?width=400"
+                 alt="{{ user.username }}" class="img-fluid">
+        </div>
+        <div class="col-md-8">
+            <!-- Выводим информацию о пользователе -->
+            <h2>{{ user.username }}</h2>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>Имя:</strong> {{ user.first_name }}</p>
+            <p><strong>Фамилия:</strong> {{ user.last_name }}</p>
+        </div>
+        <h3>Редактировать подключение к AmoCRM</h3>
+        <div class="container mt-4">
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Переменная</th>
+                    <th>Значение</th>
+                    <th>Действие</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for amo in amo_variables %}
+                    <tr>
+                        <form method="post" action="/{{ request.lang }}/api/v1/admin/edit-amo-connection">
+                            {% csrf_token %}
+                            <td>
+                                <input type="text" value="{{ amo.k }}" disabled>
+                            </td>
+                            <td>
+                                <input type="text" name="{{ amo.k }}" style="width: 100%" value="{{ amo.v }}">
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-primary">Обновить</button>
+                            </td>
+                        </form>
+                    </tr>
+
+                {% endfor %}
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+{% endblock %}

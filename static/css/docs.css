@@ -1,0 +1,169 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+.sc2-hJahJl2Y {
+    border: none;
+    border-bottom: 1px solid white;
+    background-color: rgb(10, 40, 50);
+    outline: none;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.intertext{
+    padding-left: 20px;
+
+    font-family: 'Montserrat', sans-serif;
+
+}
+.silka{
+    text-decoration: none;
+    color: white;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 28px;
+    padding-right: 5px;
+
+}
+.silka:hover{
+    text-decoration: none;
+    color: white;
+
+}
+.silkainter{
+    text-decoration: none;
+
+}
+.silkainter:hover{
+    text-decoration: none;
+
+}
+
+body {
+    max-width: 100vw;
+    background-color: #202020;
+}
+
+
+.custom-width {
+    max-width: 100vw;
+}
+
+
+.contentinter{
+
+    text-align: left;
+
+}
+
+.toggle-button {
+    height: 100%;
+    width: 20px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    position: absolute;
+    right: 0;
+}
+
+.sidebar {
+    position: relative;
+    padding-right: 20px;
+}
+
+
+
+.Xasdafv {
+    position: absolute;
+    margin-top: 5px;
+}
+
+.Xasdafvq {
+    left: 265px;
+    position: absolute;
+    margin-right: 5px;
+}
+
+.galochka {
+
+    margin-right: 20px;
+
+}
+
+.label-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.label-content > div {
+    flex-grow: 1;
+}
+
+.searchdocs {
+    width: 312px;
+    margin-left: 0px;
+    background-color: rgb(10, 40, 50);
+
+}
+
+.list-text {
+
+}
+
+li {
+    list-style-type: none; /* Убираем маркеры */
+}
+
+ul {
+    margin-left: 0;
+    padding-left: 0;
+}
+
+.text-label {
+    font-size: 24px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.text-label2 {
+    font-size: 22px;
+    font-weight: 300;
+
+
+}
+
+.text-label3 {
+    font-size: 18px;
+    font-weight: 200;
+
+}
+
+.label-hoover:hover {
+    background-color: rgba(230, 263, 273, 0.30);
+    opacity: 0.6;
+}
+
+.redoc-wrap {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5em;
+    display: flex;
+    position: relative;
+    text-align: left;
+    -webkit-font-smoothing: antialiased;
+    text-size-adjust: 100%;
+    text-rendering: optimizespeed !important;
+}
+
+.fjUIJu {
+    padding: 10px 5px 10px 28px;
+
+}
+
+.fjUIJu2 {
+    padding: 10px 5px 10px 18px;
+
+}
+
+label {
+    margin: 0 0 0 0;
+
+}

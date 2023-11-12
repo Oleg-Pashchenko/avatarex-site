@@ -8,99 +8,190 @@
     {% include "home/components/youtube-video.html" %}
     <legend class="border-bottom mb-4"></legend>
 
-    <div class="mt-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text">OpenAI API KEY:</span>
-            <input type="text" id="gpt-token" value="{{ gpt_token }}">
-            <button class="input-group-text input-group-button btn btn-light ml-1 " onclick="updateToken();">Обновить
-            </button>
+
+    <!-- <div class="mt-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">OpenAI API KEY:</span>
+                <input type="text" id="gpt-token" value="{{ gpt_token }}">
+                <button class="input-group-text input-group-button btn btn-light ml-1 " onclick="updateToken();">
+                    Обновить
+                </button>
+            </div>
         </div>
-    </div>
-    <div class="mt-3">
-        <div class="input-group-prepend">
-            <button class="input-group-text btn btn-light " href="/api/v1/home/syncronize-amo">Синхронизировать воронки
-                с AmoCRM
-            </button>
-            <select id="mySelect" class="input-group-select">
+        <div class="mt-3">
+            <div class="input-group-prepend">
+                <button class="input-group-text btn btn-light " href="/api/v1/home/syncronize-amo">Синхронизировать
+                    воронки
+                    с AmoCRM
+                </button>
+                <select id="mySelect" class="input-group-select">
+                    <option name="{{ selected_mode }}">{{ selected_mode }}</option>
+                    <option name="{{ disabled_mode }}">{{ disabled_mode }}</option>
+                    <option name="{{ disabled_mode2 }}">{{ disabled_mode2 }}</option>
+                </select>
+                <button class="input-group-text input-group-button btn btn-light ml-1 " onclick="changeMode();">Обновить
+                </button>
+            </div>
+        </div>
+
+        <div class="mt-3">
+            <div class="input-group-prepend">
+                <button style="height: 50%" class="input-group-text btn btn-light " href="/api/v1/home/syncronize-amo">
+                    Распознавать голосовые сообщения
+                </button>
+                <div style="width: 100%; width: 100%;" class="form-group">
+                    <select class="custom-select" required>
+                        <option value="0">Да</option>
+                        <option value="1">Нет</option>
+                    </select>
+                </div>
+
+                <button style="height: 50%" class="input-group-text input-group-button btn btn-light ml-1 "
+                        onclick="changeMode();">Обновить
+                </button>
+            </div>
+        </div>
+
+        <legend class="border-bottom mt-4"></legend>
+
+        <h4 class="mt-5 mb-3">Выберите воронку:</h4>
+        <div class="pl-3 pr-3">
+            <div class="row p-2 rounded-value" style="background-color: rgb(26, 24, 22);">
+                {% for pipeline in pipelines %}
+                    <a class="pipeline-item" href="#"
+                       data-pipeline="{{ pipeline.p_id }}"> {{ pipeline.name }}</a>
+
+                {% endfor %}
+            </div>
+        </div>
+        <h4 class="mt-5">На каких стадиях принимать сообщения:</h4>
+        <div class="pl-3 pr-3">
+            <div class="row rounded-value statuses-bar" style="background-color: rgb(26, 24, 22);">
+
+            </div>
+        </div>-->
+    <div class="container">
+
+        <style>
+            @media (min-width: 768px) {
+                .w-md-80 {
+                    max-width: 76.9%;
+                }
+
+                .w-md2-80 {
+                    max-width: 62.6%;
+                }
+
+                .w-md3-80 {
+                    max-width: 60.6%;
+                }
+            }
+
+            .change-work-mode {
+                border: 2px solid rgb(114, 119, 240);
+                border-radius: 5px;
+                margin-right: 5px;
+                padding: 15px;
+                background-color: rgb(38, 47, 60);
+                color: white;
+                text-align: center;
+                display: inline-block;
+            }
+
+            .change-work-mode:hover {
+                text-decoration: none;
+                color: white;
+                cursor: default;
+                border: 2px solid  rgb(114, 119, 240);;
+                background-color: rgb(114, 119, 240);
+            }
+
+        </style>
+
+        <!-- Первый блок -->
+        <div class="input-group flex-md-row flex-column">
+            <span class="mb-2 input-group-text">OpenAI API KEY:</span>
+            <input type="text" class="ml-0 mb-2 w-100 w-md-80 form-control" id="gpt-token" value="{{ gpt_token }}">
+            <div class="mb-2 input-group-append">
+                <button class="input-group-text btn btn-light ml-0 " onclick="updateToken();">Обновить</button>
+            </div>
+        </div>
+
+        <!-- Второй блок  -->
+        <div class="mt-3 input-group">
+            <span class="input-group-text btn btn-light mb-2 " href="/api/v1/home/syncronize-amo">Синхронизировать воронки с AmoCRM</span>
+            <select id="mySelect" class="custom-select w-100 w-md3-80 ml-0 mb-2 ">
                 <option name="{{ selected_mode }}">{{ selected_mode }}</option>
                 <option name="{{ disabled_mode }}">{{ disabled_mode }}</option>
                 <option name="{{ disabled_mode2 }}">{{ disabled_mode2 }}</option>
             </select>
-            <button class="input-group-text input-group-button btn btn-light ml-1 " onclick="changeMode();">Обновить
-            </button>
+            <div class="input-group-append mb-2 ">
+                <button class="input-group-text btn btn-light ml-0 " onclick="changeMode();">Обновить</button>
+            </div>
         </div>
-    </div>
 
-    <div class="mt-3">
-        <div class="input-group-prepend">
-            <button style="height: 50%" class="input-group-text btn btn-light " href="/api/v1/home/syncronize-amo">
-                Распознавать голосовые сообщения
-            </button>
-            <div style="width: 100%; width: 100%;" class="form-group">
-                <select class="custom-select" required>
-                    <option value="0">Да</option>
-                    <option value="1">Нет</option>
-                </select>
+        <!-- Третий блок  -->
+        <div class="mt-3  input-group">
+            <div class=" mb-2 input-group-text " href="/api/v1/home/syncronize-amo">Распознавать
+                голосовые
+                сообщения
+            </div>
+            <select class="mb-2 custom-select ml-0 w-100 w-md2-80 " required>
+                <option value="0">Да</option>
+                <option value="1">Нет</option>
+            </select>
+            <div class=" mb-2 input-group-append">
+                <button class="input-group-text btn btn-light ml-0" onclick="changeMode();">Обновить</button>
+            </div>
+        </div>
+
+        <legend class="border-bottom mt-4"></legend>
+
+        <h4 class="mt-5 mb-3">Выберите воронку:</h4>
+        <div class="pl-3 pr-3">
+            <div class="row p-2 rounded-value" style="background-color: rgb(26, 24, 22);">
+                {% for pipeline in pipelines %}
+                    <a class="pipeline-item" href="#"
+                       data-pipeline="{{ pipeline.p_id }}"> {{ pipeline.name }}</a>
+
+                {% endfor %}
+            </div>
+        </div>
+        <h4 class="mt-5">На каких стадиях принимать сообщения:</h4>
+        <div class="pl-3 pr-3">
+            <div class="row rounded-value statuses-bar" style="background-color: rgb(26, 24, 22);">
+            </div>
+        </div>
+
+
+        <legend class="border-bottom mt-4"></legend>
+        <div class="row mt-3">
+            <div class="col">
+                <a class="change-work-mode" id="default-mode-settings" href="{% url 'prompt_mode_v1' %}">Настроить
+                    режим
+                    работы по вашему контексту</a>
             </div>
 
-            <button style="height: 50%" class="input-group-text input-group-button btn btn-light ml-1 "
-                    onclick="changeMode();">Обновить
-            </button>
+            <div class="col">
+                <a class="change-work-mode" id="database-mode-settings" href="{% url 'db_mode' %}">Настроить режим
+                    работы с вашей базой
+                    данных</a>
+            </div>
+
+            <div class="col">
+                <a class="change-work-mode" id="knowledge-mode-settings" href="{% url 'new_db_mode' %}">Настроить
+                    работы с вашей базой знаний</a>
+            </div>
+            <div class="col">
+                <a class="change-work-mode" id="database-and-knowledge-mode-settings" href="{% url 'new_db_mode' %}">Настроить
+                    режим работы с базой данных и знаний</a>
+            </div>
+
         </div>
-    </div>
-
-    <legend class="border-bottom mt-4"></legend>
-
-    <h4 class="mt-5 mb-3">Выберите воронку:</h4>
-    <div class="pl-3 pr-3">
-        <div class="row p-2 rounded-value" style="background-color: rgb(26, 24, 22);">
-            {% for pipeline in pipelines %}
-                <a class="pipeline-item" href="#"
-                   data-pipeline="{{ pipeline.p_id }}"> {{ pipeline.name }}</a>
-
-            {% endfor %}
-        </div>
-    </div>
-    <h4 class="mt-5">На каких стадиях принимать сообщения:</h4>
-    <div class="pl-3 pr-3">
-        <div class="row rounded-value statuses-bar" style="background-color: rgb(26, 24, 22);">
+        <div class="row mt-4">
 
         </div>
     </div>
-
-
-
-
-
-
-    <legend class="border-bottom mt-4"></legend>
-    <div class="row mt-3">
-        <div class="col">
-            <a class="change-work-mode" id="default-mode-settings" href="{% url 'prompt_mode_v1' %}">Настроить
-                режим
-                работы по вашему контексту</a>
-        </div>
-
-        <div class="col">
-            <a class="change-work-mode" id="database-mode-settings" href="{% url 'db_mode' %}">Настроить режим
-                работы с вашей базой
-                данных</a>
-        </div>
-
-        <div class="col">
-            <a class="change-work-mode" id="knowledge-mode-settings" href="{% url 'new_db_mode' %}">Настроить
-                работы с вашей базой знаний</a>
-        </div>
-        <div class="col">
-            <a class="change-work-mode" id="database-and-knowledge-mode-settings" href="{% url 'new_db_mode' %}">Настроить
-                режим работы с базой данных и знаний</a>
-        </div>
-
-    </div>
-    <div class="row mt-4">
-
-    </div>
-
     <br/>
     <br/>
     <br/>
@@ -225,3 +316,4 @@
         });
     </script>
 {% endblock content %}
+

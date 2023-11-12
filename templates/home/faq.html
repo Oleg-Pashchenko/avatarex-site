@@ -1,0 +1,170 @@
+{% extends "core/base.html" %}
+{% block title %}FAQ{% endblock %}
+{% block head %}
+    {{ block.super }}
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Oswald|PT+Sans" rel="stylesheet">
+
+
+{% endblock %}
+
+{% block content %}
+    <style>
+        .text-label2 {
+            font-size: 22px;
+            font-weight: 300;
+        }
+
+        .text-label3 {
+            font-size: 22px;
+            font-weight: 200;
+            background-color: white;
+            color: #202020;
+            border-radius: 15px;
+            margin-top: 0px;
+        }
+
+        li {
+            list-style-type: none; /* Убираем маркеры */
+        }
+
+        .label-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgb(114, 119, 240);
+            font-size: 28px;
+            color: white;
+            border-radius: 15px;
+            margin-bottom: 0px;
+        }
+
+        .label-content > div {
+            flex-grow: 1;
+        }
+    </style>
+    <div class="container mt-5">
+        <h1>Часто задаваемые вопросы (FAQ)</h1>
+
+
+        <!-- Добавьте другие вопросы и ответы аналогичным образом -->
+
+    </div>
+    <div class="container">
+        <div class="row w-100">
+            <ul class="text-label2 ml-0 w-100 ">
+                <li id="Introduction" class="">
+                    <label  onclick="toggleVisibility(this.nextElementSibling)"
+                           type="section" role="menuitem"
+                           class="fjUIJu2 label-hoover w-100">
+                        <div class="label-content pl-2">
+                            <div title="Введение">Вопрос первый</div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                 fill="currentColor" class="bi bi-chevron-right galochka"
+                                 viewBox="0 0 16 16">
+                                <path d="M6.293 4.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L9.586 8 6.293 4.707a1 1 0 010-1.414z"/>
+                            </svg>
+                        </div>
+                    </label>
+                    <p style="display: none;" class="ml-0 text-label3 pl-4">Ёмкий ответ</p>
+                </li>
+                <li id="Introduction" class="">
+                    <label onclick="toggleVisibility(this.nextElementSibling)"
+                           type="section" role="menuitem"
+                           class="fjUIJu2 label-hoover w-100">
+                        <div class="label-content pl-2">
+                            <div title="Введение">Вопрос второй</div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                 fill="currentColor" class="bi bi-chevron-right galochka"
+                                 viewBox="0 0 16 16">
+                                <path d="M6.293 4.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L9.586 8 6.293 4.707a1 1 0 010-1.414z"/>
+                            </svg>
+                        </div>
+                    </label>
+                    <p style="display: none;" class="ml-0 text-label3 pl-4">Ёмкий ответ</p>
+                </li>
+                <li id="Introduction" class="">
+                    <label onclick="toggleVisibility(this.nextElementSibling)"
+                           type="section" role="menuitem"
+                           class="fjUIJu2 label-hoover w-100">
+                        <div class="label-content pl-2 ">
+                            <div title="Введение">Вопрос третий</div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                 fill="currentColor" class="bi bi-chevron-right galochka"
+                                 viewBox="0 0 16 16">
+                                <path d="M6.293 4.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L9.586 8 6.293 4.707a1 1 0 010-1.414z"/>
+                            </svg>
+                        </div>
+                    </label>
+                    <p style="display: none;" class="ml-0 text-label3 pl-4">Ёмкий ответ</p>
+                </li>
+                <li id="Introduction" class="">
+                    <label onclick="toggleVisibility(this.nextElementSibling)"
+                           type="section" role="menuitem"
+                           class="fjUIJu2 label-hoover w-100">
+                        <div class="label-content pl-2">
+                            <div title="Введение">Вопрос четвертый</div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                 fill="currentColor" class="bi bi-chevron-right galochka"
+                                 viewBox="0 0 16 16">
+                                <path d="M6.293 4.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L9.586 8 6.293 4.707a1 1 0 010-1.414z"/>
+                            </svg>
+                        </div>
+                    </label>
+                    <p style="display: none;" class="ml-0 text-label3 pl-4">Ёмкий ответ</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <h2 class="mt-5">Задать вопрос</h2>
+    <form action="submit_question.php" method="POST">
+        <div class="form-group">
+            <label for="email">Ваш email:</label>
+            <input type="email" name="email" id="email" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="question">Ваш вопрос:</label>
+            <textarea name="question" id="question" class="form-control" rows="3" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Отправить вопрос</button>
+    </form>
+
+    <p class="mt-4">Если у вас возникли дополнительные вопросы, вы также можете написать нам в <a
+            href="https://t.me/your_telegram_channel">Telegram</a>.</p>
+    </div>
+
+    <!-- Подключение Bootstrap JS и jQuery (необходим для некоторых компонентов Bootstrap) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function toggleVisibility(element) {
+
+            if (element.style.display === 'none' || element.style.display === '') {
+                element.style.display = 'block';
+                toggleGalochka(element.previousElementSibling, true);
+            } else {
+                element.style.display = 'none';
+                toggleGalochka(element.previousElementSibling, false);
+            }
+        }
+
+        function toggleGalochka(label, rotate) {
+
+            if (rotate) {
+                const galochka = label.querySelector('.galochka');
+                galochka.style.transform = 'rotate(90deg)';
+            } else {
+                const galochka = label.querySelector('.galochka');
+                galochka.style.transform = 'rotate(0deg)';
+            }
+        }
+    </script>
+
+{% endblock %}
