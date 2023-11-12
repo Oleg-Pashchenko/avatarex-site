@@ -71,7 +71,7 @@
                             </svg>
                         </div>
                     </label>
-                    <p style="display: none;" class="ml-0 text-label3 pl-4">Ёмкий ответ</p>
+                    <p style="display: none; padding-top: 25px; padding-bottom: 25px" class="ml-0 text-label3 pl-4">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
                 </li>
                 <li id="Introduction" class="">
                     <label onclick="toggleVisibility(this.nextElementSibling)"
@@ -145,13 +145,16 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         function toggleVisibility(element) {
+            var label = element.previousElementSibling;
 
             if (element.style.display === 'none' || element.style.display === '') {
                 element.style.display = 'block';
                 toggleGalochka(element.previousElementSibling, true);
+                label.style.marginBottom = '0'; // Убираем margin-bottom
             } else {
                 element.style.display = 'none';
                 toggleGalochka(element.previousElementSibling, false);
+                label.style.marginBottom = '8px'; // Добавляем margin-bottom
             }
         }
 
