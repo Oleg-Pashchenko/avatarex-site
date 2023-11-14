@@ -9,7 +9,6 @@ import gdown
 @login_required
 def update_mode(request):
     data = json.loads(request.body.decode('utf-8'))
-    print(data)
     qualification_fields = data['qualification_fields']
     qualification_finished = data['qualificationFinished']
     print(qualification_finished, 'qf')
