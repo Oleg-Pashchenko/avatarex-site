@@ -1,4 +1,6 @@
 
+
+
 .gradient-text_cyan {
     font-size: 6vw;
     background: linear-gradient(90deg, white, cyan);
@@ -17,6 +19,7 @@
     margin: 5px;
     width: 150px;
 }
+
 .button:hover {
     text-decoration: none;
     color: white;

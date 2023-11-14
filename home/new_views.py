@@ -7,12 +7,17 @@ from home import misc
 from home.forms import GptDefaultMode
 from home.models import Pipelines
 
+
 def docs(request):
     return render(request, 'admin/docs/docs_main.html')
 
 
 def faq(request):
     return render(request, 'home/faq.html')
+
+
+def profile(request):
+    return render(request, 'home/profile.html')
 
 
 @login_required
