@@ -1,0 +1,600 @@
+<!doctype  html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Avatarex{% endblock %}</title>
+    <!-- Include Bootstrap CSS here -->
+    {% load static %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/admin.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/docs.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+    <!-- and it's easy to individually load additional languages -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
+
+    <script>hljs.highlightAll();</script>
+
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+        .col-md-3 {
+            height: 100vh;
+        }
+
+        .silkainter {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        .silkainter:hover {
+            text-decoration: none;
+            color: #004a9a;
+        }
+
+        .forsilk {
+            margin: 0px;
+            padding: 0px 15px;
+            border-left: 4px solid rgb(221, 221, 221);
+            color: rgb(255, 255, 255);
+
+        }
+
+        .divscroll::-webkit-scrollbar {
+            width: 10px;
+
+        }
+
+        .divscroll::-webkit-scrollbar-track {
+            background: rgb(10, 40, 50);
+
+        }
+
+        .divscroll::-webkit-scrollbar-thumb {
+            background: rgb(255, 255, 255);
+            border-radius: 6px;
+
+        }
+
+        pre {
+
+            overflow: auto;
+
+            width: calc(100vw / 2);
+
+        }
+
+        code {
+
+        }
+    </style>
+</head>
+<body style="color: #DEDEDE; min-width: 100vw;">
+<div class=" " style="position: sticky;top: 0; z-index: 20;min-width: 100vw;">
+    <nav style="border-bottom: 1px solid rgba(255, 255, 255, 0.50); min-width: 100vw;"
+         class=" navbar navbar-expand-lg navbar-light header-container navbar-dark  text-white rounded p-2 row m-0 sti">
+        <a class="navbar-brand ml-5" href="{% url 'enter_secret_code_page' %}">Avatarex Admin</a>
+        <a data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+           aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </a>
+        <div class="navbar-collapse collapse ml-2 " id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active ">
+                    <a class="nav-link btn btn-outline-success  my-2 my-sm-0 " href="{% url 'main' %}">На сайт</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'subscriptions' %}">Подписки</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="{% url 'users' %}">Пользователи</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'translations' %}">Переводы</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'docs' %}">Документация</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <nav style="border-bottom: 1px solid rgba(255, 255, 255, 0.50); min-width: 100vw;"
+         class=" m-0 navbar navbar-expand navbar-light header-container navbar-dark  text-white rounded p-3 row ">
+        <div class="navbar-collapse collapse ml-0" id="navbarNav">
+            <ul class="ml-0 navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'subscriptions' %}">Общее описание</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'users' %}">Что-то полезное</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'translations' %}">Что-то полезнее</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'docs' %}">Самое полезное</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<div>
+    <div class="redoc-wrap p-0 m-0 " style="max-width: 100vw;position: sticky;top: 154px; z-index: 20;">
+        <div class="col-12 d-md-none p-0 " style="height: 25px;max-width: 100vw;">
+            <!-- Скрыть боковую панель для мобильных экранов -->
+            <div class="mobile-toggle-button w-100 p-0 " style="height: 25px;max-width: 100vw;">
+                <button id="toggleButton" class="btn btn-primary w-100 toggle-button p-0" style="max-width: 100vw;"
+                        onclick="toggleSidebar()">
+                    Скрыть панель
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="redoc-wrap m-0 p-0  " style="max-width: 100vw;">
+        <div class="col-md-3 m-0 p-0 " style="max-width: 312px;">
+            <div class="row" style="max-width: 312px;">
+                <div class="col-md-3 sidebar" style="max-width: 312px;">
+                    <!-- Ширина боковой панели для больших экранов -->
+                    <div class="searchdocs divscroll mt-0 pt-3"
+                         style="height: calc(100vh - 130px); position: fixed; overflow-x: hidden ; overflow-y: scroll; ">
+                        <div class="searchdocs mt-0 pt-3 ">
+                            <div class=" ml-3 h-10">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white"
+                                     class=" Xasdafv pb-0 pr-0 pl-0 pt-0 bi bi-search" viewBox="0 0 15 15">
+                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
+                                </svg>
+                                <input style="width: 90%;" aria-label="Search" type="text"
+                                       class="sc2-hJahJl2Y search-input" value="">
+                                <button class="btn p-0 Xasdafvq " id="clear-search" type="button"
+                                        onclick="document.querySelector('.search-input').value = '';">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white"
+                                         class="bi bi-x-lg" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd"
+                                              d="M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z"/>
+                                        <path fill-rule="evenodd"
+                                              d="M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="searchdocs mt-0  pt-3 " style=" top: 87px; ">
+                            <div class="list-text ml-0 scrollbar-contaier undefined ps ps--active-y">
+                                <ul>
+                                    <li class="w-100 mb-3">
+                                        <label class="w-100">
+                                            <div style="font-weight: 600 " class="pl-3 mb-2 mt-2 text-label  w-100"
+                                                 title="Общее описание">Общее описание
+                                            </div>
+                                        </label>
+                                        <ul class="text-label2 ml-0 ">
+                                            <li id="Introduction" class="">
+                                                <label onclick="toggleVisibility(this.nextElementSibling)"
+                                                       type="section" role="menuitem"
+                                                       class="fjUIJu2 label-hoover w-100">
+                                                    <div class="label-content">
+                                                        <div title="Введение">Введение</div>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                             fill="currentColor" class="bi bi-chevron-right galochka"
+                                                             viewBox="0 0 16 16">
+                                                            <path d="M6.293 4.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L9.586 8 6.293 4.707a1 1 0 010-1.414z"/>
+                                                        </svg>
+                                                    </div>
+                                                </label>
+                                                <ul style="display: none;" class="ml-0 text-label3">
+                                                    <li data-nav="true" class=""><label type="section" role="menuitem"
+                                                                                        class="fjUIJu  label-hoover w-100">
+                                                        <div class="anchor-clickable" data-href="#ipsum1"><a
+                                                                href="#ipsum1" class="silka">Lorem Ipsum1</a></div>
+                                                    </label>
+                                                    </li>
+                                                    <li data-item-id="" data-nav="true" class=""><label type="section"
+                                                                                                        role="menuitem"
+                                                                                                        class="fjUIJu label-hoover w-100">
+                                                        <div class="anchor-clickable" data-href="#ipsum2"><a
+                                                                href="#ipsum2" class="silka">Lorem Ipsum2</a></div>
+                                                    </label>
+                                                    </li>
+                                                    <li data-item-id="" data-nav="true" class=""><label type="section"
+                                                                                                        role="menuitem"
+                                                                                                        class="fjUIJu label-hoover w-100">
+                                                        <div class="anchor-clickable" data-href="#ipsum3"><a
+                                                                href="#ipsum2" class="silka">Lorem Ipsum2</a></div>
+                                                    </label>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li id="Introduction" class="">
+                                                <label onclick="toggleVisibility(this.nextElementSibling)"
+                                                       type="section"
+                                                       role="menuitem"
+                                                       class="fjUIJu2 label-hoover w-100">
+                                                    <div class="label-content">
+                                                        <div title="Введение">Первая глава</div>
+                                                    </div>
+                                                </label>
+                                            </li>
+                                            <li id="Introduction" class="">
+                                                <label onclick="toggleVisibility(this.nextElementSibling)"
+                                                       type="section"
+                                                       role="menuitem"
+                                                       class="fjUIJu2 label-hoover w-100">
+                                                    <div class="label-content">
+                                                        <div title="Введение">Вторая Глава</div>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                             height="16" fill="currentColor"
+                                                             class="bi bi-chevron-right galochka"
+                                                             viewBox="0 0 16 16">
+                                                            <path d="M6.293 4.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L9.586 8 6.293 4.707a1 1 0 010-1.414z"/>
+                                                        </svg>
+                                                    </div>
+                                                </label>
+                                                <ul style="display: none;" class="ml-0 text-label3">
+                                                    <li data-item-id="" data-nav="true"
+                                                        class=""><label
+                                                            type="section" role="menuitem"
+                                                            class="fjUIJu label-hoover w-100">
+                                                        <div class="anchor-clickable" data-href="#ipsum2"><a
+                                                                href="#ipsum2" class="silka">Lorem Ipsum2</a></div>
+                                                    </label>
+                                                    </li>
+                                                    <li data-item-id="" data-nav="true"
+                                                        class=""><label type="section" role="menuitem"
+                                                                        class="fjUIJu label-hoover w-100">
+                                                        <div class="anchor-clickable" data-href="#ipsum2"><a
+                                                                href="#ipsum2" class="silka">Lorem Ipsum2</a></div>
+                                                    </label>
+                                                    </li>
+                                                    <li data-item-id="" data-nav="true"
+                                                        class=""><label type="section" role="menuitem"
+                                                                        class="fjUIJu label-hoover w-100">
+                                                        <div class="anchor-clickable" data-href="#ipsum2"><a
+                                                                href="#ipsum2" class="silka">Lorem Ipsum2</a></div>
+                                                    </label>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+
+                                    </li>
+                                    <li class="w-100 mb-3">
+                                        <label class="w-100">
+                                            <div style="font-weight: 600 " class="pl-3 mb-2 mt-4 text-label  w-100"
+                                                 title="Общее описание">Методы
+                                            </div>
+                                        </label>
+                                        <ul class="text-label2 ml-0 ">
+                                            <li id="Introduction" class="">
+                                                <label onclick="toggleVisibility(this.nextElementSibling)"
+                                                       type="section" role="menuitem"
+                                                       class="fjUIJu2 label-hoover w-100">
+                                                    <div class="label-content">
+                                                        <div title="Введение">Метод первый</div>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                             fill="currentColor" class="bi bi-chevron-right galochka"
+                                                             viewBox="0 0 16 16">
+                                                            <path d="M6.293 4.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L9.586 8 6.293 4.707a1 1 0 010-1.414z"/>
+                                                        </svg>
+                                                    </div>
+                                                </label>
+                                                <ul style="display: none;" class="ml-0 text-label3">
+                                                    <li data-nav="true" class=""><label type="section" role="menuitem"
+                                                                                        class="fjUIJu  label-hoover w-100">
+                                                        <div class="anchor-clickable" data-href="#ipsum2"><a
+                                                                href="#ipsum2" class="silka">Lorem Ipsum1</a></div>
+                                                    </label>
+                                                    </li>
+                                                    <li data-item-id="" data-nav="true" class=""><label type="section"
+                                                                                                        role="menuitem"
+                                                                                                        class="fjUIJu label-hoover w-100">
+                                                        <div class="anchor-clickable" data-href="#ipsum2"><a
+                                                                href="#ipsum2" class="silka">Lorem Ipsum2</a></div>
+                                                    </label>
+                                                    </li>
+                                                    <li data-item-id="" data-nav="true" class=""><label type="section"
+                                                                                                        role="menuitem"
+                                                                                                        class="fjUIJu label-hoover w-100">
+                                                        <div class="anchor-clickable" data-href="#ipsum2"><a
+                                                                href="#ipsum2" class="silka">Lorem Ipsum3</a></div>
+                                                    </label>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li id="Introduction" class="">
+                                                <label onclick="toggleVisibility(this.nextElementSibling)"
+                                                       type="section"
+                                                       role="menuitem"
+                                                       class="fjUIJu2 label-hoover w-100">
+                                                    <div class="label-content">
+                                                        <div title="Введение">Метод второй</div>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                             height="16" fill="currentColor"
+                                                             class="bi bi-chevron-right galochka"
+                                                             viewBox="0 0 16 16">
+                                                            <path d="M6.293 4.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L9.586 8 6.293 4.707a1 1 0 010-1.414z"/>
+                                                        </svg>
+                                                    </div>
+                                                </label>
+                                                <ul style="display: none;" class="ml-0 text-label3">
+                                                    <li data-item-id="" data-nav="true"
+                                                        class=""><label
+                                                            type="section" role="menuitem"
+                                                            class="fjUIJu label-hoover w-100">
+                                                        <div class="anchor-clickable" data-href="#ipsum2"><a
+                                                                href="#ipsum2" class="silka">Lorem Ipsum4</a></div>
+                                                    </label>
+                                                    </li>
+                                                    <li data-item-id="" data-nav="true"
+                                                        class=""><label
+                                                            type="section" role="menuitem"
+                                                            class="fjUIJu label-hoover w-100">
+                                                        <div class="anchor-clickable" data-href="#ipsum2"><a
+                                                                href="#ipsum2" class="silka">Lorem Ipsum5</a></div>
+                                                    </label>
+                                                    </li>
+                                                    <li data-item-id="" data-nav="true"
+                                                        class=""><label
+                                                            type="section" role="menuitem"
+                                                            class="fjUIJu label-hoover w-100">
+                                                        <div class="anchor-clickable" data-href="#ipsum2"><a
+                                                                href="#ipsum2" class="silka">Lorem Ipsum6</a></div>
+                                                    </label>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li id="Introduction" class="">
+                                                <label onclick="toggleVisibility(this.nextElementSibling)"
+                                                       type="section"
+                                                       role="menuitem"
+                                                       class="fjUIJu2 label-hoover w-100">
+                                                    <div class="label-content">
+                                                        <div title="Введение">Метод третий</div>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                             height="16" fill="currentColor"
+                                                             class="bi bi-chevron-right galochka"
+                                                             viewBox="0 0 16 16">
+                                                            <path d="M6.293 4.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L9.586 8 6.293 4.707a1 1 0 010-1.414z"/>
+                                                        </svg>
+                                                    </div>
+                                                </label>
+                                                <ul style="display: none;" class="ml-0 text-label3">
+                                                    <li data-item-id="" data-nav="true"
+                                                        class=""><label
+                                                            type="section" role="menuitem"
+                                                            class="fjUIJu label-hoover w-100">
+                                                        <div class="anchor-clickable" data-href="#ipsum2"><a
+                                                                href="#ipsum2" class="silka">Lorem Ipsum7</a></div>
+                                                    </label>
+                                                    </li>
+                                                    <li data-item-id="" data-nav="true"
+                                                        class=""><label
+                                                            type="section" role="menuitem"
+                                                            class="fjUIJu label-hoover w-100">
+                                                        <div class="anchor-clickable" data-href="#ipsum2"><a
+                                                                href="#ipsum2" class="silka">Lorem Ipsum8</a></div>
+                                                    </label>
+                                                    </li>
+                                                    <li data-item-id="" data-nav="true"
+                                                        class=""><label
+                                                            type="section" role="menuitem"
+                                                            class="fjUIJu label-hoover w-100">
+                                                        <div class="anchor-clickable" data-href="#ipsum2"><a
+                                                                href="#ipsum2" class="silka">Lorem Ipsum9</a></div>
+                                                    </label>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+
+                                    </li>
+                                    <li class="w-100 mb-3">
+                                        <label class="w-100">
+                                            <div style="font-weight: 600 " class="pl-3 mb-2 mt-4 text-label  w-100"
+                                                 title="Общее описание">Общее описание
+                                            </div>
+                                        </label>
+                                        <ul class="text-label2 ml-0 ">
+                                            <li id="Introduction" class="">
+                                                <label onclick="toggleVisibility(this.nextElementSibling)"
+                                                       type="section" role="menuitem"
+                                                       class="fjUIJu2 label-hoover w-100">
+                                                    <div class="label-content">
+                                                        <div title="Введение">Введение</div>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                             fill="currentColor" class="bi bi-chevron-right galochka"
+                                                             viewBox="0 0 16 16">
+                                                            <path d="M6.293 4.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L9.586 8 6.293 4.707a1 1 0 010-1.414z"/>
+                                                        </svg>
+                                                    </div>
+                                                </label>
+                                                <ul style="display: none;" class="ml-0 text-label3">
+                                                    <li data-nav="true" class=""><label type="section" role="menuitem"
+                                                                                        class="fjUIJu  label-hoover w-100">
+                                                        <div class="anchor-clickable" data-href="#ipsum1"><a
+                                                                href="#ipsum1" class="silka">Lorem Ipsum1</a></div>
+                                                    </label>
+                                                    </li>
+                                                    <li data-item-id="" data-nav="true" class=""><label type="section"
+                                                                                                        role="menuitem"
+                                                                                                        class="fjUIJu label-hoover w-100">
+                                                        <div class="anchor-clickable" data-href="#ipsum2"><a
+                                                                href="#ipsum2" class="silka">Lorem Ipsum2</a></div>
+                                                    </label>
+                                                    </li>
+                                                    <li data-item-id="" data-nav="true" class=""><label type="section"
+                                                                                                        role="menuitem"
+                                                                                                        class="fjUIJu label-hoover w-100">
+                                                        <div class="anchor-clickable" data-href="#ipsum3"><a
+                                                                href="#ipsum2" class="silka">Lorem Ipsum2</a></div>
+                                                    </label>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li id="Introduction" class="">
+                                                <label onclick="toggleVisibility(this.nextElementSibling)"
+                                                       type="section"
+                                                       role="menuitem"
+                                                       class="fjUIJu2 label-hoover w-100">
+                                                    <div class="label-content">
+                                                        <div title="Введение">Первая глава</div>
+                                                    </div>
+                                                </label>
+                                            </li>
+                                            <li id="Introduction" class="">
+                                                <label onclick="toggleVisibility(this.nextElementSibling)"
+                                                       type="section"
+                                                       role="menuitem"
+                                                       class="fjUIJu2 label-hoover w-100">
+                                                    <div class="label-content">
+                                                        <div title="Введение">Вторая Глава</div>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                             height="16" fill="currentColor"
+                                                             class="bi bi-chevron-right galochka"
+                                                             viewBox="0 0 16 16">
+                                                            <path d="M6.293 4.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L9.586 8 6.293 4.707a1 1 0 010-1.414z"/>
+                                                        </svg>
+                                                    </div>
+                                                </label>
+                                                <ul style="display: none;" class="ml-0 text-label3">
+                                                    <li data-item-id="" data-nav="true"
+                                                        class=""><label
+                                                            type="section" role="menuitem"
+                                                            class="fjUIJu label-hoover w-100">
+                                                        <div class="anchor-clickable" data-href="#ipsum2"><a
+                                                                href="#ipsum2" class="silka">Lorem Ipsum2</a></div>
+                                                    </label>
+                                                    </li>
+                                                    <li data-item-id="" data-nav="true"
+                                                        class=""><label type="section" role="menuitem"
+                                                                        class="fjUIJu label-hoover w-100">
+                                                        <div class="anchor-clickable" data-href="#ipsum2"><a
+                                                                href="#ipsum2" class="silka">Lorem Ipsum2</a></div>
+                                                    </label>
+                                                    </li>
+                                                    <li data-item-id="" data-nav="true"
+                                                        class=""><label type="section" role="menuitem"
+                                                                        class="fjUIJu label-hoover w-100">
+                                                        <div class="anchor-clickable" data-href="#ipsum2"><a
+                                                                href="#ipsum2" class="silka">Lorem Ipsum2</a></div>
+                                                    </label>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="content" style="width: 100%;font-weight: 600; z-index: -1 ">
+            <div class="contentinter"
+                 style="padding-top: 40px;padding-bottom: 20px;font-family: 'Montserrat', sans-serif;">
+                <div id="ipsum1" class="intertext">
+                    <h1 style="font-weight: 600;" class="">Документация Avatarex
+                        <span>(1.0)</span></h1>
+                    <div class="" data-role="redoc-description"><p>Его популяризации в новое время послужили публикация
+                        листов Letraset с образцами Lorem Ipsum в 60-х годах</p>
+                        <blockquote class="forsilk">
+                            <p><a class="silkainter" href="https://seller-edu.ozon.ru">Что такое Lorem Ipsum?</a></p>
+                        </blockquote>
+                        <blockquote class="forsilk">
+                            <p><a class="silkainter" href="https://dev.ozon.ru/">Откуда он появился?</a></p>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+            <div class="contentinter"
+                 style="padding-top: 40px;padding-bottom: 20px;font-family: 'Montserrat', sans-serif;">
+                <div id="ipsum1" class="intertext">
+                    <h1 style="font-weight: 600;" id="ipsum2" class="">Введение</h1>
+                </div>
+            </div>
+            <div class="contentinter">
+                <div id="" class="intertext" style="width: 100%;">
+                    <pre class="hljs"
+                         style="color: rgb(169, 183, 198); background: rgb(40, 43, 46); display: block; overflow-x: auto; padding: 0.5em;"><span
+                            class="hljs-keyword" style="color: rgb(204, 120, 50);">GET</span> <span class="hljs-string"
+                                                                                                    style="color: rgb(106, 135, 89);">/</span> HTTP/1.1
+                        <span class="hljs-attribute" style="color: rgb(106, 135, 89);">Host</span>: api-seller.ozon.ru
+                        <span class="hljs-attribute" style="color: rgb(106, 135, 89);">Client-Id</span>: &lt;Client-Id&gt;
+                        <span class="hljs-attribute" style="color: rgb(106, 135, 89);">Api-Key</span>: &lt;Api-Key&gt;
+                        <span class="hljs-attribute" style="color: rgb(106, 135, 89);">Content-Type</span>: application/json</pre>
+                    <p>Для проверки корректности формата запроса используйте вкладку <strong>Консоль</strong> над
+                        описанием метода или
+                        <a href="https://www.postman.com">Postman</a>.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+
+    function toggleVisibility(element) {
+
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+            toggleGalochka(element.previousElementSibling, true);
+        } else {
+            element.style.display = 'none';
+            toggleGalochka(element.previousElementSibling, false);
+        }
+    }
+
+    function toggleGalochka(label, rotate) {
+
+        if (rotate) {
+            const galochka = label.querySelector('.galochka');
+            galochka.style.transform = 'rotate(90deg)';
+        } else {
+            const galochka = label.querySelector('.galochka');
+            galochka.style.transform = 'rotate(0deg)';
+        }
+    }
+
+    function toggleSidebar() {
+        const sidebar = document.querySelector('.col-md-3'); // Замените на класс вашей боковой панели
+        const toggleButton = document.querySelector('#toggleButton');
+
+        if (sidebar.classList.contains('d-none')) {
+            sidebar.classList.remove('d-none');
+            toggleButton.textContent = 'Скрыть панель';
+        } else {
+            sidebar.classList.add('d-none');
+            toggleButton.textContent = 'Показать панель';
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var anchorClickableDivs = document.querySelectorAll('.anchor-clickable');
+
+        anchorClickableDivs.forEach(function (div) {
+            div.addEventListener('click', function () {
+                var href = div.getAttribute('data-href');
+                if (href) {
+                    window.location.href = href;
+                }
+            });
+        });
+    });
+
+</script>
+
+</body>
+</html>

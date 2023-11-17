@@ -1,10 +1,135 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "core/base.html" %}
+{% block title %}Профиль пользователя{% endblock %}
+{% block head %}
+    <style>
+        input[type="text"] {
+            border: none;
+            background-color: transparent;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+        }
+    </style>
+    {{ block.super }}
+{% endblock %}
+{% block content %}
 
-</body>
-</html>
+    <h1>Профиль пользователя</h1>
+    {% if error_alert %}
+        <div class="alert alert-danger" role="alert">
+            {{ error_alert }}
+        </div>
+    {% endif %}
+
+    {% if success_alert %}
+        <div class="alert alert-success" role="alert">
+            {{ success_alert }}
+        </div>
+    {% endif %}
+    <div class="row">
+        <div class="col-md-4">
+            <!-- Выводим фотографию пользователя -->
+            <img src="https://static.vecteezy.com/system/resources/previews/003/337/584/original/default-avatar-photo-placeholder-profile-icon-vector.jpg"
+                 alt="{{ user.username }}" class="img-fluid">
+        </div>
+        <div class="col-md-8">
+            <!-- Выводим информацию о пользователе -->
+            <p style="font-size: 24px"><strong>Login:</strong> {{ user.username }}</p>
+            <p style="font-size: 24px"><strong>Email:</strong> {{ user.email }}</p>
+            <p style="font-size: 24px"><strong>Имя:</strong> {{ user.first_name }}</p>
+            <p style="font-size: 24px"><strong>Фамилия:</strong> {{ user.last_name }}</p>
+            <button type="button" class="btn btn-outline-danger"
+                    onclick="">Выйти
+            </button>
+        </div>
+        <h3 class="mt-5">Редактировать подключение к AmoCRM</h3>
+        <div class="container  mt-4">
+            <div class=" col mb-0" id="loaded-elements">
+                <div class="container rule row mb-2 d-flex align-items-center justify-content-center"
+                     style="padding: 0 0 0 20px">
+                    <div class=" row-3 d-flex align-items-center mr-3">
+                        <p style="font-size: 18px" class="m-0">Логин</p>
+                    </div>
+                    <div class="row-3  d-flex align-items-center mr-3">
+                        <input class="form-control  w-100 pr-0 " name="field-value" value="{{ v }}">
+                    </div>
+                    <div class="row-3 d-flex align-items-center mr-3">
+                        <p style="font-size: 18px" class="m-0">Пароль</p>
+                    </div>
+                    <div class="row-3  d-flex align-items-center mr-3 ">
+
+                        <input class="form-control  w-100 pr-0 " name="field-value" value="{{ m }}">
+                    </div>
+                    <div class="row-3 d-flex align-items-center mr-3" style="padding: 0px 0px">
+                        <button type="button" class="btn btn-outline-success"
+
+                                onclick="">Сохранить
+                        </button>
+                    </div>
+                    <div class="row-3 d-flex align-items-center" style="padding: 0px 0px">
+                        <button type="button" class="btn btn-outline-danger"
+                                onclick="deleteLoadedQualificationField(this.parentNode);">Удалить
+                        </button>
+                    </div>
+                    <div class="row-3 d-flex align-items-center" style="padding: 0px 0px">
+
+                    </div>
+                </div>
+                <div id="added-elements"></div>
+                <button class="btn btn-success mr-0 " type="button" id="plus_field"
+                        onclick="addQualificationField();">Добавить аккаунт
+                </button>
+            </div>
+
+        </div>
+    </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function addQualificationField() {
+            var container = document.getElementById("added-elements");
+
+            var newInputField = document.createElement("div");
+            newInputField.className = "";
+            newInputField.innerHTML = `<div class="container rule row mb-2 d-flex align-items-center justify-content-center" style="padding: 0px 0px 0px 20px">
+                    <div class=" row-3 d-flex align-items-center mr-3">
+                        <p style="font-size: 18px" class="m-0">Логин</p>
+                    </div>
+                    <div class="row-3  d-flex align-items-center mr-3">
+                        <input class="form-control  w-100 pr-0 " name="field-value" value="{{ v }}">
+                    </div>
+                    <div class="row-3 d-flex align-items-center mr-3">
+                        <p style="font-size: 18px" class="m-0">Пароль</p>
+                    </div>
+                    <div class="row-3  d-flex align-items-center mr-3 ">
+
+                        <input class="form-control  w-100 pr-0 " name="field-value" value="{{ m }}">
+                    </div>
+                    <div class="row-3 d-flex align-items-center mr-3" style="padding: 0px 0px">
+                        <button type="button" class="btn btn-outline-success"
+                                onclick="">Сохранить
+                        </button>
+                    </div>
+                    <div class="row-3 d-flex align-items-center" style="padding: 0px 0px">
+                        <button type="button" class="btn btn-outline-danger"
+                                onclick="deleteLoadedQualificationField(this.parentNode);">Удалить
+                        </button>
+                    </div>
+                </div>
+
+            `;
+            container.appendChild(newInputField);
+        }
+    </script>
+    <script>
+        function deleteLoadedQualificationField(button) {
+            var rule = button.closest('.rule'); // Находим ближайший родительский элемент с классом .rule
+            if (rule) {
+                rule.remove(); // Удаляем найденный элемент
+            }
+        }
+    </script>
+
+{% endblock %}

@@ -13,25 +13,20 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/main_css.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/qualification.css' %}">
 
+    <style>body {
+        font-family: 'Roboto', sans-serif;, system-ui, sans-serif:;
+        font-size: 16px;
+        background-color: #212121;
+        color: #ddd;
+    }
+    </style>
+
 </head>
 <body>
 <div class="container">
-    <!--<nav class="navbar navbar-expand-lg navbar-light header-container navbar-dark  text-white rounded p-2 row ">
-        <a class=" navbar-brand nav-item nav-link col-2" href="{% url 'main' %}">Avatarex</a>
-
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-                <a class="nav-item nav-link col-2" href="{% url 'home' %}">Главная</a>
-                <a class="nav-item nav-link col-2" href="{% url 'payment' %}">Оплата</a>
-                <a class="nav-item nav-link col-10 mr-5" href="{% url 'stats' %}">Статистика</a>
-                <a class="nav-item nav-link col-2 ml-5" href="{% url 'profile' %}">Профиль</a>
-                <a class="nav-item nav-link col-2" href="{% url 'help' %}">Помощь</a>
-            </div>
-        </div>
-    </nav> -->
     <nav class="navbar navbar-expand-lg navbar-light header-container navbar-dark  text-white rounded p-2 row">
         <a class=" navbar-brand ml-2" href="{% url 'main' %}">Avatarex</a>
-        <a  data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+        <a data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
            aria-expanded="false" aria-label="Toggle navigation">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
                     aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">

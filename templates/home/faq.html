@@ -1,0 +1,171 @@
+{% extends "core/base.html" %}
+{% block title %}FAQ{% endblock %}
+{% block head %}
+    {{ block.super }}
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Oswald|PT+Sans" rel="stylesheet">
+
+
+{% endblock %}
+
+{% block content %}
+    <style>
+        .text-label2 {
+            font-size: 22px;
+            font-weight: 350;
+        }
+
+        .text-label3 {
+            font-size: 22px;
+            font-weight: 200;
+            background-color: white;
+            color: #202020;
+            margin-top: 0px;
+        }
+
+        li {
+            list-style-type: none; /* Убираем маркеры */
+        }
+
+        .label-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgb(114, 119, 240);
+            font-size: 28px;
+            color: white;
+            margin-bottom: 0px;
+        }
+
+        .label-content > div {
+            flex-grow: 1;
+        }
+    </style>
+    <div class="container mt-5">
+        <h1>Часто задаваемые вопросы (FAQ)</h1>
+
+
+        <!-- Добавьте другие вопросы и ответы аналогичным образом -->
+
+    </div>
+    <div class="container">
+        <div class="row w-100">
+            <ul class="text-label2 ml-0 w-100 ">
+                <li id="Introduction" class="" style="display: flex;flex-direction: column;align-items: center;justify-content: center;">
+                    <label  onclick="toggleVisibility(this.nextElementSibling)"
+                           type="section" role="menuitem"
+                           class="fjUIJu2 label-hoover w-100">
+                        <div class="label-content pl-2">
+                            <div title="Введение">Вопрос первый</div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                 fill="currentColor" class="bi bi-chevron-right galochka"
+                                 viewBox="0 0 16 16">
+                                <path d="M6.293 4.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L9.586 8 6.293 4.707a1 1 0 010-1.414z"/>
+                            </svg>
+                        </div>
+                    </label>
+                    <p style="display: none; padding-top: 25px; padding-bottom: 25px; padding-right: 15px; padding-left: 15px; width: 100%;margin-top: auto; margin-bottom: 25px;box-shadow: inset 0 10px 10px rgba(0, 0, 0, 0.55);" class="ml-0 text-label3 pl-4">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                </li>
+                <li id="Introduction" class="" style="display: flex;flex-direction: column;align-items: center;justify-content: center;">
+                    <label onclick="toggleVisibility(this.nextElementSibling)"
+                           type="section" role="menuitem"
+                           class="fjUIJu2 label-hoover w-100">
+                        <div class="label-content pl-2">
+                            <div title="Введение">Вопрос второй</div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                 fill="currentColor" class="bi bi-chevron-right galochka"
+                                 viewBox="0 0 16 16">
+                                <path d="M6.293 4.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L9.586 8 6.293 4.707a1 1 0 010-1.414z"/>
+                            </svg>
+                        </div>
+                    </label>
+                    <p style="display: none; padding-top: 25px; padding-bottom: 25px; padding-right: 15px; padding-left: 15px; width: 100%;margin-top: auto; margin-bottom: 25px;box-shadow: inset 0 10px 10px rgba(0, 0, 0, 0.55);" class="ml-0 text-label3 pl-4" class="ml-0 text-label3 pl-4">Ёмкий ответ</p>
+                </li>
+                <li id="Introduction" class="" style="display: flex;flex-direction: column;align-items: center;justify-content: center;">
+                    <label onclick="toggleVisibility(this.nextElementSibling)"
+                           type="section" role="menuitem"
+                           class="fjUIJu2 label-hoover w-100">
+                        <div class="label-content pl-2 ">
+                            <div title="Введение">Вопрос третий</div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                 fill="currentColor" class="bi bi-chevron-right galochka"
+                                 viewBox="0 0 16 16">
+                                <path d="M6.293 4.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L9.586 8 6.293 4.707a1 1 0 010-1.414z"/>
+                            </svg>
+                        </div>
+                    </label>
+                    <p style="display: none; padding-top: 25px; padding-bottom: 25px; padding-right: 15px; padding-left: 15px; width: 100%;margin-top: auto; margin-bottom: 25px;box-shadow: inset 0 10px 10px rgba(0, 0, 0, 0.55);" class="ml-0 text-label3 pl-4" class="ml-0 text-label3 pl-4">Ёмкий ответ</p>
+                </li>
+                <li id="Introduction" class="" style="display: flex;flex-direction: column;align-items: center;justify-content: center;">
+                    <label onclick="toggleVisibility(this.nextElementSibling)"
+                           type="section" role="menuitem"
+                           class="fjUIJu2 label-hoover w-100">
+                        <div class="label-content pl-2">
+                            <div title="Введение">Вопрос четвертый</div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                 fill="currentColor" class="bi bi-chevron-right galochka"
+                                 viewBox="0 0 16 16">
+                                <path d="M6.293 4.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L9.586 8 6.293 4.707a1 1 0 010-1.414z"/>
+                            </svg>
+                        </div>
+                    </label>
+                    <p style="display: none; padding-top: 25px; padding-bottom: 25px; padding-right: 15px; padding-left: 15px; width: 100%;margin-top: auto; margin-bottom: 25px;box-shadow: inset 0 10px 10px rgba(0, 0, 0, 0.55);" class="ml-0 text-label3 pl-4" class="ml-0 text-label3 pl-4">Ёмкий ответ</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <h2 class="mt-5">Задать вопрос</h2>
+    <form action="submit_question.php" method="POST">
+        <div class="form-group">
+            <label for="email">Ваш email:</label>
+            <input type="email" name="email" id="email" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="question">Ваш вопрос:</label>
+            <textarea name="question" id="question" class="form-control" rows="3" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Отправить вопрос</button>
+    </form>
+
+    <p class="mt-4">Если у вас возникли дополнительные вопросы, вы также можете написать нам в <a
+            href="https://t.me/your_telegram_channel">Telegram</a>.</p>
+    </div>
+
+    <!-- Подключение Bootstrap JS и jQuery (необходим для некоторых компонентов Bootstrap) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function toggleVisibility(element) {
+            var label = element.previousElementSibling;
+
+            if (element.style.display === 'none' || element.style.display === '') {
+                element.style.display = 'block';
+                toggleGalochka(element.previousElementSibling, true);
+                label.style.marginBottom = '0'; // Убираем margin-bottom
+            } else {
+                element.style.display = 'none';
+                toggleGalochka(element.previousElementSibling, false);
+                label.style.marginBottom = '8px'; // Добавляем margin-bottom
+            }
+        }
+
+        function toggleGalochka(label, rotate) {
+
+            if (rotate) {
+                const galochka = label.querySelector('.galochka');
+                galochka.style.transform = 'rotate(90deg)';
+            } else {
+                const galochka = label.querySelector('.galochka');
+                galochka.style.transform = 'rotate(0deg)';
+            }
+        }
+    </script>
+
+{% endblock %}

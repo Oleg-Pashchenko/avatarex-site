@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Avatarex | Админ панель{% endblock %}</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/admin.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/docs.css' %}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
@@ -34,33 +35,35 @@
 
     </div>
 </nav>-->
-    <nav class="navbar navbar-expand-lg navbar-light header-container navbar-dark  text-white rounded p-2 row">
-        <a class="navbar-brand ml-5" href="{% url 'enter_secret_code_page' %}">Avatarex Admin</a>
-        <a  data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
-           aria-expanded="false" aria-label="Toggle navigation">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-                    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        </a>
-        <div class="navbar-collapse collapse ml-2 " id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <a class="nav-link btn btn-outline-success  my-2 my-sm-0 " href="{% url 'main' %}">На сайт</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'subscriptions' %}">Подписки</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'users' %}">Пользователи</a>
-                </li>
-                <li class="nav-item">
-                     <a class="nav-link" href="{% url 'translations' %}">Переводы</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
+<nav class="navbar navbar-expand-lg navbar-light header-container navbar-dark  text-white rounded p-2 row">
+    <a class="navbar-brand ml-5" href="{% url 'enter_secret_code_page' %}">Avatarex Admin</a>
+    <a data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+       aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </a>
+    <div class="navbar-collapse collapse ml-2 " id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link btn btn-outline-success  my-2 my-sm-0 " href="{% url 'main' %}">На сайт</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'subscriptions' %}">Подписки</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'users' %}">Пользователи</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'translations' %}">Переводы</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'docs' %}">Документация</a>
+            </li>
+        </ul>
+    </div>
+</nav>
 
 
 <div class="container">

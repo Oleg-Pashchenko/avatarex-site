@@ -17,10 +17,6 @@ select {
     border-radius: 5px;
 }
 
-body {
-    background-color: rgb(25, 33, 42);
-    color: white;
-}
 
 .widget-container {
     background-color: rgb(114, 119, 240);
@@ -97,12 +93,13 @@ body {
 }
 
 .change-work-mode:hover {
-
     text-decoration: none;
     color: white;
     cursor: default;
     border: 2px solid white;
+    background-color: rgb(114, 119, 240);
 }
+
 .pipeline-item {
     border: 1px solid rgb(114, 119, 240);
     border-radius: 5px;

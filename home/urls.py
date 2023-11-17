@@ -6,8 +6,8 @@ urlpatterns = [
     path('home/', views.home, name='home'),
     path('payment/', new_views.payment, name='payment'),
     path('stats/', views.tomorrow, name='stats'),
-    path('help/', views.tomorrow, name='help'),
-    path('profile/', views.profile, name='profile'),
+    path('help/', new_views.faq, name='help'),
+    path('profile/', new_views.profile, name='profile'),
     path('old-database-mode/', views.db_mode, name='db_mode'),
     path('new-database-mode/', views.new_db_mode, name='new_db_mode'),
     path('default-mode/', views.default_mode, name='default_mode'),
@@ -32,6 +32,7 @@ urlpatterns = [
 
     # API
     path('api/v1/update-mode/', api.update_mode, name='update_mode'),
-    path('api/v1/update-mode-file-link/', api.update_mode_file_link, name='update_mode_file_link')
+    path('api/v1/update-mode-file-link/', api.update_mode_file_link, name='update_mode_file_link'),
+    path('admin/docs',new_views.docs,name='docs')
 
 ]
