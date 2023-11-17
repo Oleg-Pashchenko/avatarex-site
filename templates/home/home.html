@@ -4,6 +4,7 @@
     {{ block.super }}
 {% endblock %}
 {% block content %}
+
     <h3>Настройки приложения:</h3>
     {% include "home/components/youtube-video.html" %}
     <legend class="border-bottom mb-4"></legend>
@@ -12,7 +13,7 @@
         <div class="input-group-prepend">
             <span class="input-group-text">OpenAI API KEY:</span>
             <input type="text" id="gpt-token" value="{{ gpt_token }}">
-            <button class="input-group-text input-group-button btn btn-light ml-1 " onclick="updateToken();">Обновить
+            <button class="input-group-text input-group-button ml-1 " onclick="updateToken();">Обновить
             </button>
         </div>
     </div>
@@ -33,7 +34,7 @@
 
     <div class="mt-3">
         <div class="input-group-prepend">
-            <button style="height: 50%" class="input-group-text btn btn-light ">
+            <button style="height: 50%" class="input-group-text">
                 Распознавать голосовые сообщения
             </button>
             <div style="width: 100%; width: 100%;" class="form-group">
