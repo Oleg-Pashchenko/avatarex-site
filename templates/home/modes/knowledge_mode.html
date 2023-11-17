@@ -4,28 +4,146 @@
     {{ block.super }}
 {% endblock %}
 {% block content %}
+    <style>
+        .checkbox_item .title {
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e5e9ec;
+            font-size: 20px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .checkbox_item .checkbox_wrap {
+            position: relative;
+            display: block;
+            cursor: pointer;
+            width: 100px;
+            margin: 0 auto 50px;
+        }
+
+        .checkbox_item:last-child .checkbox_wrap {
+            margin-bottom: 0;
+        }
+
+        .checkbox_item .checkbox_wrap .checkbox_inp {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            z-index: 1;
+        }
+
+        .checkbox_item .checkbox_wrap .checkbox_mark {
+            display: inline-block;
+            position: relative;
+            border-radius: 25px;
+        }
+
+        .checkbox_item .checkbox_wrap .checkbox_mark:before,
+        .checkbox_item .checkbox_wrap .checkbox_mark:after {
+            content: "";
+            position: absolute;
+            transition: all 0.5s ease;
+        }
+
+
+        .checkbox_item.citem_2 .checkbox_wrap .checkbox_mark {
+            border: 5px solid #ff5c5c;
+            width: 80px;
+            height: 44px;
+            padding: 2px;
+        }
+
+        .checkbox_item.citem_2 .checkbox_wrap .checkbox_mark:before {
+            top: 2px;
+            left: 3px;
+            width: 28px;
+            height: 30px;
+            background: #ff5c5c;
+            border-radius: 25px;
+        }
+
+        .checkbox_item.citem_2 .checkbox_wrap .checkbox_inp:checked ~ .checkbox_mark {
+            border-color: #1d73e1;
+        }
+
+        .checkbox_item.citem_2 .checkbox_wrap .checkbox_inp:checked ~ .checkbox_mark:before {
+            left: 40px;
+            background: #1d73e1;
+        }
+
+    </style>
+
     <a href="{% url 'home' %}" class="m-3">Вернуться на главную</a>
 
     <h4 class="m-3">Ваши настройки режима работы с базой знаний:</h4>
 
     <legend class="border-bottom mb-4"></legend>
-{% include "home/components/youtube-video.html" %}
+    {% include "home/components/youtube-video.html" %}
     {% csrf_token %}
     <div class="container">
         {% include "home/components/upload-file.html" %}
 
         {% if file_link != '' %}
             {% include "home/components/qualification.html" %}
-            {% include "home/components/bounded-situations.html" %}
+            <div class="wrapper">
+                <div class="checkbox_item citem_2">
+                    <div class="title">Выберите режим работы</div>
+                    <label class="checkbox_wrap">
+                        <input type="checkbox" name="checkbox" class="checkbox_inp" id="modeCheckbox">
+                        <span class="checkbox_mark"></span>
+                    </label>
+                </div>
             </div>
-        {% endif %}
-    <div class="widget-container text-white rounded p-2">
-        <p class="d-inline-block m-0">После внесения изменений нажмите на кнопку.</p>
-        <button id="save-button" class="btn btn-light ml-2" onclick="saveData('knowledge', {{ pipeline_id }});">Сохранить</button>
-    </div>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
+            <div id="boundedSituationsContent">
+                {% include "home/components/bounded-situations.html" %}
+            </div>
 
+            <div id="promptModeContent">
+                {% include "home/components/prompt-mode.html" %}
+            </div>
+
+
+        {% endif %}
+
+        <div class="widget-container text-white rounded p-2">
+            <p class="d-inline-block m-0">После внесения изменений нажмите на кнопку.</p>
+            <button id="save-button" class="btn btn-light ml-2" onclick="saveData('knowledge', {{ pipeline_id }});">
+                Сохранить
+            </button>
+        </div>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var checkbox = document.getElementById('modeCheckbox');
+            var boundedSituationsContent = document.getElementById('boundedSituationsContent');
+            var promptModeContent = document.getElementById('promptModeContent');
+
+            // Изменение содержимого при изменении состояния чекбокса
+            checkbox.addEventListener('change', function () {
+                if (checkbox.checked) {
+                    // Если чекбокс выбран, отображаем "home/components/prompt-mode.html"
+                    boundedSituationsContent.style.display = 'none';
+                    promptModeContent.style.display = 'block';
+                } else {
+                    // Если чекбокс не выбран, отображаем "home/components/bounded-situations.html"
+                    boundedSituationsContent.style.display = 'block';
+                    promptModeContent.style.display = 'none';
+                }
+            });
+
+            // Устанавливаем начальное содержимое в зависимости от начального состояния чекбокса
+            if (checkbox.checked) {
+                boundedSituationsContent.style.display = 'none';
+                promptModeContent.style.display = 'block';
+            } else {
+                boundedSituationsContent.style.display = 'block';
+                promptModeContent.style.display = 'none';
+            }
+        });
+    </script>
 {% endblock content %}

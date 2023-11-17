@@ -1,24 +1,6 @@
-{% extends "core/base.html" %}
-
-{% block head %}
-    {{ block.super }}
-{% endblock %}
-{% block content %}
-
-    <a href="{% url 'home' %}" class="m-3">Вернуться на главную</a>
-
-    <h4 class="m-3">Ваши настройки режима работы по контексту:</h4>
-
-    <legend class="border-bottom mb-4"></legend>
-    {% include "home/components/youtube-video.html" %}
-    {% include "home/components/qualification.html" %}
-    {% include "home/components/prompt-mode.html" %}
-    <!--<form method="post">
+<form method="post">
         {% csrf_token %}
         <div class="container">
-
-            {% include "home/components/qualification.html" %}
-
             <h5 class="m-3">Введите контекст:</h5>
 
             <legend class="border-bottom mb-4"></legend>
@@ -64,6 +46,4 @@
             <p class="d-inline-block m-0">После внесения изменений нажмите на кнопку.</p>
             <button id="save-button" class="btn btn-light ml-2">Сохранить</button>
         </div>
-    </form>-->
-
-{% endblock content %}
+    </form>

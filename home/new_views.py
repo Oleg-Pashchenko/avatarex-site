@@ -53,9 +53,53 @@ def knowledge_mode(request):
     pipeline = d['pipeline']
     pipeline = Pipelines.objects.get(user=request.user, p_id=pipeline)
     knowledge_mode = pipeline.knowledge_mode
+    instance = Pipelines.objects.get(user=request.user, p_id=d['pipeline'])
+    model_id, fine_tuned_id = instance.prompt_mode.model, ''
+    if 'gpt-3.5-turbo' not in model_id:
+        fine_tuned_id = model_id
+        model_id = 'gpt-3.5-turbo'
+
+    form = GptDefaultMode(initial=
+                          {'context': instance.prompt_mode.context,
+                           'max_tokens': instance.prompt_mode.max_tokens,
+                           'temperature': instance.prompt_mode.temperature,
+                           'model': model_id,
+                           'fine_tunel_model_id': fine_tuned_id
+                           })
+
+    if request.method == 'POST':
+        form = GptDefaultMode(request.POST)
+        if form.is_valid():
+            field_names = request.POST.getlist('field-name')
+            field_values = request.POST.getlist('field-value')
+            fields = {}
+            for field_index in range(len(field_names)):
+                if field_names[field_index] != '':
+                    fields[field_names[field_index]] = field_values[field_index]
+            instance.prompt_mode.qualification.value = fields
+            instance.prompt_mode.qualification.save()
+            messages.success(request, 'Настройки обновлены!')
+            context = form.cleaned_data.get('context')
+            max_tokens = form.cleaned_data.get('max_tokens')
+            temperature = form.cleaned_data.get('temperature')
+            model = form.cleaned_data.get('model')
+            fine_tunel_model_id = form.cleaned_data.get('fine_tunel_model_id')
+            instance.prompt_mode.context = context
+            instance.prompt_mode.max_tokens = max_tokens
+            instance.prompt_mode.temperature = temperature
+
+            if fine_tunel_model_id == '':
+                instance.prompt_mode.model = model
+            else:
+                instance.prompt_mode.model = fine_tunel_model_id
+            instance.prompt_mode.save()
+
+        else:
+            messages.warning(request, 'Не удалось обновить!')
 
     return render(request, 'home/modes/knowledge_mode.html',
                   {
+                      'form': form,
                       'youtube_video': 'https://www.youtube.com/embed/HSpYul7FYzw?si=UzabLVRlrN-83k12',
                       'pipeline_id': pipeline.p_id,
                       'qualification_rules': knowledge_mode.qualification,
