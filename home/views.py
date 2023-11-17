@@ -15,6 +15,7 @@ from django.views.decorators.csrf import csrf_exempt
 from . import amo_auth
 from .forms import AmoRegisterForm, GptDefaultMode
 from .models import AmoConnect, Pipelines, Statuses, GptApiKey
+from .validators import validate_google_doc
 
 
 @login_required
@@ -183,6 +184,12 @@ def update_new_db_file(request):
     import gdown
 
     google_drive_url = request.POST.dict()['filename']
+    try:
+        validate_google_doc(google_drive_url)
+    except:
+        messages.warning(request, 'Не удалось сохранить данные!')
+        return redirect(home)
+
     file_id = google_drive_url.split("/")[-2]
 
     try:
@@ -223,6 +230,7 @@ def new_db_mode(request):
                                                                    })
     except:
         return render(request, 'home/old_ code/new_db_mode.html', {'pipeline': pipeline})
+
 
 @login_required
 def syncronize_amo(request):

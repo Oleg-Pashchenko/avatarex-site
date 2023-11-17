@@ -2,7 +2,11 @@ import json
 
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
+from django.contrib import messages
+from django.core.exceptions import ValidationError
+
 from home.models import Pipelines, GptApiKey
+from home.validators import validate_google_doc, UpdateModeValidator
 import gdown
 
 
@@ -10,6 +14,7 @@ import gdown
 def update_mode(request):
     data = json.loads(request.body.decode('utf-8'))
     print(data)
+    UpdateModeValidator(**data)
     qualification_fields = data['qualification_fields']
     qualification_finished = data['qualificationFinished']
     print(qualification_finished, 'qf')
@@ -39,7 +44,6 @@ def update_mode(request):
         pipeline.knowledge_and_search_mode.search_mode.results_count = result_count
 
     elif mode == 'database':
-
         pipeline.search_mode.qualification.value = qualification_fields
         pipeline.search_mode.qualification.qualification_finished = qualification_finished
         pipeline.search_mode.mode_messages.hi_message = bounded_situations_fields[
@@ -94,6 +98,12 @@ def update_mode_file_link(request):
     redirect_url = data['redirect_url']
 
     google_drive_url = request.POST.dict()['filename']
+    try:
+        validate_google_doc(google_drive_url)  # validation
+    except ValidationError as e:
+        messages.warning(request, f'Не удалось сохранить данные! {e.message}')
+        return redirect(redirect_url)
+
     file_id = google_drive_url.replace('https://docs.google.com/spreadsheets/d/', '')
     file_id = file_id.split('/')[0]
     try:

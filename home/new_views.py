@@ -2,8 +2,9 @@ import openpyxl
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from pydantic import ValidationError
 
-from home import misc
+from home import misc, validators
 from home.forms import GptDefaultMode
 from home.models import Pipelines
 
@@ -75,40 +76,31 @@ def prompt_mode(request):
                            })
 
     if request.method == 'POST':
-        form = GptDefaultMode(request.POST)
-        if form.is_valid():
-            field_names = request.POST.getlist('field-name')
-            field_values = request.POST.getlist('field-value')
-            fields = {}
-            for field_index in range(len(field_names)):
-                if field_names[field_index] != '':
-                    fields[field_names[field_index]] = field_values[field_index]
-            instance.prompt_mode.qualification.value = fields
-            print(request.POST)
-            instance.prompt_mode.qualification.qualification_finished = request.POST.get('qualificationFinished')
-            instance.prompt_mode.qualification.save()
-            messages.success(request, 'Настройки обновлены!')
-            context = form.cleaned_data.get('context')
-            max_tokens = form.cleaned_data.get('max_tokens')
-            temperature = form.cleaned_data.get('temperature')
-            model = form.cleaned_data.get('model')
-            fine_tunel_model_id = form.cleaned_data.get('fine_tunel_model_id')
-            instance.prompt_mode.context = context
-            instance.prompt_mode.max_tokens = max_tokens
-            instance.prompt_mode.temperature = temperature
-
-            if fine_tunel_model_id == '':
-                instance.prompt_mode.model = model
-            else:
-                instance.prompt_mode.model = fine_tunel_model_id
-            instance.prompt_mode.save()
-
-        else:
+        try:
+            form_data = validators.PromptModeValidator(**request.POST.dict())
+        except ValidationError as e:
             messages.warning(request, 'Не удалось обновить!')
-    return render(request, 'home/modes/prompt_mode.html', {'form': form,
-                                                           'youtube_video': 'https://www.youtube.com/embed/HSpYul7FYzw?si=UzabLVRlrN-83k12',
-                                                           'qualification_rules': instance.prompt_mode.qualification
-                                                           })
+            print(e.json())
+            return render(request, 'home/modes/prompt_mode.html',
+                          {'form': form,
+                           'youtube_video': 'https://www.youtube.com/embed/HSpYul7FYzw?si=UzabLVRlrN-83k12',
+                           'qualification_rules': instance.prompt_mode.qualification
+                           })
+        messages.success(request, 'Настройки обновлены!')
+        instance.prompt_mode.context = form_data.context
+        instance.prompt_mode.max_tokens = form_data.tokens_limit
+        instance.prompt_mode.temperature = form_data.temperature
+
+        if form_data.fine_tunel_model_id == '':
+            instance.prompt_mode.model = form_data.model
+        else:
+            instance.prompt_mode.model = form_data.fine_tunel_model_id
+        instance.prompt_mode.save()
+    return render(request, 'home/modes/prompt_mode.html',
+                  {'form': form,
+                   'youtube_video': 'https://www.youtube.com/embed/HSpYul7FYzw?si=UzabLVRlrN-83k12',
+                   'qualification_rules': instance.prompt_mode.qualification
+                   })
 
 
 @login_required
