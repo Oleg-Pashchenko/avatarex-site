@@ -2,17 +2,16 @@ import json
 
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
-
 from home.models import Pipelines, GptApiKey
-
 import gdown
 
 
 @login_required
 def update_mode(request):
     data = json.loads(request.body.decode('utf-8'))
-
     qualification_fields = data['qualification_fields']
+    qualification_finished = data['qualificationFinished']
+    print(qualification_finished, 'qf')
     bounded_situations_fields = data['bounded_situations_fields']
     database_mode_fields = data['database_mode_fields']
     mode = data['mode']
@@ -23,6 +22,7 @@ def update_mode(request):
     pipeline = Pipelines.objects.get(p_id=pipeline_id)
     if mode == 'd_k':
         pipeline.knowledge_and_search_mode.search_mode.qualification.value = qualification_fields
+        pipeline.knowledge_and_search_mode.search_mode.qualification.qualification_finished = qualification_finished
         pipeline.knowledge_and_search_mode.search_mode.mode_messages.hi_message = bounded_situations_fields[
             'hi_message']
         pipeline.knowledge_and_search_mode.search_mode.mode_messages.openai_error_message = bounded_situations_fields[
@@ -40,6 +40,7 @@ def update_mode(request):
     elif mode == 'database':
 
         pipeline.search_mode.qualification.value = qualification_fields
+        pipeline.search_mode.qualification.qualification_finished = qualification_finished
         pipeline.search_mode.mode_messages.hi_message = bounded_situations_fields[
             'hi_message']
         pipeline.search_mode.mode_messages.openai_error_message = bounded_situations_fields[
@@ -56,6 +57,7 @@ def update_mode(request):
 
     elif mode == 'knowledge':
         pipeline.knowledge_mode.qualification.value = qualification_fields
+        pipeline.knowledge_mode.qualification.qualification_finished = qualification_finished
         pipeline.knowledge_mode.mode_messages.hi_message = bounded_situations_fields[
             'hi_message']
         pipeline.knowledge_mode.mode_messages.openai_error_message = bounded_situations_fields[
@@ -128,8 +130,9 @@ def prompt_mode_update(request):
     tokens_limit = int(data['tokens_limit'])
     temperature = float(data['temperature'])
     model = data['model']
+    qualification_finished = data['qualificationFinished']
     qualification_fields = data['qualification_fields']
-
+    print(qualification_finished, 'resp')
     pipeline_id = int(data['pipeline_id'])
     pipeline = Pipelines.objects.get(p_id=pipeline_id)
     pipeline.prompt_mode.context = context
@@ -137,6 +140,7 @@ def prompt_mode_update(request):
     pipeline.prompt_mode.temperature = temperature
     pipeline.prompt_mode.model = model
     pipeline.prompt_mode.qualification.value = qualification_fields
+    pipeline.prompt_mode.qualification.qualification_finished = qualification_finished
     pipeline.save()
     return redirect(f"/prompt-mode/?pipeline_id={pipeline_id}")
 

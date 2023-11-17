@@ -11,6 +11,7 @@ class ModeMessages(models.Model):
 
 class ModeQualification(models.Model):
     value = models.JSONField(default={})
+    qualification_finished = models.CharField(default='')
 
 
 class SearchMode(models.Model):

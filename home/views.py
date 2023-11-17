@@ -50,12 +50,27 @@ def get_stages_by_pipeline(request):
 
     pipeline = form_dict['pipeline']
     selected_mode = Pipelines.objects.get(user=request.user, p_id=pipeline).chosen_work_mode
-    if selected_mode == 'Standart':
-        disabled_mode, disabled_mode2 = 'CardsDatabase', 'With database'
-    elif selected_mode == 'CardsDatabase':
-        disabled_mode, disabled_mode2 = 'Standart', 'With database'
+    selected_voice = Pipelines.objects.get(user=request.user, p_id=pipeline).voice_message_detection
+    k_m_text, s_m_text, p_m_text, k_a_s_m_text = 'Ответ из базы знаний', 'Ответ из базы данных', 'Ответ по контексту', 'Ответ из базы знаний и базы данных'
+
+    if selected_voice is True:
+        selected_voice = 'да'
+        disabled_voice = 'нет'
+
     else:
-        disabled_mode, disabled_mode2 = 'CardsDatabase', 'Standart'
+        selected_voice = 'нет'
+        disabled_voice = 'да'
+
+
+    if selected_mode == k_m_text:
+        disabled_mode, disabled_mode2, disabled_mode3 = p_m_text, s_m_text, k_a_s_m_text
+    elif selected_mode == s_m_text:
+        disabled_mode, disabled_mode2, disabled_mode3 = p_m_text, k_m_text, k_a_s_m_text
+    elif selected_mode == p_m_text:
+        disabled_mode, disabled_mode2, disabled_mode3 = k_m_text, s_m_text, k_a_s_m_text
+    else:
+        selected_mode = k_a_s_m_text
+        disabled_mode, disabled_mode2, disabled_mode3 = p_m_text, k_m_text, s_m_text
 
     stages = list(
         Statuses.objects.all().filter(pipeline_id__p_id=pipeline, is_exists=True).order_by('order_number').values())
@@ -64,7 +79,10 @@ def get_stages_by_pipeline(request):
         'stages': stages,
         'selected_mode': selected_mode,
         'disabled_mode': disabled_mode,
-        'disabled_mode2': disabled_mode2
+        'disabled_mode2': disabled_mode2,
+        'disabled_mode3': disabled_mode3,
+        'selected_voice': selected_voice,
+        'disabled_voice': disabled_voice
     })
 
 
@@ -84,15 +102,23 @@ def update_mode(request):
     d = dict(request.GET.items())
     print(d)
     pipeline = Pipelines.objects.get(p_id=d['pipeline'])
-    if d['mode'] != 'Standart' and d['mode'] != 'With database' and d['mode'] != 'CardsDatabase':
-        messages.warning(request, "Ошибка обновления режима работы!")
-    else:
+    if True:
         pipeline.chosen_work_mode = d['mode']
         pipeline.save()
         messages.success(request, 'Обновление режима работы прошло успешно!')
     return redirect(f'/home/?current_pipeline={d["pipeline"]}')
 
 
+@login_required
+def update_voice(request):
+    d = dict(request.GET.items())
+    print(d)
+    pipeline = Pipelines.objects.get(p_id=d['pipeline'])
+    if True:
+        pipeline.voice_message_detection = True if d['voice'] == 'да' else False
+        pipeline.save()
+        messages.success(request, 'Обновление режима работы прошло успешно!')
+    return redirect(f'/home/?current_pipeline={d["pipeline"]}')
 
 
 @login_required

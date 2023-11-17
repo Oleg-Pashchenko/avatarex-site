@@ -140,6 +140,8 @@ def prompt_mode(request):
                 if field_names[field_index] != '':
                     fields[field_names[field_index]] = field_values[field_index]
             instance.prompt_mode.qualification.value = fields
+            print(request.POST)
+            instance.prompt_mode.qualification.qualification_finished = request.POST.get('qualificationFinished')
             instance.prompt_mode.qualification.save()
             messages.success(request, 'Настройки обновлены!')
             context = form.cleaned_data.get('context')

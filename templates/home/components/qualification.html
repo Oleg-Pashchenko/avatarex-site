@@ -3,6 +3,7 @@
     <legend class="border-bottom mb-4"></legend>
     <div id="loaded-elements">
         {% for k, v in qualification_rules.value.items %}
+
             <div style="border: 3px solid rgb(114, 119, 240); border-radius: 10px; padding: 5px 5px 5px 5px; margin-bottom: 15px;">
                 <div class="rule input-group-prepend">
                     <div class="col-3 p-0 pr-1 mb-2">
@@ -109,6 +110,11 @@
     <button class="input-group-text mt-2" type="button" id="plus_field" onclick="addQualificationField();">Добавить
         поле
     </button>
+
+    <h6 class="mt-5">Сообщение после прохождения квалификации:</h6>
+    <textarea style="min-height: 100px; background-color: rgb(26, 24, 22); color: white;" name="qualificationFinished" class="mt-2"
+              id="qualificationFinished">{{ qualification_rules.qualification_finished }}</textarea>
+
 </div>
 
 

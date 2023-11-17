@@ -21,6 +21,7 @@ urlpatterns = [
     path('api/v1/home/syncronize-amo', views.syncronize_amo, name='syncronize_amo'),
     path('api/v1/home/update-db-rules/', views.update_db_rules, name='update_db_rules'),
     path('api/v1/home/update-new-db-rules/', views.update_new_db_rules, name='update_new_db_rules'),
+    path('api/v1/home/update-voice/', views.update_voice, name='update_voice'),
 
     # New handlers
     # VIEWS
