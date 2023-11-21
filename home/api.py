@@ -10,6 +10,7 @@ import gdown
 def update_mode(request):
     data = json.loads(request.body.decode('utf-8'))
     qualification_fields = data['qualification_fields']
+    print(qualification_fields)
     qualification_finished = data['qualificationFinished']
     print(qualification_finished, 'qf')
     bounded_situations_fields = data['bounded_situations_fields']

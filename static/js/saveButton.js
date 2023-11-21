@@ -32,19 +32,31 @@ function saveData(mode, pipeline_id) {
 
 
     dataObject['database_mode_fields'] = data;
-    const qualificationFelds = {};
 // Квалификация
-    const elements = document.querySelectorAll('.rule');
+const elements = document.querySelectorAll('.rule');
+const qualificationFields = [];
 
-    elements.forEach((element) => {
-        const fieldNameInput = element.querySelector('[name="field-name"]');
-        const fieldValueInput = element.querySelector('[name="field-value"]');
-        const fieldName = fieldNameInput.value;
-        const fieldValue = fieldValueInput.value;
-        qualificationFelds[fieldName] = fieldValue;
+elements.forEach((element) => {
+    const childElements = element.querySelectorAll('[name^="response-name-"], [name^="number-select-"], [name^="time-select-"], [name="field-name"], [name="field-value"]');
+
+    const blockData = {};
+    childElements.forEach((childElement) => {
+        const fieldName = childElement.name;
+        const fieldValue = childElement.value;
+        // Добавьте проверки, если необходимо, и сохраните данные
+        blockData[fieldName] = fieldValue;
     });
-    dataObject['qualification_fields'] = qualificationFelds;
-    console.log(dataObject);
+
+    // Пример: добавление данных блока в массив
+    qualificationFields.push(blockData);
+});
+
+// Вывод объекта qualificationFields в консоль для проверки
+console.log(qualificationFields);
+
+// Ваш дальнейший код
+dataObject['qualification_fields'] = qualificationFields;
+console.log(dataObject);
 
 // Отправка запроса
     const requestOptions = {
