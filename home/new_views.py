@@ -49,6 +49,25 @@ def database_mode(request):
 
 @login_required
 def knowledge_mode(request):
+    qualification_rules = {
+
+    'Имя': 'Как вас зовут?',
+    'Дата': 'Когда вы родились',}
+    loaded_inter_elements_data = [{
+        'response_name_0_0': 'Скажите пожалуйста',
+        'number_select_0_0': '2',
+        'time_select_0_0': 'hours',
+
+    },
+    {
+        'response_name_0_1': 'Ответь',
+        'number_select_0_1': '1',
+        'time_select_0_1': 'hours',
+    },]
+
+
+
+
     d = dict(request.GET.items())
     pipeline = d['pipeline']
     pipeline = Pipelines.objects.get(user=request.user, p_id=pipeline)
@@ -102,7 +121,8 @@ def knowledge_mode(request):
                       'form': form,
                       'youtube_video': 'https://www.youtube.com/embed/HSpYul7FYzw?si=UzabLVRlrN-83k12',
                       'pipeline_id': pipeline.p_id,
-                      'qualification_rules': knowledge_mode.qualification,
+                      'qualification_rules': qualification_rules,
+                      'loaded_inter_elements_data': loaded_inter_elements_data,
                       'file_link': knowledge_mode.database_link,
                       'upload_file_inputs': [
                           {'action': f'/api/v1/update-mode-file-link/?pipeline_id={pipeline.p_id}&mode_name='

@@ -87,7 +87,7 @@
         {% if file_link != '' %}
             {% include "home/components/qualification.html" %}
             <div class="wrapper">
-                <div class="checkbox_item citem_2">
+                <div class="checkbox_item citem_2 rule">
                     <div class="title">Выберите режим работы</div>
                     <label class="checkbox_wrap">
                         <input type="checkbox" name="checkbox" class="checkbox_inp" id="modeCheckbox">
@@ -95,11 +95,11 @@
                     </label>
                 </div>
             </div>
-            <div id="boundedSituationsContent">
+            <div class="rule" id="boundedSituationsContent">
                 {% include "home/components/bounded-situations.html" %}
             </div>
 
-            <div id="promptModeContent">
+            <div class="rule" id="promptModeContent">
                 {% include "home/components/prompt-mode.html" %}
             </div>
 

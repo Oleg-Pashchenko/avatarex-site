@@ -12,8 +12,14 @@ def update_mode(request):
     qualification_fields = data['qualification_fields']
     print(qualification_fields)
     qualification_finished = data['qualificationFinished']
-    print(qualification_finished, 'qf')
+    print(qualification_finished)
     bounded_situations_fields = data['bounded_situations_fields']
+    checkbox = data['checkbox']
+    print(checkbox)
+    know_bound = data.get('knowledge-bounded', {})
+    know_promt = data.get('knowledge-prompt', {})
+    print(know_bound)
+    print(know_promt)
     database_mode_fields = data['database_mode_fields']
     mode = data['mode']
     if mode != 'knowledge':
@@ -81,7 +87,7 @@ def update_mode(request):
     pipeline.knowledge_and_search_mode.search_mode.qualification.save()
     pipeline.knowledge_and_search_mode.search_mode.save()
     pipeline.knowledge_and_search_mode.knowledge_mode.save()
-    return redirect(f'/home')
+    #return redirect(f'/home')
 
 
 @login_required

@@ -2,109 +2,76 @@
     <h5 class="mt-5">Если вы хотите проводить квалификацию клиента, пожалуйста, добавьте поля:</h5>
     <legend class="border-bottom mb-4"></legend>
     <div id="loaded-elements">
-        {% for k, v in qualification_rules.value.items %}
-
+        {% for k, v in qualification_rules.items %}
             <div style="border: 3px solid rgb(114, 119, 240); border-radius: 10px; padding: 5px 5px 5px 5px; margin-bottom: 15px;">
                 <div class="rule input-group-prepend">
                     <div class="col-3 p-0 pr-1 mb-2">
                         <input name="field-name" class="input-group-text" value="{{ k }}">
                     </div>
-                    <div class=" pl-1 pr-0 col-8">
+                    <div class="pl-1 pr-0 col-8">
                         <input class="form-control q" name="field-value" value="{{ v }}">
                     </div>
                     <button type="button" class="ml-1 ml-0 h-50 btn btn-outline-danger"
                             onclick="deleteLoadedQualificationField(this.parentNode.parentNode);">Удалить
                     </button>
                 </div>
-                <div class="rule input-group-prepend text-center ">
+                <div class="rule input-group-prepend text-center">
                     <div class="mt-0 col-12">
                         <div class="btn text-light" style="display: inline-block; width: auto;"
                              onclick="toggleVisibility(this.parentElement.parentElement.nextElementSibling)">
                             <hr class="line"
-                                style=" border-top: 1px solid #ffffff; width: 100px; display: inline-block; margin: 0;padding-bottom: 5px">
+                                style="border-top: 1px solid #ffffff; width: 100px; display: inline-block; margin: 0;padding-bottom: 5px">
                             ещё
                             <hr class="line"
-                                style=" border-top: 1px solid #ffffff; width: 100px; display: inline-block; margin: 0;padding-bottom: 5px">
+                                style="border-top: 1px solid #ffffff; width: 100px; display: inline-block; margin: 0;padding-bottom: 5px">
                         </div>
                     </div>
-
                 </div>
-                <div class=" input-group-prepend mb-2" id="hiddenDiv" style="display: none;">
+                <div class="input-group-prepend mb-2" id="hiddenDiv" style="display: none;">
                     <button class="input-group-text mb-2 ml-1" type="button" id="plus_field"
                             onclick="addResponseField(0);">Добавить поле
                     </button>
                     <div id="loaded-inter-elements">
-                        <div class="rule  pl-1 pr-0 mb-2 col-12" style="display: flex; align-items: center;">
-                            <input style="flex: 1; width: 100%;display: inline-block;" placeholder="Ваше сообщение"
-                                   class=" form-control q col-8" name="response-name" value="{{ x }}">
-                            <select name="number-select"
-                                    style="background-color: rgb(38, 47, 60); color: white; border: solid rgb(38, 47, 60); font-size: large; display: inline-block;box-sizing: border-box; width: 40%;"
-                                    class="form-control col-3 ml-2 mr-2" id="number">
-                                <option value="0" style="text-align: center; font-size: large;"></option>
-                                <option value="1" style="text-align: center; font-size: large;"
-                                        {% if search_rule.v == '1' %}selected{% endif %}>1
-                                </option>
-                                <option value="2" style="text-align: center; font-size: large;"
-                                        {% if search_rule.v == '2' %}selected{% endif %}>2
-                                </option>
-                                <option value="3" style="text-align: center; font-size: large;"
-                                        {% if search_rule.v == '3' %}selected{% endif %}>3
-                                </option>
-                                <option value="4" style="text-align: center; font-size: large;"
-                                        {% if search_rule.v == '4' %}selected{% endif %}>4
-                                </option>
-                                <option value="5" style="text-align: center; font-size: large;"
-                                        {% if search_rule.v == '5' %}selected{% endif %}>5
-                                </option>
-                                <option value="6" style="text-align: center; font-size: large;"
-                                        {% if search_rule.v == '6' %}selected{% endif %}>6
-                                </option>
-                                <option value="7" style="text-align: center; font-size: large;"
-                                        {% if search_rule.v == '7' %}selected{% endif %}>7
-                                </option>
-                                <option value="8" style="text-align: center; font-size: large;"
-                                        {% if search_rule.v == '8' %}selected{% endif %}>8
-                                </option>
-                                <option value="9" style="text-align: center; font-size: large;"
-                                        {% if search_rule.v == '9' %}selected{% endif %}>9
-                                </option>
-                                <option value="10" style="text-align: center; font-size: large;"
-                                        {% if search_rule.v == '10' %}selected{% endif %}>10
-                                </option>
-                                <option value="15" style="text-align: center; font-size: large;"
-                                        {% if search_rule.v == '15' %}selected{% endif %}>15
-                                </option>
-                                <option value="25" style="text-align: center; font-size: large;"
-                                        {% if search_rule.v == '25' %}selected{% endif %}>25
-                                </option>
-                                <option value="30" style="text-align: center; font-size: large;"
-                                        {% if search_rule.v == '30' %}selected{% endif %}>30
-                                </option>
-                            </select>
-                            <select name="time-select"
-                                    style="background-color: rgb(38, 47, 60); color: white; border: solid rgb(38, 47, 60); font-size: large; display: inline-block;box-sizing: border-box; width: 40%;"
-                                    class="form-control col-3 mr-2" id="time">
-                                <option value="" style="text-align: center; font-size: large;"></option>
-                                <option value="minutes" style="text-align: center; font-size: large;"
-                                        {% if search_rule.v == 'minutes' %}selected{% endif %}>минут
-                                </option>
-                                <option value="hours" style="text-align: center; font-size: large;"
-                                        {% if search_rule.v == 'hours' %}selected{% endif %}>часов
-                                </option>
-                                <option value="days" style="text-align: center; font-size: large;"
-                                        {% if search_rule.v == 'days' %}selected{% endif %}>дней
-                                </option>s
-                            </select>
-                            <button type="button" class="ml-1 ml-0 h-50 btn btn-outline-danger"
-                                    onclick="deleteParentDiv(this);">Удалить
-                            </button>
-                        </div>
+                        {% for x in loaded_inter_elements_data %}
+                            <div class="rule pl-1 pr-0 mb-2 col-12" style="display: flex; align-items: center;">
+                                <input style="flex: 1; width: 100%; display: inline-block;" placeholder="Ваше сообщение"
+                                       class="form-control q col-8" name="response-name"
+                                       value="{{ x.response_name_0_0 }}">
+                                <select name="number-select" class="form-control col-3 ml-2 mr-2" id="number">
+                                    <option value="0" style="text-align: center; font-size: large;"></option>
+                                    <option value="1" style="text-align: center; font-size: large;"
+                                            {% if x.number_select_0_0 == '1' %}selected{% endif %}>1
+                                    </option>
+                                    <option value="2" style="text-align: center; font-size: large;"
+                                            {% if x.number_select_0_0 == '2' %}selected{% endif %}>2
+                                    </option>
+                                    <!-- Добавьте остальные опции здесь -->
+                                </select>
+                                <select name="time-select" class="form-control col-3 mr-2" id="time">
+                                    <option value="" style="text-align: center; font-size: large;"></option>
+                                    <option value="minutes" style="text-align: center; font-size: large;"
+                                            {% if x.time_select_0_0 == 'minutes' %}selected{% endif %}>минут
+                                    </option>
+                                    <option value="hours" style="text-align: center; font-size: large;"
+                                            {% if x.time_select_0_0 == 'hours' %}selected{% endif %}>часов
+                                    </option>
+                                    <option value="days" style="text-align: center; font-size: large;"
+                                            {% if x.time_select_0_0 == 'days' %}selected{% endif %}>дней
+                                    </option>
+                                    <!-- Добавьте остальные опции здесь -->
+                                </select>
+                                <button type="button" class="ml-1 ml-0 h-50 btn btn-outline-danger"
+                                        onclick="deleteParentDiv(this);">Удалить
+                                </button>
+                            </div>
+                        {% endfor %}
                     </div>
                     <div id="added-inter-elements-0"></div>
                 </div>
             </div>
         {% endfor %}
     </div>
+
     <div id="added-elements"></div>
 
     <button class="input-group-text mt-2" type="button" id="plus_field" onclick="addQualificationField();">Добавить
@@ -158,7 +125,7 @@
                             onclick="addResponseField(${counter1});">Добавить поле
                     </button>
 
-                    <div id="added-inter-elements-${counter1}"></div>
+                    <div id="added_inter_elements_${counter1}"></div>
                 </div>
             </div>
 
@@ -186,8 +153,8 @@
         newInputField.style = "display: flex; align-items: center;";
         newInputField.innerHTML = `
                             <input style="flex: 1; width: 100%;display: inline-block;" placeholder="Ваше сообщение"
-                                   class="form-control q col-8"  name="response-name-${parentCounter}-${counter}" value="{{ y }}">
-                            <select name="number-select-${parentCounter}-${counter}"
+                                   class="form-control q col-8"  name="response_name_${parentCounter}_${counter}" value="{{ y }}">
+                            <select name="number_select_${parentCounter}_${counter}"
                                     style="background-color: rgb(38, 47, 60); color: white; border: solid rgb(38, 47, 60); font-size: large; display: inline-block;box-sizing: border-box; width: 40%;"
                                     class="form-control col-3 ml-2 mr-2" id="exampleFormControlSelect1">
                                 <option value=""  style="text-align: center; font-size: large;"></option>
@@ -230,7 +197,7 @@
                                         {% if search_rule.v == '30' %}selected{% endif %}>30
                                 </option>
                             </select>
-                            <select name="time-select-${parentCounter}-${counter}"
+                            <select name="time_select_${parentCounter}_${counter}"
                                     style="background-color: rgb(38, 47, 60); color: white; border: solid rgb(38, 47, 60); font-size: large; display: inline-block;box-sizing: border-box; width: 40%;"
                                     class="form-control col-3 mr-2" id="time">
                                 <option name="hours-select" style="text-align: center; font-size: large;"></option>
