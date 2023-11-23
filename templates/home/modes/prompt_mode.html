@@ -4,7 +4,7 @@
     {{ block.super }}
 {% endblock %}
 {% block content %}
-
+<div class="rule">
     <a href="{% url 'home' %}" class="m-3">Вернуться на главную</a>
 
     <h4 class="m-3">Ваши настройки режима работы по контексту:</h4>
@@ -12,7 +12,9 @@
     <legend class="border-bottom mb-4"></legend>
     {% include "home/components/youtube-video.html" %}
     {% include "home/components/qualification.html" %}
+
     {% include "home/components/prompt-mode.html" %}
+
     <!--<form method="post">
         {% csrf_token %}
         <div class="container">
@@ -65,5 +67,10 @@
             <button id="save-button" class="btn btn-light ml-2">Сохранить</button>
         </div>
     </form>-->
-
+    <div class="widget-container text-white rounded p-2">
+        <p class="d-inline-block m-0">После внесения изменений нажмите на кнопку.</p>
+        <button id="save-button" class="btn btn-light ml-2" onclick="saveData('prompt', {{ pipeline_id }});">Сохранить
+        </button>
+    </div>
+</div>
 {% endblock content %}

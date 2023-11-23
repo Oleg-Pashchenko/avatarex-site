@@ -13,6 +13,8 @@ def update_mode(request):
     print(qualification_fields)
     qualification_finished = data['qualificationFinished']
     print(qualification_finished)
+    prompt_data = data.get('prompt-data', {})
+    print(prompt_data)
     bounded_situations_fields = data['bounded_situations_fields']
     checkbox = data['checkbox']
     print(checkbox)
@@ -20,6 +22,7 @@ def update_mode(request):
     know_promt = data.get('knowledge-prompt', {})
     print(know_bound)
     print(know_promt)
+
     database_mode_fields = data['database_mode_fields']
     mode = data['mode']
     if mode != 'knowledge':
@@ -134,6 +137,8 @@ def update_mode_file_link(request):
 def prompt_mode_update(request):
     data = json.loads(request.body.decode('utf-8'))
     context = data['context']
+    prompt_data = data.get('prompt-data', {})
+    print(prompt_data)
     tokens_limit = int(data['tokens_limit'])
     temperature = float(data['temperature'])
     model = data['model']

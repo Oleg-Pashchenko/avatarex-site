@@ -1,6 +1,6 @@
 <form method="post">
         {% csrf_token %}
-        <div class="container ">
+        <div class="container rule ">
             <h5 class="m-3">Введите контекст:</h5>
             <legend class="border-bottom mb-4"></legend>
             {{ form.context }}
@@ -41,8 +41,5 @@
                 </div>
             </div>
         </div>
-        <div class="widget-container text-white rounded p-2">
-            <p class="d-inline-block m-0">После внесения изменений нажмите на кнопку.</p>
-            <button id="save-button" class="btn btn-light ml-2">Сохранить</button>
-        </div>
+
     </form>

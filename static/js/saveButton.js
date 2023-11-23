@@ -1,8 +1,9 @@
 function saveData(mode, pipeline_id) {
     var dataObject = {};
     dataObject["currentUrl"] = window.location.href;
-
+    /*
     var boundedSituationsFields = {};
+
     dataObject['mode'] = mode;
     dataObject['pipeline_id'] = pipeline_id;
 
@@ -12,7 +13,9 @@ function saveData(mode, pipeline_id) {
     boundedSituationsFields["openai_error_message"] = document.getElementById("openai-error-message").value;
     boundedSituationsFields["service_settings_error_message"] = document.getElementById("service_settings_error_message").value;
     dataObject["bounded_situations_fields"] = boundedSituationsFields;
-    const data = {};
+
+    const data = {};*/
+
 
     if (window.location.href.includes('database')) {
         dataObject["view_rule"] = document.getElementById("view-rule").value;
@@ -27,6 +30,41 @@ function saveData(mode, pipeline_id) {
             data[parameterName] = selectedOperator;
         });
     }
+
+    if (window.location.href.includes('prompt-mode')) {
+        const PromptObject = {};
+
+        dataObject['qualificationFinished'] = document.getElementById("qualificationFinished").value;
+        const elements = document.querySelectorAll('.rule');
+        elements.forEach((element) => {
+
+            const contextElement = document.getElementById('id_context');
+            const context = contextElement ? contextElement.value : '';
+
+            const maxTokensElement = document.getElementById('id_max_tokens');
+            const maxTokens = maxTokensElement ? maxTokensElement.value : '';
+
+            const temperatureElement = document.getElementById('id_temperature');
+            const temperature = temperatureElement ? temperatureElement.value : '';
+
+            const modelElement = document.getElementById('id_model');
+            const model = modelElement ? modelElement.value : '';
+
+            const fineTunelModelIdElement = document.getElementById('id_fine_tunel_model_id');
+            const fineTunelModelId = fineTunelModelIdElement ? fineTunelModelIdElement.value : '';
+
+
+            PromptObject.context = context;
+            PromptObject.maxTokens = maxTokens;
+            PromptObject.temperature = temperature;
+            PromptObject.model = model;
+            PromptObject.fineTunelModelId = fineTunelModelId;
+            dataObject['prompt-data'] = PromptObject;
+
+        });
+
+    }
+
 
     const checkboxObject = {
         mode: 'inactive' // По умолчанию чекбокс неактивен

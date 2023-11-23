@@ -32,33 +32,47 @@
                             onclick="addResponseField(0);">Добавить поле
                     </button>
                     <div id="loaded-inter-elements">
-                        {% for x in loaded_inter_elements_data %}
+                        {% for item in loaded_inter_elements_data %}
                             <div class="rule pl-1 pr-0 mb-2 col-12" style="display: flex; align-items: center;">
+
                                 <input style="flex: 1; width: 100%; display: inline-block;" placeholder="Ваше сообщение"
-                                       class="form-control q col-8" name="response-name"
-                                       value="{{ x.response_name_0_0 }}">
-                                <select name="number-select" class="form-control col-3 ml-2 mr-2" id="number">
-                                    <option value="0" style="text-align: center; font-size: large;"></option>
-                                    <option value="1" style="text-align: center; font-size: large;"
-                                            {% if x.number_select_0_0 == '1' %}selected{% endif %}>1
-                                    </option>
-                                    <option value="2" style="text-align: center; font-size: large;"
-                                            {% if x.number_select_0_0 == '2' %}selected{% endif %}>2
-                                    </option>
-                                    <!-- Добавьте остальные опции здесь -->
+                                        {% for key, value in item.items %}
+                                            {% if key|slice:":13" == 'response_name' %}
+                                       class="form-control q col-8" name="response_name"
+                                       value="{{ value }}">
+                                            {% endif %}
+                                        {% endfor %}
+                                <select name="number_select" class="form-control col-3 ml-2 mr-2" id="number">
+                                    {% for key, value in item.items %}
+                                        {% if key|slice:":13" == 'number_select' %}
+
+                                            <option value="0" style="text-align: center; font-size: large;"></option>
+                                            <option value="1" style="text-align: center; font-size: large;"
+                                                    {% if value  == '1' %}selected{% endif %}>1
+                                            </option>
+                                            <option value="2" style="text-align: center; font-size: large;"
+                                                    {% if value  == '2' %}selected{% endif %}>2
+                                            </option>
+                                            <!-- Добавьте остальные опции здесь -->
+                                        {% endif %}
+                                    {% endfor %}
                                 </select>
-                                <select name="time-select" class="form-control col-3 mr-2" id="time">
-                                    <option value="" style="text-align: center; font-size: large;"></option>
-                                    <option value="minutes" style="text-align: center; font-size: large;"
-                                            {% if x.time_select_0_0 == 'minutes' %}selected{% endif %}>минут
-                                    </option>
-                                    <option value="hours" style="text-align: center; font-size: large;"
-                                            {% if x.time_select_0_0 == 'hours' %}selected{% endif %}>часов
-                                    </option>
-                                    <option value="days" style="text-align: center; font-size: large;"
-                                            {% if x.time_select_0_0 == 'days' %}selected{% endif %}>дней
-                                    </option>
-                                    <!-- Добавьте остальные опции здесь -->
+                                <select name="time_select" class="form-control col-3 mr-2" id="time">
+                                    {% for key, value in item.items %}
+                                        {% if key|slice:":11" == 'time_select' %}
+                                            <option value="" style="text-align: center; font-size: large;"></option>
+                                            <option value="minutes" style="text-align: center; font-size: large;"
+                                                    {% if value == 'minutes' %}selected{% endif %}>минут
+                                            </option>
+                                            <option value="hours" style="text-align: center; font-size: large;"
+                                                    {% if value == 'hours' %}selected{% endif %}>часов
+                                            </option>
+                                            <option value="days" style="text-align: center; font-size: large;"
+                                                    {% if value == 'days' %}selected{% endif %}>дней
+                                            </option>
+                                            <!-- Добавьте остальные опции здесь -->
+                                        {% endif %}
+                                    {% endfor %}
                                 </select>
                                 <button type="button" class="ml-1 ml-0 h-50 btn btn-outline-danger"
                                         onclick="deleteParentDiv(this);">Удалить
