@@ -4,7 +4,7 @@
     {{ block.super }}
 {% endblock %}
 {% block content %}
-<div class="rule">
+
     <a href="{% url 'home' %}" class="m-3">Вернуться на главную</a>
 
     <h4 class="m-3">Ваши настройки режима работы по контексту:</h4>
@@ -72,5 +72,5 @@
         <button id="save-button" class="btn btn-light ml-2" onclick="saveData('prompt', {{ pipeline_id }});">Сохранить
         </button>
     </div>
-</div>
+
 {% endblock content %}

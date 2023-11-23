@@ -13,11 +13,13 @@ def update_mode(request):
     print(qualification_fields)
     qualification_finished = data['qualificationFinished']
     print(qualification_finished)
+
+    #bounded_situations_fields = data['bounded_situations_fields']
     prompt_data = data.get('prompt-data', {})
     print(prompt_data)
-    bounded_situations_fields = data['bounded_situations_fields']
     checkbox = data['checkbox']
     print(checkbox)
+
     know_bound = data.get('knowledge-bounded', {})
     know_promt = data.get('knowledge-prompt', {})
     print(know_bound)

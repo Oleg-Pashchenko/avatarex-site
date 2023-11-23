@@ -49,24 +49,50 @@ def database_mode(request):
 
 @login_required
 def knowledge_mode(request):
-    qualification_rules = {
+    qualification = [
+        {
+            'order': 1,
+            'field_name': 'Имя',
+            'question': 'Как вас зовут?',
+            'additional_questions': [
+                {
+                    'order': 1,
+                    'question': 'Скажите пожалуйста',
+                    'time_number': 25,
+                    'time_type': 'days',
 
-    'Имя': 'Как вас зовут?',
-    'Дата': 'Когда вы родились',}
-    loaded_inter_elements_data = [{
-        'response_name_0_0': 'Скажите пожалуйста',
-        'number_select_0_0': '2',
-        'time_select_0_0': 'hours',
+                },
+                {
+                    'order': 2,
+                    'question': 'Скажите пожалуйста',
+                    'time_number': 10,
+                    'time_type': 'hours',
 
-    },
-    {
-        'response_name_0_1': 'Ответь',
-        'number_select_0_1': '1',
-        'time_select_0_1': 'hours',
-    },]
+                }
+            ]
+        },
+        {
+            'order': 2,
+            'field_name': 'Дата',
+            'question': 'Когда вы родились?',
+            'additional_questions': [
+                {
+                    'order': 1,
+                    'question': 'Привет',
+                    'time_number': 1,
+                    'time_type': 'hours',
 
+                },
+                {
+                    'order': 2,
+                    'question': 'Пока',
+                    'time_number': 2,
+                    'time_type': 'hours',
 
-
+                }
+            ]
+        }
+    ]
 
     d = dict(request.GET.items())
     pipeline = d['pipeline']
@@ -121,8 +147,8 @@ def knowledge_mode(request):
                       'form': form,
                       'youtube_video': 'https://www.youtube.com/embed/HSpYul7FYzw?si=UzabLVRlrN-83k12',
                       'pipeline_id': pipeline.p_id,
-                      'qualification_rules': qualification_rules,
-                      'loaded_inter_elements_data': loaded_inter_elements_data,
+                      'qualification_rules': qualification,
+
                       'file_link': knowledge_mode.database_link,
                       'upload_file_inputs': [
                           {'action': f'/api/v1/update-mode-file-link/?pipeline_id={pipeline.p_id}&mode_name='
@@ -135,7 +161,53 @@ def knowledge_mode(request):
 
 @login_required
 def prompt_mode(request):
+    qualification = [
+        {
+            'order': 1,
+            'field_name': 'Имя',
+            'question': 'Как вас зовут?',
+            'additional_questions': [
+                {
+                    'order': 1,
+                    'question': 'Скажите пожалуйста',
+                    'time_number': 1,
+                    'time_type': 'days',
+
+                },
+                {
+                    'order': 2,
+                    'question': 'Скажите пожалуйста',
+                    'time_number': 1,
+                    'time_type': 'hours',
+
+                }
+            ]
+        },
+        {
+            'order': 2,
+            'field_name': 'Дата',
+            'question': 'Когда вы родились?',
+            'additional_questions': [
+                {
+                    'order': 1,
+                    'question': 'Привет',
+                    'time_number': 1,
+                    'time_type': 'hours',
+
+                },
+                {
+                    'order': 2,
+                    'question': 'Пока',
+                    'time_number': 2,
+                    'time_type': 'hours',
+
+                }
+            ]
+        }
+    ]
+
     d = dict(request.GET.items())
+
     instance = Pipelines.objects.get(user=request.user, p_id=d['pipeline'])
     model_id, fine_tuned_id = instance.prompt_mode.model, ''
     if 'gpt-3.5-turbo' not in model_id:
@@ -183,7 +255,7 @@ def prompt_mode(request):
             messages.warning(request, 'Не удалось обновить!')
     return render(request, 'home/modes/prompt_mode.html', {'form': form,
                                                            'youtube_video': 'https://www.youtube.com/embed/HSpYul7FYzw?si=UzabLVRlrN-83k12',
-                                                           'qualification_rules': instance.prompt_mode.qualification
+                                                           'qualification_rules': qualification
                                                            })
 
 

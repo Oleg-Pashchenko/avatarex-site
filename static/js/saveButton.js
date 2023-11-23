@@ -14,7 +14,9 @@ function saveData(mode, pipeline_id) {
     boundedSituationsFields["service_settings_error_message"] = document.getElementById("service_settings_error_message").value;
     dataObject["bounded_situations_fields"] = boundedSituationsFields;
 
-    const data = {};*/
+     */
+
+    const data = {};
 
 
     if (window.location.href.includes('database')) {
@@ -70,6 +72,22 @@ function saveData(mode, pipeline_id) {
         mode: 'inactive' // По умолчанию чекбокс неактивен
     };
     if (window.location.href.includes('knowledge-mode')) {
+
+        var boundedSituationsFields = {};
+
+        dataObject['mode'] = mode;
+        dataObject['pipeline_id'] = pipeline_id;
+
+        console.log(dataObject);
+        boundedSituationsFields["hi_message"] = document.getElementById("hi-message").value;
+        boundedSituationsFields["database_error_message"] = document.getElementById("db-error-message").value;
+        boundedSituationsFields["openai_error_message"] = document.getElementById("openai-error-message").value;
+        boundedSituationsFields["service_settings_error_message"] = document.getElementById("service_settings_error_message").value;
+        dataObject["bounded_situations_fields"] = boundedSituationsFields;
+
+        const data = {};
+
+
         const knowledgeObject = {};
         const knowledgeBoundedObject = {};
         const elements = document.querySelectorAll('.rule');
@@ -146,37 +164,66 @@ function saveData(mode, pipeline_id) {
 
 
     const elements = document.querySelectorAll('.rule');
+
+
     const qualificationFields = [];
 
-    elements.forEach((element) => {
+    elements.forEach((element, order) => {
         const fieldElements = element.querySelectorAll('[name="field-name"], [name="field-value"]');
-        const responseElements = element.querySelectorAll('[name^="response-name-"],[name^="number-select-"],[name^="time-select-"]');
+        const responseElements = element.querySelectorAll('[name^="response_name_"],[name^="number_select_"],[name^="time_select_"]');
 
-        const blockData = {};
+        const blockData = {
+            'order': order + 1,  // Порядковый номер для родительского словаря
+            'field_name': '',
+            'question': '',
+            'additional_questions': [],
+        };
 
         fieldElements.forEach((fieldElement) => {
             const fieldName = fieldElement.name;
             const fieldValue = fieldElement.value;
 
-            // Если поле начинается с "field-name", добавляем его значение как ключ
-            if (fieldName.startsWith('field-name')) {
-                const key = fieldValue;
-                const valueElement = element.querySelector('[name="field-value"]');
-                const value = valueElement ? valueElement.value : '';
-
-                blockData[key] = value;
+            if (fieldName === 'field-name') {
+                blockData['field_name'] = fieldValue;
+            } else if (fieldName === 'field-value') {
+                blockData['question'] = fieldValue;
             }
         });
 
+        let additionalOrder = 1;  // Порядковый номер для дополнительных вопросов
+
         responseElements.forEach((responseElement, index) => {
-            const RespName = responseElement.name;
-            const RespValue = responseElement.value;
+            const responseName = responseElement.name;
+            const responseValue = responseElement.value;
 
+            // Если поле вопроса не пусто
+            if (responseName.trim() !== '') {
+                const responseNameElement = element.querySelector(`[name="response_name_${index}"]`);
+                const timeNumberElement = element.querySelector(`[name="number_select_${index}"]`);
+                const timeTypeElement = element.querySelector(`[name="time_select_${index}"]`);
 
-            blockData[RespName] = RespValue;
+                const fieldtext = responseNameElement ? responseNameElement.value : '';
+                const timeNumber = timeNumberElement ? parseInt(timeNumberElement.value) : 0;
+                const timeType = timeTypeElement ? timeTypeElement.value : '';
+
+                // Если вопрос не пустой, добавляем его в массив additional_questions
+                if (fieldtext.trim() !== '') {
+                    const additionalQuestion = {
+                        'order': additionalOrder,  // Порядковый номер для дополнительного вопроса
+                        'question': fieldtext,
+                        'time_number': timeNumber,
+                        'time_type': timeType,
+                    };
+
+                    blockData['additional_questions'].push(additionalQuestion);
+                    additionalOrder++;  // Увеличиваем порядковый номер для следующего вопроса
+                }
+            }
         });
 
-        qualificationFields.push(blockData);
+        if (blockData['field_name'].trim() !== '' && blockData['question'].trim() !== '') {
+            qualificationFields.push(blockData);
+        }
     });
 
     console.log(qualificationFields);
