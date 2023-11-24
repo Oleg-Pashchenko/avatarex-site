@@ -3,48 +3,99 @@
 {% block head %}
     {{ block.super }}
 {% endblock %}
-{% block content %}
-    <div class="pl-3 pr-3 pb-2"><h1 style="display: flex; justify-content: center; ">Ваша подписка</h1>
-    </div>
+{% load static %}
 
-    <div style="width: 75%" class="row align-items-start ">
-        <div class="col-5 pr-0"><label class="h4 col pr-0 " for="exampleFormControlSelect1">Действующая
-            подписка:</label></div>
-        <div class="pt-1 col-2 pl-0"><p style="color: greenyellow;" class="h5 mt-0 pt-0 mb-0 pb-0 ">
-            Professional {{ subscription_type }}</p></div>
-        <div class="pt-0 col-3 ">
-            <p class="h4 col pr-0"> Действует до:</p>
+
+
+{% block content %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/payment.css' %}">
+    <main class="main flow">
+        <h1 style="display: flex; justify-content: center; ">Купить подписку</h1>
+        <div class="main__cards cards">
+            <div class="cards__inner">
+                <div class="cards__card card">
+                    <h2 class="card__heading">Basic</h2>
+                    <p class="card__price">$9.99</p>
+                    <ul role="list" class="card__bullets flow">
+                        <li>Доступ к стандартным методам</li>
+                        <li>E-mail Поддержка</li>
+                    </ul>
+                    <a href="#basic" class="card__cta cta">Начать</a>
+                </div>
+
+                <div class="cards__card card">
+                    <h2 class="card__heading">Pro</h2>
+                    <p class="card__price">$19.99</p>
+                    <ul role="list" class="card__bullets flow">
+                        <li>Доступ к продвинутым функциям</li>
+                        <li>Приоритетная E-mail поддержка</li>
+                        <li>Эксклюзивный доступ куда-нибудь</li>
+                    </ul>
+                    <a href="#pro" class="card__cta cta">Улучшить до Pro</a>
+                </div>
+
+                <div class="cards__card card">
+                    <h2 class="card__heading">Ultimate</h2>
+                    <p class="card__price">$29.99</p>
+                    <ul role="list" class="card__bullets flow">
+                        <li>Полный доступ ко всем функциям</li>
+                        <li>24/7 Поддержка</li>
+                        <li>Ранний доступ ко всем нововведениям</li>
+                    </ul>
+                    <a href="#ultimate" class="card__cta cta">Идти до конца</a>
+                </div>
+            </div>
+
+            <div class="overlay cards__inner"></div>
         </div>
-        <div class="pt-1 col-2 pl-0 ">
-            <p style="color: greenyellow" class="h5 mt-0 pt-0 mb-0 pb-0"> 31.10.24 {{ subscription_type }}</p>
+    </main>
+    <legend class="border-bottom mb-1 mt-4 "></legend>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-center">Ваша подписка</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 d-flex align-items-center justify-content-center">
+                <label class="h4 mb-0 pb-0" for="exampleFormControlSelect1">Действующая подписка:</label>
+            </div>
+            <div class="col-md-1">
+                <p style="color: greenyellow;" class="h5 mb-1  mt-1 pb-0 ">Pro {{ subscription_type }}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="h4 mb-0 pb-0 ">Действует до:</p>
+            </div>
+            <div class="col-md-2">
+                <p style="color: greenyellow" class="h5 mb-1 pb-0 mt-1">31.10.24 {{ subscription_type }}</p>
+            </div>
         </div>
     </div>
     <legend class="border-bottom mb-2"></legend>
-    <div class="pl-3 pr-3 pb-0 pt-0 mt-4"><h1 style="display: flex; justify-content: center; ">Купить подписку</h1>
-    </div>
-    <div class="pl-3 pr-3 pb-2 pt-0 ">
+    <!--<div class="pl-3 pr-3 pb-2 pt-0 ">
         <form>
             <div class="form-group">
                 <label class="h4" for="exampleFormControlSelect1">Выберите тип подписки</label>
                 <select style="background-color: rgb(38, 47, 60);color: white; border: solid rgb(38, 47, 60);font-size: large"
                         class=" col-15 pr-1 form-control input-group-text " id="exampleFormControlSelect1">
-                    <option style="text-align: left" class="input-group-text" value="stnd">Standart - 3499 руб./мес.</option>
-                    <option style="text-align: left" class="input-groups-text" value="pro">Professional - 7499 руб./мес. </option>
+                    <option style="text-align: left" class="input-group-text" value="stnd">Standart - 3499 руб./мес.
+                    </option>
+                    <option style="text-align: left" class="input-groups-text" value="pro">Professional - 7499
+                        руб./мес.
+                    </option>
                 </select>
             </div>
         </form>
-    </div>
-    <div style="display: flex; justify-content: center;"   class="mb-2" >
-        <button onclick="window.open('https://www.youtube.com/', '_blank');" type="button" class="btn btn-success">
-            Купить подписку
-        </button>
-    </div>
-    <legend class="border-bottom mb-1 mt-4 "></legend>
+    </div>-->
+
+
+
     <div class="pl-3 pr-3 pb-0 pt-0 mt-1 mb-0 "><h1 style="display: flex; justify-content: center; ">Транзакции</h1>
     </div>
-    <div class=" mt-2 "  style="display: flex; justify-content: center;">
-        <table class="table table-dark table-hover">
-            <thead class="bg-primary " >
+    <div class=" mt-2 " style="display: flex; justify-content: center;">
+        <table style="background-color: #2b2b2b;" class="table table-dark table-hover">
+            <thead class="bg-primary ">
             <tr>
                 <th scope="col ">#</th>
                 <th scope="col">Подписка</th>
@@ -55,23 +106,73 @@
             <tbody>
             <tr>
                 <th scope="row">1</th>
-                <td>Professional</td>
+                <td>Pro</td>
                 <td>10.09.23</td>
                 <td>7499₽</td>
             </tr>
             <tr>
                 <th scope="row">2</th>
-                <td>Professional</td>
+                <td>Pro</td>
                 <td>02.09.23</td>
                 <td>7499₽</td>
             </tr>
             <tr>
                 <th scope="row">3</th>
-                <td>Professional</td>
+                <td>Pro</td>
                 <td>29.09.23</td>
                 <td>7499₽</td>
             </tr>
             </tbody>
         </table>
     </div>
+
+
+
+    <script>console.clear();
+
+    const cardsContainer = document.querySelector(".cards");
+    const cardsContainerInner = document.querySelector(".cards__inner");
+    const cards = Array.from(document.querySelectorAll(".card"));
+    const overlay = document.querySelector(".overlay");
+
+    const applyOverlayMask = (e) => {
+        const overlayEl = e.currentTarget;
+        const x = e.pageX - cardsContainer.offsetLeft;
+        const y = e.pageY - cardsContainer.offsetTop;
+
+        overlayEl.style = `--opacity: 1; --x: ${x}px; --y:${y}px;`;
+    };
+
+    const createOverlayCta = (overlayCard, ctaEl) => {
+        const overlayCta = document.createElement("div");
+        overlayCta.classList.add("cta");
+        overlayCta.textContent = ctaEl.textContent;
+        overlayCta.setAttribute("aria-hidden", true);
+        overlayCard.append(overlayCta);
+    };
+
+    const observer = new ResizeObserver((entries) => {
+        entries.forEach((entry) => {
+            const cardIndex = cards.indexOf(entry.target);
+            let width = entry.borderBoxSize[0].inlineSize;
+            let height = entry.borderBoxSize[0].blockSize;
+
+            if (cardIndex >= 0) {
+                overlay.children[cardIndex].style.width = `${width}px`;
+                overlay.children[cardIndex].style.height = `${height}px`;
+            }
+        });
+    });
+
+    const initOverlayCard = (cardEl) => {
+        const overlayCard = document.createElement("div");
+        overlayCard.classList.add("card");
+        createOverlayCta(overlayCard, cardEl.lastElementChild);
+        overlay.append(overlayCard);
+        observer.observe(cardEl);
+    };
+
+    cards.forEach(initOverlayCard);
+    document.body.addEventListener("pointermove", applyOverlayMask);
+    </script>
 {% endblock content %}

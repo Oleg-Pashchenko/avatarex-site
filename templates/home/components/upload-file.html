@@ -1,11 +1,1 @@
-{% for upload_file_input in upload_file_inputs %}
-<form method="post" action={{ upload_file_input.action }}>
-    {% csrf_token %}
-    <div class="input-group-prepend">
-        <span class="input-group-text">{{ upload_file_input.text }}</span>
-        <input name="filename" value="{{ upload_file_input.file_link }}">
-        <button type="submit" class="input-group-text">Обновить</button>
-    </div>
-</form>
-{% endfor %}
 
