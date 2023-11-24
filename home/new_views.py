@@ -145,3 +145,8 @@ def database_and_knowledge_mode(request):
 @login_required
 def payment(request):
     return render(request, 'home/payment.html')
+
+
+
+def about(request):
+    return render(request, 'home/about.html')
