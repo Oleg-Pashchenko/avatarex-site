@@ -20,7 +20,7 @@
                 <div class="cards__card card">
                     <div style="text-align: center"><h1 class="card__heading">Старт</h1>
                         <p>на 30 дней</p></div>
-
+                    <div style="text-align: center">
                     {% if user.new_user %}
                         <p class="card__price" id="price">
                             <span style="text-decoration: line-through; color: #484848;">9.000 ₽</span> 3.000 ₽
@@ -28,6 +28,7 @@
                     {% else %}
                         <p class="card__price" id="price">9.000 ₽</p>
                     {% endif %}
+                    </div>
                     <ul class="list"></ul>
                     <button onclick="sendPeriod(1)" class="card__cta cta">Начать</button>
                 </div>
@@ -36,7 +37,9 @@
                 <div class="cards__card card">
                     <div style="text-align: center"><h1 class="card__heading">Профи</h1>
                         <p>на 3 года </p></div>
+                    <div style="text-align: center">
                     <p class="card__price">95.000 ₽</p>
+                        </div>
                     <ul class="list"></ul>
                     <button onclick="sendPeriod(2)" class="card__cta cta">Стать Профи</button>
                 </div>
