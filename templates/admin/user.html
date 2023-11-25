@@ -1,4 +1,5 @@
 {% extends "core/base_admin.html" %}
+{% csrf_token %}
 {% block content %}
     <div class="card text-center">
         <div class="card-header">
@@ -21,16 +22,20 @@
                            placeholder="30">
                 </div>
             </div>
-            <div class="form-group mb-0 ">
+            <div class="form-group mb-2 ">
                 <label for="exampleFormControlSelect1">Причина выдачи</label>
-                    <input type="reason" class="form-control" id="reason"
-                           placeholder="Подарок">
-                </div>
+                <input type="reason" class="form-control" id="reason"
+                       placeholder="Подарок">
             </div>
-            <div style="display: flex; justify-content: center;" class=" mb-4 mt-0 text-muted form-group">
-                <button type="submit" class="mt-0 btn btn-primary btn-lg">Выдать подписку</button></div>
-
+            <div class="mb-0">
+                {% include "home/components/upload-file.html" %}
+            </div>
         </div>
+        <div style="display: flex; justify-content: center;" class=" mb-4 mt-0 text-muted form-group">
+            <button type="submit" class="mt-0 btn btn-primary btn-lg">Выдать подписку</button>
+        </div>
+
+    </div>
 
     </div>
 

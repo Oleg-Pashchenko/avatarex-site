@@ -156,4 +156,3 @@ def update_token(request):
     else:
         GptApiKey(user=request.user, key=d['token']).save()
 
-
