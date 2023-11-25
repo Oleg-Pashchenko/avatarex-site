@@ -144,8 +144,23 @@ def database_and_knowledge_mode(request):
 
 @login_required
 def payment(request):
-    return render(request, 'home/payment.html')
+    transaction = [{'name': 'Pro',
+                    'date': '20.10.23',
+                    'amount': 2000,
+                    },
+                   {'name': 'EZ',
+                    'date': '29.10.23',
+                    'amount': 9000,
+                    }
 
+                   ]
+    new_user = True  # или False
+    user = {'new_user': new_user}
+    return render(request, 'home/payment.html',
+                  {'transaction': transaction,
+                   'user': user,
+
+                   })
 
 
 def about(request):
