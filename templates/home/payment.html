@@ -29,7 +29,7 @@
                         <p class="card__price" id="price">9.000 ₽</p>
                     {% endif %}
                     <ul class="list"></ul>
-                    <a onclick="setPeriod(1)" class="card__cta cta">Начать</a>
+                    <button onclick="sendPeriod(1)" class="card__cta cta">Начать</button>
                 </div>
 
 
@@ -38,7 +38,7 @@
                         <p style="text-align: center">на 3 года </p></div>
                     <p class="card__price">95.000 ₽</p>
                     <ul class="list"></ul>
-                    <a onclick="setPeriod(2)" class="card__cta cta">Стать Профи</a>
+                    <button onclick="sendPeriod(2)" class="card__cta cta">Стать Профи</button>
                 </div>
             </div>
 
@@ -59,13 +59,13 @@
                 <label class="h4 mb-0 pb-0" for="exampleFormControlSelect1">Действующая подписка:</label>
             </div>
             <div class="col-md-1">
-                <p style="color: greenyellow;" class="h5 mb-1  mt-1 pb-0 ">Pro {{ subscription_type }}</p>
+                <p style="color: greenyellow;" class="h5 mb-1  mt-1 pb-0 "> {{ sub_type }}</p>
             </div>
             <div class="col-md-3">
-                <p class="h4 mb-0 pb-0 ">Действует до:</p>
+                <p class="h4 mb-0 pb-0 ">Действует:</p>
             </div>
             <div class="col-md-2">
-                <p style="color: greenyellow" class="h5 mb-1 pb-0 mt-1">31.10.24 {{ subscription_type }}</p>
+                <p style="color: greenyellow" class="h5 mb-1 pb-0 mt-1"> {{ days }}</p>
             </div>
         </div>
     </div>
@@ -103,12 +103,16 @@
             </thead>
             <tbody>
             {% for transaction in transaction %}
-            <tr>
-                <th scope="row">{{ forloop.counter }}</th>
-                <td>{{ transaction.name }}</td>
-                <td>{{ transaction.date}}</td>
-                <td>{{ transaction.amount }}₽</td>
-            </tr>
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    {% if transaction.sub_type == 1 %}
+                        <td> Подписка на 30 дней </td>
+                        {% else %}
+                        <td> Подписка на 3 года </td>
+                    {% endif %}
+                    <td>{{ transaction.date }}</td>
+                    <td>{{ transaction.amount }}₽</td>
+                </tr>
             {% endfor %}
             </tbody>
         </table>
@@ -117,20 +121,31 @@
         // Функция для отправки POST-запроса
         function sendPeriod(value) {
             // Создаем объект FormData для передачи данных в POST-запросе
-            const formData = new FormData();
-            formData.append('period', value);
+
+
+            const data = {'period': value};
+
             const requestOptions = {
                 method: 'POST',
 
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: formData,
+                body: JSON.stringify(data)
             };
-            fetch(`payment`, requestOptions).then(response => {
+            fetch(`/payment/`, requestOptions)
+                .then(response => response.json())
+                .then(data => {
+                    // Assuming the URL key is stored in the 'urlKey' property of the response data
+                    const urlKey = data.url;
 
-                }
-            )
+                    // Redirect to the URL using window.location.href
+                    window.location.href = urlKey;
+                })
+                .catch(error => {
+                    console.error('Error fetching payment information:', error);
+                });
+
         }
     </script>
 

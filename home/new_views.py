@@ -1,9 +1,12 @@
+import json
+
 import openpyxl
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 
-from home import misc
+from home import misc, tinkoff
 from home.forms import GptDefaultMode
 from home.models import Pipelines
 
@@ -144,21 +147,34 @@ def database_and_knowledge_mode(request):
 
 @login_required
 def payment(request):
-    transaction = [{'name': 'Pro',
-                    'date': '20.10.23',
-                    'amount': 2000,
-                    },
-                   {'name': 'EZ',
-                    'date': '29.10.23',
-                    'amount': 9000,
-                    }
+    # Here execute update method
+    tinkoff.update(request.user.id)
+    new_user = tinkoff.is_user_new(request.user.id)  # или False
 
-                   ]
-    new_user = True  # или False
+    if request.method == 'POST':
+        b = json.loads(request.body)
+        period = b.get('period', None)
+        if period is None:
+            return render(request, 'home/payment.html')
+
+        if str(period) == '1':
+            if new_user:
+                sum1 = 3000
+            else:
+                sum1 = 9000
+        else:
+            sum1 = 95000
+        url = tinkoff.create_payment(sum1, request.user.id, int(period))
+        return JsonResponse({'url': url})
+
+    count, transactions = tinkoff.get_person_info(request.user.id)
+
     user = {'new_user': new_user}
     return render(request, 'home/payment.html',
-                  {'transaction': transaction,
+                  {'transaction': transactions,
                    'user': user,
+                   'days': f'{count} дней' if count != 0 else '',
+                   'sub_type': 'Pro' if count != 0 else ''
 
                    })
 
