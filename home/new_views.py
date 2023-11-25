@@ -9,6 +9,7 @@ from django.shortcuts import render, redirect
 from home import misc, tinkoff
 from home.forms import GptDefaultMode
 from home.models import Pipelines
+from home.wrappers import sub_active_required
 
 
 @login_required
@@ -37,7 +38,7 @@ def database_mode(request):
                       'view_rule': db_mode.view_rule
                   })
 
-
+@sub_active_required
 @login_required
 def knowledge_mode(request):
     d = dict(request.GET.items())
@@ -59,7 +60,7 @@ def knowledge_mode(request):
                       'bounded_situations': knowledge_mode.mode_messages,
                   })
 
-
+@sub_active_required
 @login_required
 def prompt_mode(request):
     d = dict(request.GET.items())

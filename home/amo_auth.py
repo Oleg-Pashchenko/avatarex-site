@@ -106,6 +106,8 @@ def update_pipelines(host, mail, password, user):
             knowledge_and_search_mode = SearchAndKnowledgeMode.objects.create(search_mode=search_mode2,
                                                                               knowledge_mode=knowledge_mode2)
 
+
+            
             pipeline = Pipelines.objects.create(
                 p_id=id,
                 name=name,

@@ -15,8 +15,10 @@ from django.views.decorators.csrf import csrf_exempt
 from . import amo_auth
 from .forms import AmoRegisterForm, GptDefaultMode
 from .models import AmoConnect, Pipelines, Statuses, GptApiKey
+from .wrappers import sub_active_required
 
 
+@sub_active_required
 @login_required
 def home(request):
     instance = AmoConnect.objects.filter(user=request.user).first()
