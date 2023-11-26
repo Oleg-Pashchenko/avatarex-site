@@ -280,9 +280,17 @@ def amo_register(request):
             host = form.cleaned_data.get('host')
             password = form.cleaned_data.get('password')
             # account_chat_id = form.cleaned_data.get('account_chat_id')
-            account_chat_id = new_amo.AmoConnect(user_login=email, user_password=password, host=host)
+            try:
+                amo_conn = new_amo.AmoConnect(user_login=email, user_password=password, host=host)
+                amo_conn.auth()
+                account_chat_id = amo_conn.amo_hash
+            except:
+                account_chat_id = ''
             print(account_chat_id)
-            status = amo_auth.try_auth(host, email, password, 3)
+            try:
+                status = amo_auth.try_auth(host, email, password, 3)
+            except:
+                status = False
             instance = AmoConnect.objects.filter(email=email).first()
             if status:
                 if instance:
