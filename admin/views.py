@@ -25,7 +25,7 @@ def user(request, user_id):
     # Передаем данные в шаблон и отображаем страницу
     return render(request, 'admin/user.html', {'user': user, 'pipelines': pipelines, 'upload_file_inputs': [
         {'action': '',
-         'text': 'Ссылка на базу знаний', 'file_link': 'nowledge_mode'},
+         'text': 'Ссылка на базу знаний', 'file_link': 'ссылка'},
     ]})
 
 
