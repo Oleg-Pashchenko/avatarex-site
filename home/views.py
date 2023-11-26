@@ -12,7 +12,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 
-from . import amo_auth
+from . import amo_auth, new_amo
 from .forms import AmoRegisterForm, GptDefaultMode
 from .models import AmoConnect, Pipelines, Statuses, GptApiKey
 from .wrappers import sub_active_required
@@ -279,7 +279,9 @@ def amo_register(request):
             email = form.cleaned_data.get('email')
             host = form.cleaned_data.get('host')
             password = form.cleaned_data.get('password')
-            account_chat_id = form.cleaned_data.get('account_chat_id')
+            # account_chat_id = form.cleaned_data.get('account_chat_id')
+            account_chat_id = new_amo.AmoConnect(user_login=email, user_password=password, host=host)
+            print(account_chat_id)
             status = amo_auth.try_auth(host, email, password, 3)
             instance = AmoConnect.objects.filter(email=email).first()
             if status:
