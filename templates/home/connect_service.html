@@ -10,11 +10,6 @@
             </fieldset>
 
             <fieldset class="form-group mt-3">
-                <legend class="border-bottom mb-4">Где найти параметр ChatID?</legend>
-                Перейдите по  <a id="link" href="" target="_blank">ссылке</a> и возьмите параметр amojo_id (он будет выглядеть примерно так: 123ab456-b4a6-4e66-9088-2837f8752be3)
-            </fieldset>
-
-            <fieldset class="form-group mt-3">
                 <div class="description-block">
                     <legend class="border-bottom mb-4">Простая настройка подключения в 3 шага:</legend>
 
@@ -37,16 +32,4 @@
     </div>
     </form>
     </div>
-    <script>
-        function updateFormAction() {
-            element = document.getElementById('link');
-            element.href = host.value + 'api/v4/account?with=amojo_id';
-
-        }
-
-        host = document.getElementById('id_host');
-        host.addEventListener('input', function () {
-            updateFormAction();
-        });
-    </script>
 {% endblock content %}
