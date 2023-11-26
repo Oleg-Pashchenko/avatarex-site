@@ -62,9 +62,6 @@ def prompt_mode(request):
     d = dict(request.GET.items())
     instance = Pipelines.objects.get(user=request.user, p_id=d['pipeline'])
     model_id, fine_tuned_id = instance.prompt_mode.model, ''
-    if 'gpt-3.5-turbo' not in model_id:
-        fine_tuned_id = model_id
-        model_id = 'gpt-3.5-turbo'
 
     form = GptDefaultMode(initial=
                           {'context': instance.prompt_mode.context,
@@ -165,3 +162,7 @@ def payment(request):
 
 def about(request):
     return render(request, 'home/about.html')
+
+
+def faq(request):
+    return render(request, 'home/faq.html')
