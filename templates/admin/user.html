@@ -6,29 +6,40 @@
             Пользователь
         </div>
         <div class=" pr-2 pl-2  card-body">
-            <h5 class="card-title">Шеншин Афанасий Афанасьевич</h5>
-            <p class="card-text">qweqew@gmail.com</p>
-            <div class="form-group">
-                <label for="exampleFormControlSelect1">Выберите подписку</label>
-                <select class="form-control" id="exampleFormControlSelect1">
-                    <option>Standart</option>
-                    <option>Professional</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="exampleFormControlSelect1">Введите срок в днях</label>
+            {% if user %}
+                <h5 class="card-tittle">{{ user.id }} </h5>
+                <p class="card-text">{{ user.email }}</p>
                 <div class="form-group">
-                    <input type="period" class="form-control" id="period"
-                           placeholder="30">
+                    <label for="exampleFormControlSelect1">Выберите подписку</label>
+                    <select class="form-control" id="exampleFormControlSelect1">
+                        <option>Standart</option>
+                        <option>Professional</option>
+                    </select>
                 </div>
-            </div>
-            <div class="form-group mb-2 ">
-                <label for="exampleFormControlSelect1">Причина выдачи</label>
-                <input type="reason" class="form-control" id="reason"
-                       placeholder="Подарок">
-            </div>
-            <div class="mb-0">
-                {% include "home/components/upload-file.html" %}
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Введите срок в днях</label>
+                    <div class="form-group">
+                        <input type="period" class="form-control" id="period"
+                               placeholder="30">
+                    </div>
+                </div>
+                <div class="form-group mb-2 ">
+                    <label for="exampleFormControlSelect1">Причина выдачи</label>
+                    <input type="reason" class="form-control" id="reason"
+                           placeholder="Подарок">
+                </div>
+            {% endif %}
+            <label for="exampleFormControlSelect1">Ссылка на базу знаний</label>
+            <div class="mb-2">
+                {% for upload_file_input in upload_file_inputs %}
+                <form method="post" class="w-100" action={{ upload_file_input.action }}>
+                    <div class="input-group-prepend">
+                        <span class="input-group-text ">{{ upload_file_input.text }}</span>
+                        <input name="filename" class="form-control" value="{{ upload_file_input.file_link }}">
+                        <button onclick="saveData('knowledge', {{ pipeline_id }});" type="submit" class="input-group-text">Обновить</button>
+                    </div>
+                </form>
+                {% endfor %}
             </div>
         </div>
         <div style="display: flex; justify-content: center;" class=" mb-4 mt-0 text-muted form-group">
@@ -37,6 +48,5 @@
 
     </div>
 
-    </div>
 
 {% endblock content %}

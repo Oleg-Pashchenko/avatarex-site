@@ -1,4 +1,6 @@
-from django.shortcuts import render
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
+from django.shortcuts import render, get_object_or_404
 
 from home.models import Pipelines
 
@@ -15,29 +17,19 @@ def translations(request):
     return render(request, 'admin/translations.html')
 
 
-def user(request):
-    d = dict(request.GET.items())
-    pipeline = d['pipeline']
-    pipeline = Pipelines.objects.get(user=request.user, p_id=pipeline)
-    knowledge_mode = pipeline.knowledge_mode
-    return render(request, 'admin/user.html', {
-        'pipeline_id': pipeline.p_id,
-        'file_link': knowledge_mode.database_link,
-        'upload_file_inputs': [
-            {'action': f'/api/v1/update-mode-file-link/?pipeline_id={pipeline.p_id}&mode_name='
-                       f'knowledge&redirect_url=/knowledge-mode/?pipeline={pipeline.p_id}',
-             'text': 'Ссылка на базу знаний', 'file_link': knowledge_mode.database_link},
-        ], })
+def user(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    pipelines = Pipelines.objects.filter(user=User.objects.get(id=user_id))
 
-    """
-        return render(request, 'admin/user.html', {
-            'upload_file_inputs': [
-                {'action': 'Fff',
-                 'text': 'Ссылка на базу данных', 'file_link': 'FF'},
-            ],
-        })
-    """
+
+    # Передаем данные в шаблон и отображаем страницу
+    return render(request, 'admin/user.html', {'user': user, 'pipelines': pipelines, 'upload_file_inputs': [
+        {'action': '',
+         'text': 'Ссылка на базу знаний', 'file_link': 'nowledge_mode'},
+    ]})
 
 
 def users(request):
-    return render(request, 'admin/users.html')
+    all_users = User.objects.all()
+
+    return render(request, 'admin/users.html', {'users': all_users})
