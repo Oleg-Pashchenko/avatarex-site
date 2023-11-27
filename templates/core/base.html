@@ -13,13 +13,20 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/main_css.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/qualification.css' %}">
 
+    <style>body {
+        font-family: 'Roboto', sans-serif;, system-ui, sans-serif:;
+        font-size: 16px;
+        background-color: #212121;
+        color: #ddd;
+    }
+    </style>
+
 </head>
 <body>
 <div class="container">
-
     <nav class="navbar navbar-expand-lg navbar-light header-container navbar-dark  text-white rounded p-2 row">
         <a class=" navbar-brand ml-2" href="{% url 'main' %}">Avatarex</a>
-        <a  data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+        <a data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
            aria-expanded="false" aria-label="Toggle navigation">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
                     aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,18 +35,22 @@
         </a>
         <div class="navbar-collapse collapse" id="navbarNav">
             <ul class="navbar-nav">
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-item nav-link col-2" href="{% url 'home' %}">Главная</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-item nav-link col-2" href="{% url 'payment' %}">Оплата</a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-item nav-link col-2" href="{% url 'profile' %}">Профиль</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-item nav-link col-2" href="{% url 'faq' %}">Помощь</a>
                 </li>
+
+
+
                 <li class="nav-item">
                     <a class="nav-item nav-link col" href="{% url 'about' %}">О нас</a>
                 </li>
@@ -70,5 +81,29 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Add this script tag to your HTML document -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Get the current URL
+        var currentUrl = window.location.pathname;
+
+        // Remove the leading slash to match it with the URLs in the navigation
+        currentUrl = currentUrl.substr(1);
+
+        // Iterate through each navigation link
+        $('.navbar-nav a').each(function () {
+            // Get the href attribute of the link
+            var href = $(this).attr('href').substr(1);
+
+            // Check if the current URL contains the link's href
+            if (currentUrl.indexOf(href) !== -1) {
+                // Add the "active" class to the parent li element
+                $(this).closest('li').addClass('active');
+            }
+        });
+    });
+</script>
+
 </body>
 </html>

@@ -78,3 +78,19 @@ class Statuses(models.Model):
     is_active = models.BooleanField(default=True)
     pipeline_id = models.ForeignKey(Pipelines, on_delete=models.CASCADE)
     is_exists = models.BooleanField(default=True)
+
+
+class Transactions(models.Model):
+    sub_type = models.IntegerField()
+    date = models.DateField()
+    amount = models.FloatField()
+    payment_id = models.TextField()
+    owner_id = models.IntegerField()
+    is_finished = models.BooleanField()
+
+
+class Subscriptions(models.Model):
+    date_start = models.DateField()
+    period = models.IntegerField()
+    owner_id = models.IntegerField()
+    transaction_id = models.IntegerField(default=None)

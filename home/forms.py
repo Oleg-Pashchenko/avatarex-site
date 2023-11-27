@@ -5,7 +5,6 @@ class AmoRegisterForm(forms.Form):
     email = forms.CharField(required=True)
     host = forms.CharField(required=True)
     password = forms.CharField(widget=forms.PasswordInput, required=True)
-    account_chat_id = forms.CharField(required=True)
 
 
 class GptDefaultMode(forms.Form):

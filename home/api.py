@@ -88,7 +88,6 @@ def update_mode(request):
 @login_required
 def update_mode_file_link(request):
     """Get pipeline_id, mode_name, redirect urls params and filename string data"""
-
     data = request.GET.dict()
     pipeline_id = data['pipeline_id']
     mode_name = data['mode_name']
