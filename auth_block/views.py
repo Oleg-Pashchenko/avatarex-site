@@ -49,4 +49,7 @@ def login_view(request):
 
 
 def logout(request):
-    pass
+    return redirect('/auth/login/')
+
+def amo(request):
+    return redirect('/amo-register/')

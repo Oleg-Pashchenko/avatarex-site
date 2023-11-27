@@ -10,11 +10,21 @@ import gdown
 def update_mode(request):
     data = json.loads(request.body.decode('utf-8'))
     qualification_fields = data['qualification_fields']
-    user_info = data['users_info']
-    print(user_info)
+    print(qualification_fields)
     qualification_finished = data['qualificationFinished']
-    print(qualification_finished, 'qf')
-    bounded_situations_fields = data['bounded_situations_fields']
+    print(qualification_finished)
+
+    # bounded_situations_fields = data['bounded_situations_fields']
+    prompt_data = data.get('prompt-data', {})
+    print(prompt_data)
+    checkbox = data['checkbox']
+    print(checkbox)
+
+    know_bound = data.get('knowledge-bounded', {})
+    know_promt = data.get('knowledge-prompt', {})
+    print(know_bound)
+    print(know_promt)
+
     database_mode_fields = data['database_mode_fields']
     mode = data['mode']
     if mode != 'knowledge':
@@ -90,7 +100,6 @@ def update_mode_file_link(request):
     """Get pipeline_id, mode_name, redirect urls params and filename string data"""
     info = request.POST.dict()
 
-
     pipeline_id = info['pipeline']
     mode_name = info['mode_name']
     redirect_url = ''
@@ -158,4 +167,3 @@ def update_token(request):
         inst.save()
     else:
         GptApiKey(user=request.user, key=d['token']).save()
-

@@ -143,8 +143,8 @@
         }
 
         .card__heading {
-            font-size: 1.05em;
-            font-weight: 600;
+            font-size: 22px;
+            font-weight:  bold;
         }
 
         .card__price {
@@ -238,9 +238,29 @@
             --lightness: 48.04%;
         }
 
+        .card:nth-child(5) {
+            --hue: 638.69;
+            --saturation: 100%;
+            --lightness: 48.04%;
+        }
+        .card:nth-child(6) {
+            --hue: 238.69;
+            --saturation: 100%;
+            --lightness: 48.04%;
+        }
+        .card:nth-child(7) {
+            --hue: 508.69;
+            --saturation: 100%;
+            --lightness: 48.04%;
+        }
+        .card:nth-child(8) {
+            --hue: 738.69;
+            --saturation: 100%;
+            --lightness: 48.04%;
+        }
     </style>
     <div class="container mt-5">
-        <h1>Часто задаваемые вопросы (FAQ)</h1>
+        <h1>Ответы на вопросы</h1>
 
 
         <!-- Добавьте другие вопросы и ответы аналогичным образом -->
@@ -253,9 +273,9 @@
                     style="">
                     <label onclick="toggleVisibility(this.nextElementSibling)"
                            type="section" role="menuitem"
-                           class="fjUIJu2 label-hoover w-100">
+                           class="fjUIJu2 label-hoover w-100 pb-2 pt-3">
                         <div class="label-content pl-2" style="border-radius: 10px">
-                            <div title="Введение">Вопрос первый</div>
+                            <div title="Введение" class="card__heading">Как узнать о приложении Avatarex для amoCRM подробнее?</div>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                  fill="currentColor" class="bi bi-chevron-right galochka"
                                  viewBox="0 0 16 16">
@@ -263,22 +283,18 @@
                             </svg>
                         </div>
                     </label>
-                    <p class="ml-0 text-label3 pl-4 inner_text">Lorem Ipsum is simply dummy text of the printing and
-                        typesetting
-                        industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                        unknown printer took a galley of type and scrambled it to make a type specimen book. It has
-                        survived not only five centuries, but also the leap into electronic typesetting, remaining
-                        essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets
-                        containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus
-                        PageMaker including versions of Lorem Ipsum.</p>
+                    <span class="ml-0 text-label3 pl-4 inner_text">Свяжитесь с разработчиками по желтой кнопке в разделе “Что же такое нейро-ассистенты и как Avatarex для amoCRM с ними работает?” или по этой ссылке <a
+                            href="https://t.me/vladimir_avatarex"
+                            style="border-bottom: 1px solid rgb(255, 255, 255); box-shadow: none; text-decoration: none;">https://t.me/vladimir_avatarex</a> </span>
+
                 </li>
                 <li id="Introduction" class="cards__inner card mb-3"
                     style="display: flex;flex-direction: column;align-items: center;justify-content: center;">
                     <label onclick="toggleVisibility(this.nextElementSibling)"
                            type="section" role="menuitem"
-                           class="fjUIJu2 label-hoover w-100">
+                           class="fjUIJu2 label-hoover w-100 pb-2 pt-3">
                         <div class="label-content pl-2" style="border-radius: 10px">
-                            <div title="Введение">Вопрос второй</div>
+                            <div title="Введение" class="card__heading">Есть ли демо-период?</div>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                  fill="currentColor" class="bi bi-chevron-right galochka"
                                  viewBox="0 0 16 16">
@@ -286,16 +302,19 @@
                             </svg>
                         </div>
                     </label>
-                    <p style="display: none; padding-top: 25px; padding-bottom: 25px; padding-right: 15px; padding-left: 15px; width: 95%;margin-top: auto; margin-bottom: 25px;box-shadow: inset 0 10px 10px rgba(0, 0, 0, 0.55);"
-                       class="ml-0 text-label3 pl-4" class="ml-0 text-label3 pl-4">Ёмкий ответ</p>
+                    <span style="display: none; padding-top: 25px; padding-bottom: 25px; padding-right: 15px; padding-left: 15px; width: 95%;margin-top: auto; margin-bottom: 25px;box-shadow: inset 0 10px 10px rgba(0, 0, 0, 0.55);"
+                          class="ml-0 text-label3 pl-4 inner_text">Да, мы даем возможность
+                        протестировать приложение в течение 3 дней бесплатно. Помогаем подключить и настроить приложение
+                        в аккаунте amoCRM. Если у dfc нет аккаунта в amoCRM, поможем подключить и настроить новый
+                        аккаунт.</span>
                 </li>
                 <li id="Introduction" class="cards__inner card mb-3"
                     style="display: flex;flex-direction: column;align-items: center;justify-content: center;">
                     <label onclick="toggleVisibility(this.nextElementSibling)"
                            type="section" role="menuitem"
-                           class="fjUIJu2 label-hoover w-100">
+                           class="fjUIJu2 label-hoover w-100 pb-2 pt-3">
                         <div class="label-content pl-2 " style="border-radius: 10px">
-                            <div title="Введение">Вопрос третий</div>
+                            <div title="Введение" class="card__heading">Как осуществляется техподдержка?</div>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                  fill="currentColor" class="bi bi-chevron-right galochka"
                                  viewBox="0 0 16 16">
@@ -303,16 +322,18 @@
                             </svg>
                         </div>
                     </label>
-                    <p style="display: none; padding-top: 25px; padding-bottom: 25px; padding-right: 15px; padding-left: 15px; width: 95%;margin-top: auto; margin-bottom: 25px;box-shadow: inset 0 10px 10px rgba(0, 0, 0, 0.55);"
-                       class="ml-0 text-label3 pl-4" class="ml-0 text-label3 pl-4">Ёмкий ответ</p>
+                    <span style="display: none; padding-top: 25px; padding-bottom: 25px; padding-right: 15px; padding-left: 15px; width: 95%;margin-top: auto; margin-bottom: 25px;box-shadow: inset 0 10px 10px rgba(0, 0, 0, 0.55);"
+                          class="ml-0 text-label3 pl-4 inner_text">Техподдержка осуществляется через
+                        персональный чат в Телеграм, в котором наши специалисты отвечают на вопросы и помогают решать
+                        технические задачи в режиме с 9 утра до 9 вечера по МСК без выходных.</span>
                 </li>
                 <li id="Introduction" class="cards__inner card mb-3"
                     style="display: flex;flex-direction: column;align-items: center;justify-content: center;">
                     <label onclick="toggleVisibility(this.nextElementSibling)"
                            type="section" role="menuitem"
-                           class="fjUIJu2 label-hoover w-100">
+                           class="fjUIJu2 label-hoover w-100 pb-2 pt-3">
                         <div class="label-content pl-2" style="border-radius: 10px">
-                            <div title="Введение">Вопрос четвертый</div>
+                            <div title="Введение" class="card__heading">Как происходит выплата партнерской комиссии?</div>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                  fill="currentColor" class="bi bi-chevron-right galochka"
                                  viewBox="0 0 16 16">
@@ -320,11 +341,87 @@
                             </svg>
                         </div>
                     </label>
-                    <p style="display: none; padding-top: 25px; padding-bottom: 25px; padding-right: 15px; padding-left: 15px; width: 95%;margin-top: auto; margin-bottom: 25px;box-shadow: inset 0 10px 10px rgba(0, 0, 0, 0.55);" class="ml-0 text-label3 pl-4" class="ml-0 text-label3 pl-4">Ёмкий ответ</p>
+                    <span style="display: none; padding-top: 25px; padding-bottom: 25px; padding-right: 15px; padding-left: 15px; width: 95%;margin-top: auto; margin-bottom: 25px;box-shadow: inset 0 10px 10px rgba(0, 0, 0, 0.55);"
+                          class="ml-0 text-label3 pl-4 inner_text">Партнер может самостоятельно принять оплату от конечного пользователя и перевести нам стоимость лицензии. Если платеж от конечного пользователя принимаем мы, комиссия выплачивается партнеру в течение 3 рабочих дней в любой удобной форме и валюте, включая криптовалюты.</span>
+                </li>
+                <li id="Introduction" class="cards__inner card mb-3"
+                    style="display: flex;flex-direction: column;align-items: center;justify-content: center;">
+                    <label onclick="toggleVisibility(this.nextElementSibling)"
+                           type="section" role="menuitem"
+                           class="fjUIJu2 label-hoover w-100 pb-2 pt-3">
+                        <div class="label-content pl-2" style="border-radius: 10px">
+                            <div title="Введение" class="card__heading">Могу ли я выступить в качестве партнера для продвижения приложения?
+                            </div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                 fill="currentColor" class="bi bi-chevron-right galochka"
+                                 viewBox="0 0 16 16">
+                                <path d="M6.293 4.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L9.586 8 6.293 4.707a1 1 0 010-1.414z"/>
+                            </svg>
+                        </div>
+                    </label>
+                    <span style="display: none; padding-top: 25px; padding-bottom: 25px; padding-right: 15px; padding-left: 15px; width: 95%;margin-top: auto; margin-bottom: 25px;box-shadow: inset 0 10px 10px rgba(0, 0, 0, 0.55);"
+                          class="ml-0 text-label3 pl-4 inner_text">Да, это возможно. Мы выплачиваем комиссионное вознаграждение нашим партнерам за продвижение приложения. Чтобы узнать условия партнерской программы - свяжитесь с разработчиками по желтой кнопке в разделе “Что же такое нейро-ассистенты и как Avatarex для amoCRM с ними работает?” или по этой ссылке <a
+                            href="https://t.me/vladimir_avatarex"
+                            style="border-bottom: 1px solid rgb(255, 255, 255); box-shadow: none; text-decoration: none;">https://t.me/vladimir_avatarex</a></span>
+                </li>
+                <li id="Introduction" class="cards__inner card mb-3"
+                    style="display: flex;flex-direction: column;align-items: center;justify-content: center;">
+                    <label onclick="toggleVisibility(this.nextElementSibling)"
+                           type="section" role="menuitem"
+                           class="fjUIJu2 label-hoover w-100 pb-2 pt-3">
+                        <div class="label-content pl-2" style="border-radius: 10px">
+                            <div title="Введение" class="card__heading">За что еще нужно платить, кроме лицензии на приложение?</div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                 fill="currentColor" class="bi bi-chevron-right galochka"
+                                 viewBox="0 0 16 16">
+                                <path d="M6.293 4.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L9.586 8 6.293 4.707a1 1 0 010-1.414z"/>
+                            </svg>
+                        </div>
+                    </label>
+                    <span style="display: none; padding-top: 25px; padding-bottom: 25px; padding-right: 15px; padding-left: 15px; width: 95%;margin-top: auto; margin-bottom: 25px;box-shadow: inset 0 10px 10px rgba(0, 0, 0, 0.55);"
+                          class="ml-0 text-label3 pl-4 inner_text">Кроме оплаты за лицензию Avatarex для amoCRM, необходимо оплачивать самостоятельно подписку на amoCRM и подписку на chatGPT/openai.com (оплачивать расход токенов).</span>
+                </li>
+                <li id="Introduction" class="cards__inner card mb-3"
+                    style="display: flex;flex-direction: column;align-items: center;justify-content: center;">
+                    <label onclick="toggleVisibility(this.nextElementSibling)"
+                           type="section" role="menuitem"
+                           class="fjUIJu2 label-hoover w-100 pb-2 pt-3">
+                        <div class="label-content pl-2" style="border-radius: 10px">
+                            <div title="Введение" class="card__heading">Как партнер должен передавать клиентов (конечных пользователей)?</div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                 fill="currentColor" class="bi bi-chevron-right galochka"
+                                 viewBox="0 0 16 16">
+                                <path d="M6.293 4.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L9.586 8 6.293 4.707a1 1 0 010-1.414z"/>
+                            </svg>
+                        </div>
+                    </label>
+                    <span style="display: none; padding-top: 25px; padding-bottom: 25px; padding-right: 15px; padding-left: 15px; width: 95%;margin-top: auto; margin-bottom: 25px;box-shadow: inset 0 10px 10px rgba(0, 0, 0, 0.55);"
+                          class="ml-0 text-label3 pl-4 inner_text">Партнеры передают контактные данные конечных пользователей своим кураторам из числа сотрудников нашей компании, которые назначаются после собеседования с партнером.</span>
+                </li>
+                <li id="Introduction" class="cards__inner card mb-3"
+                    style="display: flex;flex-direction: column;align-items: center;justify-content: center;">
+                    <label onclick="toggleVisibility(this.nextElementSibling)"
+                           type="section" role="menuitem"
+                           class="fjUIJu2 label-hoover w-100 pb-2 pt-3">
+                        <div class="label-content pl-2" style="border-radius: 10px">
+                            <div title="Введение" class="card__heading">Как юридически оформляются отношения с пользователями?</div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                 fill="currentColor" class="bi bi-chevron-right galochka"
+                                 viewBox="0 0 16 16">
+                                <path d="M6.293 4.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L9.586 8 6.293 4.707a1 1 0 010-1.414z"/>
+                            </svg>
+                        </div>
+                    </label>
+                    <span style="display: none; padding-top: 25px; padding-bottom: 25px; padding-right: 15px; padding-left: 15px; width: 95%;margin-top: auto; margin-bottom: 25px;box-shadow: inset 0 10px 10px rgba(0, 0, 0, 0.55);"
+                          class="ml-0 text-label3 pl-4 inner_text">Отношения между пользователями приложения и нашей компанией строятся на основе публичной оферты, опубликованной на этом сайте.</span>
                 </li>
             </ul>
             <ul class="overlay cards__inner ">
-                <li class="cards__inner card mb-3" ><p style="display: none"></p></li>
+                <li class="cards__inner card mb-3"><p style="display: none"></p></li>
+                <li class="cards__inner card mb-3"><p style="display: none"></p></li>
+                <li class="cards__inner card mb-3"><p style="display: none"></p></li>
+                <li class="cards__inner card mb-3"><p style="display: none"></p></li>
+                <li class="cards__inner card mb-3"><p style="display: none"></p></li>
                 <li class="cards__inner card mb-3"><p style="display: none"></p></li>
                 <li class="cards__inner card mb-3"><p style="display: none"></p></li>
                 <li class="cards__inner card mb-3"><p style="display: none"></p></li>

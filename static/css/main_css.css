@@ -1,4 +1,8 @@
 
+body{
+    font-family: 'Roboto', sans-serif;, system-ui, sans-serif:;
+}
+
 .gradient-text_cyan {
     font-size: 6vw;
     background: linear-gradient(90deg, white, cyan);
