@@ -415,3 +415,4 @@ def update_new_db_rules(request):
     pipeline_obj.save()
     messages.success(request, "Данные обновлены!")
     return 'ok'
+

@@ -1,0 +1,33 @@
+{% extends "core/base_admin.html" %}
+{% csrf_token %}
+{% block content %}
+    <div class="mb-2">
+        <h4> Настроить Widget поддержки: </h4>
+        <br/>
+        <form method="post" class="w-100" action="/admin/widget/">
+
+            <h6>Ссылка на базу знаний:</h6>
+            <input name="knowledge_link" class="form-control" value="{{ settings.knowledge_link }}">
+            <br/>
+
+
+            <h6>Контекст:</h6>
+            <textarea name="context" class="form-control">{{ settings.context }}</textarea>
+            <br/>
+
+
+            <h6>Api Token:</h6>
+            <input name="api_token" class="form-control" value="{{ settings.api_token }}">
+            <br/>
+
+
+            <h6>Сообщение при ошибке:</h6>
+            <textarea name="error_message" class="form-control">{{ settings.error_message }}</textarea>
+
+            <br/>
+            <button type="submit" class="input-group-text">Обновить
+            </button>
+        </form>
+    </div>
+
+{% endblock content %}

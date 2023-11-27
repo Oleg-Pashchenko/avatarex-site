@@ -94,3 +94,10 @@ class Subscriptions(models.Model):
     period = models.IntegerField()
     owner_id = models.IntegerField()
     transaction_id = models.IntegerField(default=None)
+
+
+class AvatarexSettings(models.Model):
+    knowledge_link = models.CharField(max_length=100)
+    context = models.CharField(max_length=30000)
+    api_token = models.CharField(max_length=100)
+    error_message = models.CharField(max_length=30000)
