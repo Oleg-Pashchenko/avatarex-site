@@ -63,7 +63,6 @@ def get_stages_by_pipeline(request):
         selected_voice = 'нет'
         disabled_voice = 'да'
 
-
     if selected_mode == k_m_text:
         disabled_mode, disabled_mode2, disabled_mode3 = p_m_text, s_m_text, k_a_s_m_text
     elif selected_mode == s_m_text:
@@ -213,18 +212,19 @@ def new_db_mode(request):
         q_m = QualificationMode.objects.get(p_id=pipeline)
         print(q_m.qualification_rules)
         return render(request, 'home/old_ code/new_db_mode.html', {'pipeline': pipeline,
-                                                     'file_link': q_m.file_link,
-                                                     'qualification_rules': q_m.qualification_rules,
-                                                     'hi_message': q_m.hi_message,
-                                                     'openai_error_message': q_m.openai_error_message,
-                                                     'db_error_message': q_m.db_error_message,
-                                                     'qualification_repeat_time': q_m.qualification_repeat_time,
-                                                     'qualification_repeat_count': q_m.qualification_repeat_count,
-                                                     'gpt_not_qualified_message_time': q_m.gpt_not_qualified_message_time,
-                                                     'gpt_not_qualified_question_time': q_m.gpt_not_qualified_question_time
+                                                                   'file_link': q_m.file_link,
+                                                                   'qualification_rules': q_m.qualification_rules,
+                                                                   'hi_message': q_m.hi_message,
+                                                                   'openai_error_message': q_m.openai_error_message,
+                                                                   'db_error_message': q_m.db_error_message,
+                                                                   'qualification_repeat_time': q_m.qualification_repeat_time,
+                                                                   'qualification_repeat_count': q_m.qualification_repeat_count,
+                                                                   'gpt_not_qualified_message_time': q_m.gpt_not_qualified_message_time,
+                                                                   'gpt_not_qualified_question_time': q_m.gpt_not_qualified_question_time
                                                                    })
     except:
         return render(request, 'home/old_ code/new_db_mode.html', {'pipeline': pipeline})
+
 
 @login_required
 def syncronize_amo(request):
@@ -331,6 +331,7 @@ def tomorrow(request):
     return render(request, 'home/404.html')
 
 
+@login_required
 def profile(request):
     amo_connect_object = AmoConnect.objects.get(user=request.user)
 
@@ -423,4 +424,3 @@ def update_new_db_rules(request):
     pipeline_obj.save()
     messages.success(request, "Данные обновлены!")
     return 'ok'
-
