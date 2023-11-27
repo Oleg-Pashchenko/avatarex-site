@@ -124,6 +124,23 @@
     </div>
 
 </div>
+<!-- Add this script section at the end of your existing script -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var chatInput = document.getElementById('chat-input');
+
+        // Add an event listener for the 'keydown' event on the input element
+        chatInput.addEventListener('keydown', function (event) {
+            // Check if the pressed key is 'Enter' (key code 13)
+            if (event.keyCode === 13) {
+                // Prevent the default behavior of the Enter key (e.g., new line)
+                event.preventDefault();
+                // Call the sendMessage function
+                sendMessage();
+            }
+        });
+    });
+</script>
 
 <script>
     function toggleChat() {
