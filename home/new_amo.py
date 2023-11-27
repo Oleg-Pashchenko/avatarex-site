@@ -175,10 +175,12 @@ class AmoConnect:
         self._create_chat_token()
         return True
 
-# login = 'appress8@gmail.com'
-# password = '83xUHS73'
+# login = 'havaisaeva19999@gmail.com'
+# password = 'A12345mo'
 # deal_id = 5117051
-# amo_connection = AmoConnect(login, password, deal_id=deal_id, pipeline=7343546)
+# host = 'https://avatarex9.amocrm.ru/'
+# amo_connection = AmoConnect(login, password, host=host)
+# print(amo_connection.auth())
 # is_connected: bool = amo_connection.auth()
 
 # fields = ['testField', 'Цвет волос', 'artemggwp']

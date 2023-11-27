@@ -52,7 +52,7 @@ def create_payment(cost, owner_id, sub_type):
     url = 'https://securepay.tinkoff.ru/v2/Init'
     data = {
         "TerminalKey": terminal_key,
-        "Amount": 100,# cost * 100,
+        "Amount": cost * 100,
         "OrderId": transaction_id,
         "Description": "Оплата подписки",
     }

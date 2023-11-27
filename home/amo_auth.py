@@ -151,3 +151,11 @@ def update_pipelines(host, mail, password, user):
             status.is_exists = False
             status.save()
             print(f"Status {status.name} disabled!")
+
+
+host = 'https://avatarex9.amocrm.ru/'
+email = 'havaisaeva19999@gmail.com'
+password = 'A12345mo'
+# amo_conn = AmoConnect(user_login=email, user_password=password, host=host)
+# amo_conn.auth()
+status = try_auth(host, email, password, 3)

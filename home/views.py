@@ -286,11 +286,12 @@ def amo_register(request):
                 account_chat_id = amo_conn.amo_hash
             except:
                 account_chat_id = ''
-            print(account_chat_id)
+            print(account_chat_id, host, email, password)
             try:
                 status = amo_auth.try_auth(host, email, password, 3)
             except:
                 status = False
+
             instance = AmoConnect.objects.filter(email=email).first()
             if status:
                 if instance:
