@@ -332,8 +332,16 @@ def tomorrow(request):
 
 
 def profile(request):
-    messages.info(request, 'Дата запуска раздела: 18.10.2023')
-    return render(request, 'home/404.html')
+    amo_connect_object = AmoConnect.objects.get(user=request.user)
+
+    # Передаем данные в контекст
+    context = {
+        'email': amo_connect_object.email,
+        'host': amo_connect_object.host,
+        'password': amo_connect_object.password,
+        'account_chat_id': amo_connect_object.account_chat_id,
+    }
+    return render(request, 'home/profile.html', context)
 
 
 @login_required()

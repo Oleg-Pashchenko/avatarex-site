@@ -21,27 +21,23 @@
                     <div style="text-align: center"><h1 class="card__heading">Старт</h1>
                         <p>на 30 дней</p></div>
                     <div style="text-align: center">
-                    {% if user.new_user %}
-                        <p class="card__price" id="price">
-                            <span style="text-decoration: line-through; color: #484848;">9.000 ₽</span> 3.000 ₽
-                        </p>
-                    {% else %}
-                        <p class="card__price" id="price">9.000 ₽</p>
-                    {% endif %}
+                        {% if user.new_user %}
+                            <p class="card__price" id="price">
+                                <span style="text-decoration: line-through; color: #484848;">9.000 ₽</span> 3.000 ₽
+                            </p>
+                        {% else %}
+                            <p class="card__price" id="price">9.000 ₽</p>
+                        {% endif %}
                     </div>
-                    <ul class="list"></ul>
-                    <button onclick="sendPeriod(1)" class="card__cta cta">Начать</button>
+                    <button style="height: auto" onclick="sendPeriod(1)" class="btn card__cta cta">Начать</button>
                 </div>
-
-
                 <div class="cards__card card">
                     <div style="text-align: center"><h1 class="card__heading">Профи</h1>
                         <p>на 3 года </p></div>
                     <div style="text-align: center">
-                    <p class="card__price">95.000 ₽</p>
-                        </div>
-                    <ul class="list"></ul>
-                    <button onclick="sendPeriod(2)" class="card__cta cta">Стать Профи</button>
+                        <p class="card__price">95.000 ₽</p>
+                    </div>
+                    <button style="height: auto" onclick="sendPeriod(2)" class="btn card__cta cta ">Стать Профи</button>
                 </div>
             </div>
 
@@ -109,9 +105,9 @@
                 <tr>
                     <th scope="row">{{ forloop.counter }}</th>
                     {% if transaction.sub_type == 1 %}
-                        <td> Подписка на 30 дней </td>
-                        {% else %}
-                        <td> Подписка на 3 года </td>
+                        <td> Подписка на 30 дней</td>
+                    {% else %}
+                        <td> Подписка на 3 года</td>
                     {% endif %}
                     <td>{{ transaction.date }}</td>
                     <td>{{ transaction.amount }}₽</td>
