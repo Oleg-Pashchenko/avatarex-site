@@ -1,5 +1,7 @@
 from home import views, api, new_views
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('', views.main, name='main'),
@@ -23,7 +25,6 @@ urlpatterns = [
     path('api/v1/home/update-db-rules/', views.update_db_rules, name='update_db_rules'),
     path('api/v1/home/update-new-db-rules/', views.update_new_db_rules, name='update_new_db_rules'),
     path('api/v1/home/update-voice/', views.update_voice, name='update_voice'),
-
     # New handlers
     # VIEWS
     path('prompt-mode/', new_views.prompt_mode, name='prompt_mode_v1'),
@@ -36,3 +37,5 @@ urlpatterns = [
     path('api/v1/update-mode-file-link/', api.update_mode_file_link, name='update_mode_file_link')
 
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

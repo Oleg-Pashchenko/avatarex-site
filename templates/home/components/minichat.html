@@ -1,12 +1,20 @@
+{% load static %}
 <style>
     #chat-container {
         position: relative;
     }
 
+    .header-text {
+
+        font-size: 18px;
+        font-weight: 600;
+
+    }
+
     #chat-circle {
         width: 50px;
         height: 50px;
-        background-color: #00aced;
+        background-color: rgb(114, 119, 240);
         border-radius: 50%;
         position: fixed;
         bottom: 20px;
@@ -26,8 +34,9 @@
         right: 20px;
         width: 300px;
         height: 500px;
-        background-color: white;
-        border: 1px solid #ccc;
+        background: url("{% static 'icons/pattern-30.svg' %}") no-repeat center center;
+        background-color: #4b4b4b;
+        background-size: cover;
         border-radius: 15px;
         overflow: hidden;
         z-index: 2;
@@ -35,8 +44,9 @@
     }
 
     #chat-header {
-        background-color: #00aced;
+        background-color: rgb(114, 119, 240);
         color: white;
+        height: 10%;
         padding: 10px;
         cursor: pointer;
         position: sticky;
@@ -49,18 +59,20 @@
         justify-content: flex-end;
         padding: 10px;
         overflow-y: auto;
-        border-top: 1px solid #ccc;
+
         margin-top: auto; /* Push messages to the bottom */
         z-index: 1;
         scroll-behavior: smooth; /* Add smooth scrolling */
     }
 
     #input-container {
+        width: calc(100% - 30px);
         display: flex;
         position: relative;
-        border: 2px #2b2b2b solid;
+        border: 2px rgba(43, 43, 43, 0.5) solid;
         border-radius: 15px;
-        margin-bottom: 0;
+
+        margin: auto auto 10px auto;
         z-index: 2;
     }
 
@@ -69,7 +81,7 @@
         padding: 10px;
         border: none;
         outline: none;
-        padding-bottom: 5px;
+        padding-bottom: 7px;
         position: sticky;
         bottom: 0;
         z-index: 2;
@@ -78,15 +90,15 @@
     #send-button {
         width: 40px;
         height: 40px;
-        background-color: #00aced;
+        background-color: rgb(114, 119, 240);
         color: white;
         border: none;
         cursor: pointer;
-        border-radius: 15px;
+        border-radius: 15px 15px;
     }
 
     #send-button svg {
-        transform: rotate(-135deg);
+        transform: rotate(180deg);
     }
 </style>
 <div id="chat-container">
@@ -94,14 +106,15 @@
         &#9998;
     </div>
     <div id="chat-box">
-        <div id="chat-header" onclick="toggleChat()">
-            Chat
+        <div id="chat-header" style="text-align: center" onclick="toggleChat()">
+            <p class="header-text m-0">Поддержка</p>
         </div>
         <div id="chat-messages">
             <!-- Chat messages go here -->
         </div>
         <div id="input-container">
-            <input style="border-radius: 15px" type="text" id="chat-input" placeholder="Напишите нам...">
+            <input style="border-radius: 15px; margin-right: 10px" type="text" id="chat-input"
+                   placeholder="Напишите нам...">
             <button id="send-button" onclick="sendMessage()">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
@@ -116,10 +129,14 @@
     function toggleChat() {
         var chatBox = document.getElementById('chat-box');
         chatBox.style.display = (chatBox.style.display === 'none' || chatBox.style.display === '') ? 'flex' : 'none';
+
+
     }
 
 </script>
 <script>
+    var chatHistory = [];
+
     function sendMessage() {
         var messageInput = document.getElementById('chat-input');
         var messageText = messageInput.value;
@@ -133,22 +150,29 @@
             newMessage.style.backgroundColor = 'rgb(155 250 222)';
             newMessage.style.borderRadius = '15px';
             newMessage.style.paddingLeft = '15px';
-            newMessage.style.paddingRight = '15px';
+            newMessage.style.paddingRight = '25px';
             newMessage.style.paddingBottom = '5px';
             newMessage.style.paddingTop = '5px';
-            newMessage.style.marginLeft = '150px';
+            newMessage.style.marginLeft = '100px';
+            newMessage.style.textAlign = 'right'
+            newMessage.style.maxWidth = '150px'
+            newMessage.style.marginBottom = '5px';
+            newMessage.style.minWidth = '50px'
             newMessage.style.wordWrap = 'break-word';
+            newMessage.setAttribute('role', 'user'); // Добавляем атрибут role с значением 'user'
 
+            chatHistory.push({role: 'user', content: messageText});
             // Отправка сообщения на сервер
             var requestOptions = {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+
                 },
-                body: JSON.stringify({answer: messageText}),
+                body: JSON.stringify({messages: [{role: 'user', content: messageText}]}),
             };
 
-            fetch('http://94.198.218.2:8000/', requestOptions)
+            fetch('http://95.140.146.86:8083/', requestOptions)
                 .then(response => response.json())
                 .then(data => {
                     // Создание элемента для ответа
@@ -159,14 +183,21 @@
                     responseMessage.style.backgroundColor = 'rgb(77,178,241)';
                     responseMessage.style.borderRadius = '15px';
                     responseMessage.style.paddingLeft = '25px';
-                    responseMessage.style.paddingRight = '10px';
+                    responseMessage.style.paddingRight = '15px';
                     responseMessage.style.paddingBottom = '5px';
                     responseMessage.style.paddingTop = '5px';
-                    responseMessage.style.marginRight = '150px';
+                    responseMessage.style.marginRight = '100px';
+                    responseMessage.style.marginBottom = '5px';
+                    responseMessage.style.textAlign = 'left'
+                    responseMessage.style.maxWidth = '150px'
+                    responseMessage.style.minWidth = '50px'
                     responseMessage.style.wordWrap = 'break-word';
+                    responseMessage.setAttribute('role', 'assistant');
 
                     // Добавление элемента ответа в блок сообщений чата
                     chatMessages.appendChild(responseMessage);
+
+                    chatHistory.push({role: 'assistant', content: data.answer});
 
                     // Прокрутка вниз для отображения нового сообщения
                     chatMessages.scrollTop = chatMessages.scrollHeight;
@@ -175,50 +206,51 @@
 
             // Очистка поля ввода
             messageInput.value = '';
+            console.log('Chat History:', chatHistory);
         }
     }
 </script>
+<script>document.addEventListener('DOMContentLoaded', function () {
+    // Call the loadChatHistory function when the page has finished loading
+
+});</script>
+
 <script>
-    function loadChatHistory() {
-        fetch('http://94.198.218.2:8000/chat-history') // Предполагаемый эндпоинт для получения истории чата
-            .then(response => response.json())
-            .then(data => {
-                var chatMessages = document.getElementById('chat-messages');
+    function loadChatHistory(chatHistory) {
 
-                // Перебор сообщений и добавление их в чат
-                data.messages.forEach(message => {
-                    var messageElement = document.createElement('div');
-                    messageElement.innerText = message.content;
-                    messageElement.style.zIndex = '1';
-                    messageElement.style.color = '#202020';
-                    messageElement.style.backgroundColor = message.role === 'user' ? 'rgb(155 250 222)' : 'lightgrey'; // Определение цвета для сообщений пользователя и ассистента
-                    messageElement.style.borderRadius = '15px';
-                    messageElement.style.borderRadius = '15px';
-                    messageElement.style.paddingLeft = '10px';
-                    messageElement.style.paddingRight = '25px';
-                    messageElement.style.paddingBottom = '5px';
-                    messageElement.style.paddingTop = '5px';
-                    messageElement.style.paddingLeft = '15px';
+        var chatMessages = document.getElementById('chat-messages');
 
-                    // Установка отступа в зависимости от роли
-                    if (message.role === 'user') {
-                        messageElement.style.backgroundColor = 'rgb(155 250 222)';
-                        messageElement.style.marginLeft = '150px';
-                        messageElement.style.marginLeft = '0';
-                    } else if (message.role === 'assistant') {
-                        messageElement.style.backgroundColor = 'rgb(77,178,241)';
-                        messageElement.style.marginRight = '150px';
-                        messageElement.style.margin = '0';
-                    }
+        // Перебор сообщений и добавление их в чат
+        chatHistory.forEach(message => {
+            var messageElement = document.createElement('div');
+            messageElement.innerText = message.content;
+            messageElement.style.zIndex = '1';
+            messageElement.style.color = '#202020';
+            messageElement.style.borderRadius = '15px';
+            messageElement.style.borderRadius = '15px';
+            messageElement.style.paddingLeft = '10px';
+            messageElement.style.paddingRight = '25px';
+            messageElement.style.paddingBottom = '5px';
+            messageElement.style.paddingTop = '5px';
+            messageElement.style.paddingLeft = '15px';
 
-                    messageElement.style.wordWrap = 'break-word';
+            // Установка отступа в зависимости от роли
+            if (message.role === 'user') {
+                messageElement.style.backgroundColor = 'rgb(155 250 222)';
+                messageElement.style.marginLeft = '150px';
+            } else if (message.role === 'assistant') {
+                messageElement.style.backgroundColor = 'rgb(77,178,241)';
+                messageElement.style.marginRight = '150px';
 
-                    chatMessages.appendChild(messageElement);
-                });
+            }
 
-                // Прокрутка вниз для отображения истории чата
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            })
-            .catch(error => console.error('Error loading chat history:', error));
+            messageElement.style.wordWrap = 'break-word';
+
+            chatMessages.appendChild(messageElement);
+        });
+
+        // Прокрутка вниз для отображения истории чата
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+
     }
 </script>
