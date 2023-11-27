@@ -88,12 +88,14 @@ def update_mode(request):
 @login_required
 def update_mode_file_link(request):
     """Get pipeline_id, mode_name, redirect urls params and filename string data"""
-    data = request.GET.dict()
-    pipeline_id = data['pipeline_id']
-    mode_name = data['mode_name']
-    redirect_url = data['redirect_url']
+    info = request.POST.dict()
 
-    google_drive_url = request.POST.dict()['filename']
+
+    pipeline_id = info['pipeline']
+    mode_name = info['mode_name']
+    redirect_url = ''
+
+    google_drive_url = info['filename']
     file_id = google_drive_url.replace('https://docs.google.com/spreadsheets/d/', '')
     file_id = file_id.split('/')[0]
     try:
@@ -121,7 +123,7 @@ def update_mode_file_link(request):
     pipeline.knowledge_mode.save()
     pipeline.knowledge_and_search_mode.search_mode.save()
     pipeline.knowledge_and_search_mode.knowledge_mode.save()
-    return redirect(redirect_url)
+    return redirect('/admin/users/')
 
 
 @login_required

@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404
 
-from home.models import Pipelines
+from home.models import Pipelines, KnowledgeMode
 
 
 def enter_secret_code_page(request):
@@ -20,13 +20,7 @@ def translations(request):
 def user(request, user_id):
     user = get_object_or_404(User, id=user_id)
     pipelines = Pipelines.objects.filter(user=User.objects.get(id=user_id))
-
-
-    # Передаем данные в шаблон и отображаем страницу
-    return render(request, 'admin/user.html', {'user': user, 'pipelines': pipelines, 'upload_file_inputs': [
-        {'action': '',
-         'text': 'Ссылка на базу знаний', 'file_link': 'ссылка'},
-    ]})
+    return render(request, 'admin/user.html', {'user': user, 'pipelines': pipelines})
 
 
 def users(request):

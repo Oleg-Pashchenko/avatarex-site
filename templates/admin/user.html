@@ -9,120 +9,31 @@
             {% if user %}
                 <h5 class="card-tittle">{{ user.id }} </h5>
                 <p class="card-text">{{ user.email }}</p>
-                <div class="form-group">
-                    <label for="exampleFormControlSelect1">Выберите подписку</label>
-                    <select class="form-control" id="exampleFormControlSelect1">
-                        <option>Standart</option>
-                        <option>Professional</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="exampleFormControlSelect1">Введите срок в днях</label>
-                    <div class="form-group">
-                        <input type="period" class="form-control" id="period" placeholder="30">
-                    </div>
-                </div>
-                <div class="form-group mb-2">
-                    <label for="exampleFormControlSelect1">Причина выдачи</label>
-                    <input type="reason" class="form-control" id="reason" placeholder="Подарок">
-                </div>
+
             {% endif %}
-            <label for="exampleFormControlSelect1">Ссылка на базу знаний</label>
-        </div>
-        <div style="display: flex; justify-content: center;" class=" mb-4 mt-0 text-muted form-group">
-            <button onclick="subGive({{ user.id }}, {{ pipeline_id }})" type="submit" class="mt-0 btn btn-primary btn-lg">Выдать подписку</button>
         </div>
 
     </div>
 
     <div class="mb-2">
-        {% for upload_file_input in upload_file_inputs %}
-            <form method="post" class="w-100" action={{ upload_file_input.action }}>
-                <div class="input-group-prepend">
-                    <span class="input-group-text">{{ upload_file_input.text }}</span>
-                    <input name="filename" class="form-control" value="{{ upload_file_input.file_link }}">
-                    <button type="button" class="input-group-text"
-                            onclick="saveDatauser('knowledge', {{ user.id }}, {{ pipeline_id }});">Обновить
-                    </button>
+        <h6> Обновить ссылку на базу знаний: </h6>
+        <form method="post" class="w-100" action="/api/v1/update-mode-file-link/">
+            <input name="user_id" value="{{ user.id }}" hidden>
+            <input name="mode_name" value="knowledge" hidden>
+            <div class="input-group-prepend">
+                <div class="col-2">
+                    <select name="pipeline" class="form-control">
+
+                        {% for p in pipelines %}
+                            <option value="{{ p.p_id }}">{{ p.name }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
-            </form>
-        {% endfor %}
+                <input name="filename" class="form-control" value="{{ knowledge_link }}">
+                <button type="submit" class="input-group-text">Обновить
+                </button>
+            </div>
+        </form>
     </div>
-    <script>
-        var users_info = [];
-
-        function saveDatauser(type, userId, pipelineId) {
-            // Получите значения из формы и добавьте их в user_info
-            var selectedSubscription = document.getElementById("exampleFormControlSelect1").value;
-            var period = document.getElementById("period").value;
-            var reason = document.getElementById("reason").value;
-            var filename = document.getElementsByName("filename")[0].value;
-
-            var user_info = {
-                'user_id': userId,
-                'pipeline_id': pipelineId,
-                'subscription': selectedSubscription,
-                'period': period,
-                'reason': reason,
-                'filename': filename,
-            };
-            users_info.push(user_info);
-            const requestOptions = {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({users_info: users_info}),  // Отправляем users_info на сервер
-            };
-
-
-            // Отправка запроса
-            fetch('/api/v1/update-mode/', requestOptions)
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Данные успешно отправлены на сервер', data);
-                    window.location.href = '/home';
-                })
-            // Ваша логика отправки данных на сервер здесь
-        }
-    </script>
-
-      <script>
-        var users_sub = [];
-
-        function subGive(userId,type,pipelineId) {
-            // Получите значения из формы и добавьте их в user_info
-            var selectedSubscription = document.getElementById("exampleFormControlSelect1").value;
-            var period = document.getElementById("period").value;
-            var reason = document.getElementById("reason").value;
-
-            var user_sub = {
-                'user_id': userId,
-                'pipeline_id': pipelineId,
-                'subscription': selectedSubscription,
-                'period': period,
-                'reason': reason,
-
-            };
-            users_sub.push(user_sub);
-            const requestOptions = {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({users_isub: users_sub}),  // Отправляем users_info на сервер
-            };
-
-
-            // Отправка запроса
-            fetch('/api/v1/update-mode/', requestOptions)
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Данные успешно отправлены на сервер', data);
-                    window.location.href = '/home';
-                })
-            // Ваша логика отправки данных на сервер здесь
-        }
-    </script>
 
 {% endblock content %}

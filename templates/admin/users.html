@@ -24,6 +24,7 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Email</th>
+                <th scope="col">Login</th>
                 <th scope="col"></th>
             </tr>
             </thead>
@@ -32,6 +33,7 @@
                 <tr>
                     <th scope="row">{{ x.id }}</th>
                     <td>{{ x.email }}</td>
+                    <td>{{ x.username }}</td>
                     <td>
                         <!-- Используем тег url для формирования URL с параметром user_id -->
                         <a href="{% url 'user_detail' user_id=x.id %}"

@@ -48,15 +48,11 @@
                 <li class="nav-item active">
                     <a class="nav-link btn btn-outline-success  my-2 my-sm-0 " href="{% url 'main' %}">На сайт</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'subscriptions' %}">Подписки</a>
-                </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'users' %}">Пользователи</a>
                 </li>
-                <li class="nav-item">
-                     <a class="nav-link" href="{% url 'translations' %}">Переводы</a>
-                </li>
+
             </ul>
         </div>
     </nav>
@@ -77,4 +73,26 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+<script>
+    $(document).ready(function () {
+        // Get the current URL
+        var currentUrl = window.location.pathname;
+
+        // Remove the leading slash to match it with the URLs in the navigation
+        currentUrl = currentUrl.substr(1);
+
+        // Iterate through each navigation link
+        $('.navbar-nav a').each(function () {
+            // Get the href attribute of the link
+            var href = $(this).attr('href').substr(1);
+
+            // Check if the current URL contains the link's href
+            if (currentUrl.indexOf(href) !== -1) {
+                // Add the "active" class to the parent li element
+                $(this).closest('li').addClass('active');
+            }
+        });
+    });
+</script>
+
 </html>
