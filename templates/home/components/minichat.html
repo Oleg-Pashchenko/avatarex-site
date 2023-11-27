@@ -1,0 +1,224 @@
+<style>
+    #chat-container {
+        position: relative;
+    }
+
+    #chat-circle {
+        width: 50px;
+        height: 50px;
+        background-color: #00aced;
+        border-radius: 50%;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 1;
+        color: white;
+    }
+
+    #chat-box {
+        display: none;
+        position: fixed;
+        bottom: 80px;
+        right: 20px;
+        width: 300px;
+        height: 500px;
+        background-color: white;
+        border: 1px solid #ccc;
+        border-radius: 15px;
+        overflow: hidden;
+        z-index: 2;
+        flex-direction: column;
+    }
+
+    #chat-header {
+        background-color: #00aced;
+        color: white;
+        padding: 10px;
+        cursor: pointer;
+        position: sticky;
+        top: 0;
+        z-index: 2;
+    }
+
+    #chat-messages {
+        flex: 1;
+        justify-content: flex-end;
+        padding: 10px;
+        overflow-y: auto;
+        border-top: 1px solid #ccc;
+        margin-top: auto; /* Push messages to the bottom */
+        z-index: 1;
+        scroll-behavior: smooth; /* Add smooth scrolling */
+    }
+
+    #input-container {
+        display: flex;
+        position: relative;
+        border: 2px #2b2b2b solid;
+        border-radius: 15px;
+        margin-bottom: 0;
+        z-index: 2;
+    }
+
+    #chat-input {
+        width: calc(100% - 40px);
+        padding: 10px;
+        border: none;
+        outline: none;
+        padding-bottom: 5px;
+        position: sticky;
+        bottom: 0;
+        z-index: 2;
+    }
+
+    #send-button {
+        width: 40px;
+        height: 40px;
+        background-color: #00aced;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 15px;
+    }
+
+    #send-button svg {
+        transform: rotate(-135deg);
+    }
+</style>
+<div id="chat-container">
+    <div id="chat-circle" onclick="toggleChat()">
+        &#9998;
+    </div>
+    <div id="chat-box">
+        <div id="chat-header" onclick="toggleChat()">
+            Chat
+        </div>
+        <div id="chat-messages">
+            <!-- Chat messages go here -->
+        </div>
+        <div id="input-container">
+            <input style="border-radius: 15px" type="text" id="chat-input" placeholder="Напишите нам...">
+            <button id="send-button" onclick="sendMessage()">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function toggleChat() {
+        var chatBox = document.getElementById('chat-box');
+        chatBox.style.display = (chatBox.style.display === 'none' || chatBox.style.display === '') ? 'flex' : 'none';
+    }
+
+</script>
+<script>
+    function sendMessage() {
+        var messageInput = document.getElementById('chat-input');
+        var messageText = messageInput.value;
+        if (messageText.trim() !== '') {
+            var chatMessages = document.getElementById('chat-messages');
+            var newMessage = document.createElement('div');
+            newMessage.innerText = messageText;
+            chatMessages.appendChild(newMessage);
+            newMessage.style.zIndex = '1';
+            newMessage.style.color = '#202020';
+            newMessage.style.backgroundColor = 'rgb(155 250 222)';
+            newMessage.style.borderRadius = '15px';
+            newMessage.style.paddingLeft = '15px';
+            newMessage.style.paddingRight = '15px';
+            newMessage.style.paddingBottom = '5px';
+            newMessage.style.paddingTop = '5px';
+            newMessage.style.marginLeft = '150px';
+            newMessage.style.wordWrap = 'break-word';
+
+            // Отправка сообщения на сервер
+            var requestOptions = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({answer: messageText}),
+            };
+
+            fetch('http://94.198.218.2:8000/', requestOptions)
+                .then(response => response.json())
+                .then(data => {
+                    // Создание элемента для ответа
+                    var responseMessage = document.createElement('div');
+                    responseMessage.innerText = data.answer;
+                    responseMessage.style.zIndex = '1';
+                    responseMessage.style.color = '#202020';
+                    responseMessage.style.backgroundColor = 'rgb(77,178,241)';
+                    responseMessage.style.borderRadius = '15px';
+                    responseMessage.style.paddingLeft = '25px';
+                    responseMessage.style.paddingRight = '10px';
+                    responseMessage.style.paddingBottom = '5px';
+                    responseMessage.style.paddingTop = '5px';
+                    responseMessage.style.marginRight = '150px';
+                    responseMessage.style.wordWrap = 'break-word';
+
+                    // Добавление элемента ответа в блок сообщений чата
+                    chatMessages.appendChild(responseMessage);
+
+                    // Прокрутка вниз для отображения нового сообщения
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                })
+                .catch(error => console.error('Error:', error));
+
+            // Очистка поля ввода
+            messageInput.value = '';
+        }
+    }
+</script>
+<script>
+    function loadChatHistory() {
+        fetch('http://94.198.218.2:8000/chat-history') // Предполагаемый эндпоинт для получения истории чата
+            .then(response => response.json())
+            .then(data => {
+                var chatMessages = document.getElementById('chat-messages');
+
+                // Перебор сообщений и добавление их в чат
+                data.messages.forEach(message => {
+                    var messageElement = document.createElement('div');
+                    messageElement.innerText = message.content;
+                    messageElement.style.zIndex = '1';
+                    messageElement.style.color = '#202020';
+                    messageElement.style.backgroundColor = message.role === 'user' ? 'rgb(155 250 222)' : 'lightgrey'; // Определение цвета для сообщений пользователя и ассистента
+                    messageElement.style.borderRadius = '15px';
+                    messageElement.style.borderRadius = '15px';
+                    messageElement.style.paddingLeft = '10px';
+                    messageElement.style.paddingRight = '25px';
+                    messageElement.style.paddingBottom = '5px';
+                    messageElement.style.paddingTop = '5px';
+                    messageElement.style.paddingLeft = '15px';
+
+                    // Установка отступа в зависимости от роли
+                    if (message.role === 'user') {
+                        messageElement.style.backgroundColor = 'rgb(155 250 222)';
+                        messageElement.style.marginLeft = '150px';
+                        messageElement.style.marginLeft = '0';
+                    } else if (message.role === 'assistant') {
+                        messageElement.style.backgroundColor = 'rgb(77,178,241)';
+                        messageElement.style.marginRight = '150px';
+                        messageElement.style.margin = '0';
+                    }
+
+                    messageElement.style.wordWrap = 'break-word';
+
+                    chatMessages.appendChild(messageElement);
+                });
+
+                // Прокрутка вниз для отображения истории чата
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            })
+            .catch(error => console.error('Error loading chat history:', error));
+    }
+</script>

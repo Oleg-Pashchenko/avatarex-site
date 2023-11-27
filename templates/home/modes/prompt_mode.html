@@ -11,6 +11,8 @@
 
     <legend class="border-bottom mb-4"></legend>
     {% include "home/components/youtube-video.html" %}
+    <div style="position: sticky; z-index: 10000">{% include "home/components/minichat.html" %}</div>
+
     <form method="post">
         {% csrf_token %}
         <div class="container">

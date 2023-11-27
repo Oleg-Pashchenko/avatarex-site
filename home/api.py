@@ -139,6 +139,8 @@ def update_mode_file_link(request):
 def prompt_mode_update(request):
     data = json.loads(request.body.decode('utf-8'))
     context = data['context']
+    prompt_data = data.get('prompt-data', {})
+    print(prompt_data)
     tokens_limit = int(data['tokens_limit'])
     temperature = float(data['temperature'])
     model = data['model']
