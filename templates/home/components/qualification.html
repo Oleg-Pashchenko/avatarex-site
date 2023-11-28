@@ -3,8 +3,8 @@
     <legend class="border-bottom mb-4"></legend>
     <div id="loaded-elements">
         {% for item in qualification_rules %}
-            <div style="border: 3px solid rgb(114, 119, 240); border-radius: 10px; padding: 5px 5px 5px 5px; margin-bottom: 15px;">
-                <div class="rule input-group-prepend">
+            <div class="rule" style="border: 3px solid rgb(114, 119, 240); border-radius: 10px; padding: 5px 5px 5px 5px; margin-bottom: 15px;">
+                <div class=" input-group-prepend">
                     <div class="col-3 p-0 pr-1 mb-2">
                         <input name="field-name" class="input-group-text" value="{{ item.field_name }}">
                     </div>
@@ -15,7 +15,7 @@
                             onclick="deleteLoadedQualificationField(this.parentNode.parentNode);">Удалить
                     </button>
                 </div>
-                <div class="rule input-group-prepend text-center">
+                <div class=" input-group-prepend text-center">
                     <div class="mt-0 col-12">
                         <div class="btn text-light" style="display: inline-block; width: auto;"
                              onclick="toggleVisibility(this.parentElement.parentElement.nextElementSibling)">
@@ -37,11 +37,11 @@
                                 var counter1 =
                                 {{ item.order }}
                             </script>
-                            <div class="rule pl-1 pr-0 mb-2 col-12" style="display: flex; align-items: center;">
+                            <div class="pl-1 pr-0 mb-2 col-12" style="display: flex; align-items: center;">
                                 <input style="flex: 1; width: 100%; display: inline-block;" placeholder="Ваше сообщение"
-                                       class="form-control q col-8" name="response_name"
+                                       class="form-control q col-8" name="response_name_{{ additional_question.order }}"
                                        value="{{ additional_question.question }}">
-                                <select name="number_select" class="form-control col-3 ml-2 mr-2" id="number">
+                                <select name="number_select_{{ additional_question.order }}" class="form-control col-3 ml-2 mr-2" id="number">
                                     <option value="0" style="text-align: center; font-size: large;"></option>
                                     <option value="1" style="text-align: center; font-size: large;"
                                             {% if additional_question.time_number == 1 %}selected{% endif %}>1
@@ -84,7 +84,7 @@
                                     </option>
                                     <!-- Добавьте остальные опции здесь -->
                                 </select>
-                                <select name="time_select" class="form-control col-3 mr-2" id="time">
+                                <select name="time_select_{{ additional_question.order }}" class="form-control col-3 mr-2" id="time">
                                     <option value="" style="text-align: center; font-size: large;"></option>
                                     <option value="minutes" style="text-align: center; font-size: large;"
                                             {% if additional_question.time_type == 'minutes' %}selected{% endif %}>минут
