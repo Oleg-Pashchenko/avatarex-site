@@ -32,8 +32,8 @@ class AmoConnect:
 
     def _create_session(self):
         self.session = requests.Session()
-        self.session.proxies = proxy
-        response = self.session.get(self.host, proxies=proxy)
+        # self.session.proxies = proxy
+        response = self.session.get(self.host)
         session_id = response.cookies.get('session_id')
         self.csrf_token = response.cookies.get('csrf_token')
         self.headers = {
@@ -42,22 +42,22 @@ class AmoConnect:
             'Cookie': f'session_id={session_id}; '
                       f'csrf_token={self.csrf_token};',
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) '
-                          'Chrome/112.0.0.0 Safari/537.36'
+                          'Chrome/111.0.0.0 Safari/537.36'
         }
 
     def _get_host(self):
-        response = self.session.get('https://www.amocrm.ru/v3/accounts', proxies=proxy).json()
+        response = self.session.get('https://www.amocrm.ru/v3/accounts').json()
         host = response['_embedded']['items'][0]['domain']
         self.headers['Host'] = host
         self.host = 'https://' + host
 
     def _get_amo_hash(self):
-        response = self.session.get(f'{self.host}/api/v4/account?with=amojo_id', proxies=proxy).json()
+        response = self.session.get(f'{self.host}/api/v4/account?with=amojo_id').json()
         self.amo_hash = response['amojo_id']
 
     def _create_chat_token(self):
         payload = {'request[chats][session][action]': 'create'}
-        response = self.session.post(f'{self.host}/ajax/v1/chats/session', headers=self.headers, data=payload, proxies=proxy)
+        response = self.session.post(f'{self.host}/ajax/v1/chats/session', headers=self.headers, data=payload)
         self.chat_token = response.json()['response']['chats']['session']['access_token']
 
     def _create_field(self, name):
@@ -74,11 +74,11 @@ class AmoConnect:
             'cf[add][0][settings][formula]': '',
             'cf[add][0][pipeline_id]': 0
         }
-        self.session.post(url, data=data, headers=self.headers, proxies=proxy)
+        self.session.post(url, data=data, headers=self.headers)
 
     def get_last_message(self, chat_ids):
         url = 'https://chatgpt.amocrm.ru/ajax/v2/talks'
-        response = self.session.post(url, data={'chats_ids[]': chat_ids}, proxies=proxy).json()
+        response = self.session.post(url, data={'chats_ids[]': chat_ids}).json()
         for k, v in response.items():
             v = v[0]
             return v['last_message'], v['last_message_author']['type']
@@ -92,7 +92,7 @@ class AmoConnect:
     def get_params_information(self, fields: list):
         result = {}
         url = f'{self.host}/leads/detail/{self.deal_id}'
-        response = self.session.get(url, proxies=proxy)
+        response = self.session.get(url)
         soup = bs4.BeautifulSoup(response.text, features='html.parser')
         #  print(soup)
 
@@ -148,25 +148,23 @@ class AmoConnect:
             'lead[PIPELINE_ID]': self.pipeline,
             'ID': self.deal_id
         }
-        response = self.session.post(url, data=data, proxies=proxy)
+        response = self.session.post(url, data=data)
 
     def send_message(self, message: str, chat_id: str):
         headers = {'X-Auth-Token': self.chat_token}
         url = f'https://amojo.amocrm.ru/v1/chats/{self.amo_hash}/' \
               f'{chat_id}/messages?with_video=true&stand=v16'
         print("Send message url:", url)
-        resp = self.session.post(url, headers=headers, data=json.dumps({"text": message}), proxies=proxy)
+        resp = self.session.post(url, headers=headers, data=json.dumps({"text": message}))
         print(resp.text)
 
     def auth(self) -> bool:
         self._create_session()
-        print(self.host)
         response = self.session.post(f'{self.host}/oauth2/authorize', data={
             'csrf_token': self.csrf_token,
             'username': self.login,
             'password': self.password
-        }, headers=self.headers, proxies=proxy)
-        print(response.text)
+        }, headers=self.headers)
         if response.status_code != 200:
             return False
         self.access_token = response.cookies.get('access_token')

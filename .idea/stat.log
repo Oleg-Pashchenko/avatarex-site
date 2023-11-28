@@ -7855,3 +7855,5 @@
 {"ts":1701161052625,"action":"IDE_ACTIVATED"}
 {"ts":1701161057429,"action":"FILE_CLOSED","file":"/home/views.py","tags":{"FILE_LINE_OF_CODE":"429"}}
 {"ts":1701161057429,"action":"FILE_OPENED","file":"/home/new_amo.py","tags":{"FILE_LINE_OF_CODE":"196"}}
+{"ts":1701161126054,"action":"IDE_DEACTIVATED"}
+{"ts":1701161169362,"action":"IDE_ACTIVATED"}
