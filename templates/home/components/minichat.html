@@ -54,27 +54,27 @@
         z-index: 2;
     }
 
- #chat-messages {
-    flex: 1;
-    justify-content: flex-end;
-    padding: 10px;
-    overflow-y: auto;
-    margin-top: auto; /* Push messages to the bottom */
-    z-index: 1;
-    scroll-behavior: smooth; /* Add smooth scrolling */
-}
+    #chat-messages {
+        flex: 1;
+        justify-content: flex-end;
+        padding: 10px;
+        overflow-y: auto;
+        margin-top: auto; /* Push messages to the bottom */
+        z-index: 1;
+        scroll-behavior: smooth; /* Add smooth scrolling */
+    }
 
-/* Update user message style */
-[role='user'] {
-    margin-left: 10px; /* Adjust the left margin */
-    margin-right: 100px; /* Adjust the right margin */
-}
+    /* Update user message style */
+    [role='user'] {
+        margin-left: 10px; /* Adjust the left margin */
+        margin-right: 100px; /* Adjust the right margin */
+    }
 
-/* Update assistant message style */
-[role='assistant'] {
-    margin-left: 100px; /* Adjust the left margin */
-    margin-right: 10px; /* Adjust the right margin */
-}
+    /* Update assistant message style */
+    [role='assistant'] {
+        margin-left: 100px; /* Adjust the left margin */
+        margin-right: 10px; /* Adjust the right margin */
+    }
 
 
     #input-container {
@@ -199,7 +199,7 @@
                 body: JSON.stringify({messages: [{role: 'user', content: messageText}]}),
             };
 
-            fetch('http://95.140.146.86:8083/', requestOptions)
+            fetch('http://45.93.136.245:8083/widget-api/', requestOptions)
                 .then(response => response.json())
                 .then(data => {
                     // Создание элемента для ответа
