@@ -49,3 +49,5 @@ tzdata==2023.3
 urllib3==2.0.6
 Werkzeug==2.3.6
 yarl==1.9.2
+
+TwoCaptcha~=0.0.1
