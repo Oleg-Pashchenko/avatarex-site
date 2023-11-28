@@ -9,90 +9,17 @@ import gdown
 @login_required
 def update_mode(request):
     data = json.loads(request.body.decode('utf-8'))
-    qualification_fields = data['qualification_fields']
-    print(qualification_fields)
-    qualification_finished = data['qualificationFinished']
-    print(qualification_finished)
 
-    # bounded_situations_fields = data['bounded_situations_fields']
-    prompt_data = data.get('prompt-data', {})
-    print(prompt_data)
-    checkbox = data['checkbox']
-    print(checkbox)
+    bounded_situations_fields = data.get('bounded_situations_fields', {})
 
-    know_bound = data.get('knowledge-bounded', {})
-    know_promt = data.get('knowledge-prompt', {})
-    print(know_bound)
-    print(know_promt)
-
-    database_mode_fields = data['database_mode_fields']
-    mode = data['mode']
-    if mode != 'knowledge':
-        view_rule = data['view_rule']
-        result_count = int(data['result_count'])
-    pipeline_id = int(data['pipeline_id'])
-    pipeline = Pipelines.objects.get(p_id=pipeline_id)
-    if mode == 'd_k':
-        pipeline.knowledge_and_search_mode.search_mode.qualification.value = qualification_fields
-        pipeline.knowledge_and_search_mode.search_mode.qualification.qualification_finished = qualification_finished
-        pipeline.knowledge_and_search_mode.search_mode.mode_messages.hi_message = bounded_situations_fields[
-            'hi_message']
-        pipeline.knowledge_and_search_mode.search_mode.mode_messages.openai_error_message = bounded_situations_fields[
-            'openai_error_message']
-        pipeline.knowledge_and_search_mode.search_mode.mode_messages.database_error_message = bounded_situations_fields[
-            'database_error_message']
-        pipeline.knowledge_and_search_mode.search_mode.mode_messages.service_settings_error_message = \
-            bounded_situations_fields[
-                'service_settings_error_message']
-
-        pipeline.knowledge_and_search_mode.search_mode.search_rules = database_mode_fields
-        pipeline.knowledge_and_search_mode.search_mode.view_rule = view_rule
-        pipeline.knowledge_and_search_mode.search_mode.results_count = result_count
-
-    elif mode == 'database':
-
-        pipeline.search_mode.qualification.value = qualification_fields
-        pipeline.search_mode.qualification.qualification_finished = qualification_finished
-        pipeline.search_mode.mode_messages.hi_message = bounded_situations_fields[
-            'hi_message']
-        pipeline.search_mode.mode_messages.openai_error_message = bounded_situations_fields[
-            'openai_error_message']
-        pipeline.search_mode.mode_messages.database_error_message = bounded_situations_fields[
-            'database_error_message']
-        pipeline.search_mode.mode_messages.service_settings_error_message = \
-            bounded_situations_fields[
-                'service_settings_error_message']
-
-        pipeline.search_mode.search_rules = database_mode_fields
-        pipeline.search_mode.view_rule = view_rule
-        pipeline.search_mode.results_count = result_count
-
-    elif mode == 'knowledge':
-        pipeline.knowledge_mode.qualification.value = qualification_fields
-        pipeline.knowledge_mode.qualification.qualification_finished = qualification_finished
-        pipeline.knowledge_mode.mode_messages.hi_message = bounded_situations_fields[
-            'hi_message']
-        pipeline.knowledge_mode.mode_messages.openai_error_message = bounded_situations_fields[
-            'openai_error_message']
-        pipeline.knowledge_mode.mode_messages.database_error_message = bounded_situations_fields[
-            'database_error_message']
-        pipeline.knowledge_mode.mode_messages.service_settings_error_message = \
-            bounded_situations_fields[
-                'service_settings_error_message']
-
-    pipeline.search_mode.qualification.save()
-    pipeline.search_mode.mode_messages.save()
-    pipeline.search_mode.save()
-
-    pipeline.knowledge_mode.qualification.save()
-    pipeline.knowledge_mode.mode_messages.save()
+    pipeline = Pipelines.objects.get(p_id=int(data['pipeline_id']))
+    pipeline.knowledge_mode.mode_messages.hi_message = bounded_situations_fields['hi_message']
+    pipeline.knowledge_mode.mode_messages.openai_error_message = bounded_situations_fields['openai_error_message']
+    pipeline.knowledge_mode.mode_messages.database_error_message = bounded_situations_fields['database_error_message']
+    pipeline.knowledge_mode.mode_messages.service_settings_error_message = bounded_situations_fields['service_settings_error_message']
     pipeline.knowledge_mode.save()
 
-    pipeline.knowledge_and_search_mode.search_mode.mode_messages.save()
-    pipeline.knowledge_and_search_mode.search_mode.qualification.save()
-    pipeline.knowledge_and_search_mode.search_mode.save()
-    pipeline.knowledge_and_search_mode.knowledge_mode.save()
-    return redirect(f'/home')
+    return redirect(f"/knowledge-mode/?pipeline={data['pipeline_id']}")
 
 
 @login_required
