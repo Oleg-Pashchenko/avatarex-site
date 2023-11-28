@@ -294,7 +294,7 @@ def amo_register(request):
             except:
                 status = False
 
-            instance = AmoConnect.objects.filter(email=email).first()
+            instance = AmoConnect.objects.filter(host=host).first()
             if status:
                 if instance:
                     user_email = User.objects.get(id=instance.id).email
