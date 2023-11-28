@@ -282,7 +282,8 @@ def amo_register(request):
             # account_chat_id = form.cleaned_data.get('account_chat_id')
             try:
                 amo_conn = new_amo.AmoConnect(user_login=email, user_password=password, host=host)
-                amo_conn.auth()
+                status = amo_conn.auth()
+                print(status)
                 account_chat_id = amo_conn.amo_hash
             except Exception as e:
                 print(e)
