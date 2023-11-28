@@ -5,8 +5,7 @@ import requests
 import bs4
 
 proxy = {
-    'http': 'http://ynhkdZ1N:KNSQACD9@45.93.12.175:63794',
-    'https': 'https://ynhkdZ1N:KNSQACD9@45.93.12.175:63794'
+    'http': 'http://ynhkdZ1N:KNSQACD9@45.93.12.175:63794'
 }
 class AmoConnect:
     login = ''
