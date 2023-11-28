@@ -9,7 +9,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
-    'avatarex.net'
+    'avatarex.net',
+    '95.140.146.86',
+    'http://95.140.146.86'
 ]
 
 INSTALLED_APPS = [
