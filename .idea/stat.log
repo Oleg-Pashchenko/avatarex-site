@@ -7841,3 +7841,17 @@
 {"ts":1701160889769,"action":"IDE_ACTIVATED"}
 {"ts":1701160892434,"action":"IDE_DEACTIVATED"}
 {"ts":1701160892862,"action":"IDE_ACTIVATED"}
+{"ts":1701160923727,"action":"IDE_DEACTIVATED"}
+{"ts":1701160929015,"action":"IDE_ACTIVATED"}
+{"ts":1701160930765,"action":"IDE_DEACTIVATED"}
+{"ts":1701160937832,"action":"IDE_ACTIVATED"}
+{"ts":1701160938676,"action":"IDE_DEACTIVATED"}
+{"ts":1701160989584,"action":"IDE_ACTIVATED"}
+{"ts":1701160992608,"action":"IDE_DEACTIVATED"}
+{"ts":1701160995386,"action":"IDE_ACTIVATED"}
+{"ts":1701161027521,"action":"FILE_CLOSED","file":"/home/new_amo.py","tags":{"FILE_LINE_OF_CODE":"196"}}
+{"ts":1701161027521,"action":"FILE_OPENED","file":"/home/views.py","tags":{"FILE_LINE_OF_CODE":"429"}}
+{"ts":1701161043961,"action":"IDE_DEACTIVATED"}
+{"ts":1701161052625,"action":"IDE_ACTIVATED"}
+{"ts":1701161057429,"action":"FILE_CLOSED","file":"/home/views.py","tags":{"FILE_LINE_OF_CODE":"429"}}
+{"ts":1701161057429,"action":"FILE_OPENED","file":"/home/new_amo.py","tags":{"FILE_LINE_OF_CODE":"196"}}

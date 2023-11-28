@@ -33,7 +33,7 @@ class AmoConnect:
     def _create_session(self):
         self.session = requests.Session()
         self.session.proxies = proxy
-        response = self.session.get(self.host)
+        response = self.session.get(self.host, proxies=proxy)
         session_id = response.cookies.get('session_id')
         self.csrf_token = response.cookies.get('csrf_token')
         self.headers = {
@@ -46,18 +46,18 @@ class AmoConnect:
         }
 
     def _get_host(self):
-        response = self.session.get('https://www.amocrm.ru/v3/accounts').json()
+        response = self.session.get('https://www.amocrm.ru/v3/accounts', proxies=proxy).json()
         host = response['_embedded']['items'][0]['domain']
         self.headers['Host'] = host
         self.host = 'https://' + host
 
     def _get_amo_hash(self):
-        response = self.session.get(f'{self.host}/api/v4/account?with=amojo_id').json()
+        response = self.session.get(f'{self.host}/api/v4/account?with=amojo_id', proxies=proxy).json()
         self.amo_hash = response['amojo_id']
 
     def _create_chat_token(self):
         payload = {'request[chats][session][action]': 'create'}
-        response = self.session.post(f'{self.host}/ajax/v1/chats/session', headers=self.headers, data=payload)
+        response = self.session.post(f'{self.host}/ajax/v1/chats/session', headers=self.headers, data=payload, proxies=proxy)
         self.chat_token = response.json()['response']['chats']['session']['access_token']
 
     def _create_field(self, name):
@@ -74,11 +74,11 @@ class AmoConnect:
             'cf[add][0][settings][formula]': '',
             'cf[add][0][pipeline_id]': 0
         }
-        self.session.post(url, data=data, headers=self.headers)
+        self.session.post(url, data=data, headers=self.headers, proxies=proxy)
 
     def get_last_message(self, chat_ids):
         url = 'https://chatgpt.amocrm.ru/ajax/v2/talks'
-        response = self.session.post(url, data={'chats_ids[]': chat_ids}).json()
+        response = self.session.post(url, data={'chats_ids[]': chat_ids}, proxies=proxy).json()
         for k, v in response.items():
             v = v[0]
             return v['last_message'], v['last_message_author']['type']
@@ -92,7 +92,7 @@ class AmoConnect:
     def get_params_information(self, fields: list):
         result = {}
         url = f'{self.host}/leads/detail/{self.deal_id}'
-        response = self.session.get(url)
+        response = self.session.get(url, proxies=proxy)
         soup = bs4.BeautifulSoup(response.text, features='html.parser')
         #  print(soup)
 
@@ -148,14 +148,14 @@ class AmoConnect:
             'lead[PIPELINE_ID]': self.pipeline,
             'ID': self.deal_id
         }
-        response = self.session.post(url, data=data)
+        response = self.session.post(url, data=data, proxies=proxy)
 
     def send_message(self, message: str, chat_id: str):
         headers = {'X-Auth-Token': self.chat_token}
         url = f'https://amojo.amocrm.ru/v1/chats/{self.amo_hash}/' \
               f'{chat_id}/messages?with_video=true&stand=v16'
         print("Send message url:", url)
-        resp = self.session.post(url, headers=headers, data=json.dumps({"text": message}))
+        resp = self.session.post(url, headers=headers, data=json.dumps({"text": message}), proxies=proxy)
         print(resp.text)
 
     def auth(self) -> bool:
