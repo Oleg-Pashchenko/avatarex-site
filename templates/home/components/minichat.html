@@ -32,7 +32,7 @@
         position: fixed;
         bottom: 80px;
         right: 20px;
-        width: 300px;
+        width: 450px; /* Adjust the width to 1.5 times the original value (300px * 1.5) */
         height: 500px;
         background: url("{% static 'icons/pattern-30.svg' %}") no-repeat center center;
         background-color: #4b4b4b;
@@ -54,16 +54,28 @@
         z-index: 2;
     }
 
-    #chat-messages {
-        flex: 1;
-        justify-content: flex-end;
-        padding: 10px;
-        overflow-y: auto;
+ #chat-messages {
+    flex: 1;
+    justify-content: flex-end;
+    padding: 10px;
+    overflow-y: auto;
+    margin-top: auto; /* Push messages to the bottom */
+    z-index: 1;
+    scroll-behavior: smooth; /* Add smooth scrolling */
+}
 
-        margin-top: auto; /* Push messages to the bottom */
-        z-index: 1;
-        scroll-behavior: smooth; /* Add smooth scrolling */
-    }
+/* Update user message style */
+[role='user'] {
+    margin-left: 10px; /* Adjust the left margin */
+    margin-right: 100px; /* Adjust the right margin */
+}
+
+/* Update assistant message style */
+[role='assistant'] {
+    margin-left: 100px; /* Adjust the left margin */
+    margin-right: 10px; /* Adjust the right margin */
+}
+
 
     #input-container {
         width: calc(100% - 30px);
@@ -107,7 +119,7 @@
     </div>
     <div id="chat-box">
         <div id="chat-header" style="text-align: center" onclick="toggleChat()">
-            <p class="header-text m-0">Поддержка</p>
+            <p class="header-text m-0">AI Assistant by Avatarex</p>
         </div>
         <div id="chat-messages">
             <!-- Chat messages go here -->
@@ -170,11 +182,9 @@
             newMessage.style.paddingRight = '25px';
             newMessage.style.paddingBottom = '5px';
             newMessage.style.paddingTop = '5px';
-            newMessage.style.marginLeft = '100px';
-            newMessage.style.textAlign = 'right'
-            newMessage.style.maxWidth = '150px'
+            newMessage.style.textAlign = 'left';
             newMessage.style.marginBottom = '5px';
-            newMessage.style.minWidth = '50px'
+            newMessage.style.minWidth = '50px';
             newMessage.style.wordWrap = 'break-word';
             newMessage.setAttribute('role', 'user'); // Добавляем атрибут role с значением 'user'
 
@@ -200,14 +210,12 @@
                     responseMessage.style.backgroundColor = 'rgb(77,178,241)';
                     responseMessage.style.borderRadius = '15px';
                     responseMessage.style.paddingLeft = '25px';
+                    responseMessage.style.marginBottom = '5px';
+
                     responseMessage.style.paddingRight = '15px';
                     responseMessage.style.paddingBottom = '5px';
                     responseMessage.style.paddingTop = '5px';
-                    responseMessage.style.marginRight = '100px';
-                    responseMessage.style.marginBottom = '5px';
                     responseMessage.style.textAlign = 'left'
-                    responseMessage.style.maxWidth = '150px'
-                    responseMessage.style.minWidth = '50px'
                     responseMessage.style.wordWrap = 'break-word';
                     responseMessage.setAttribute('role', 'assistant');
 
@@ -231,43 +239,3 @@
     // Call the loadChatHistory function when the page has finished loading
 
 });</script>
-
-<script>
-    function loadChatHistory(chatHistory) {
-
-        var chatMessages = document.getElementById('chat-messages');
-
-        // Перебор сообщений и добавление их в чат
-        chatHistory.forEach(message => {
-            var messageElement = document.createElement('div');
-            messageElement.innerText = message.content;
-            messageElement.style.zIndex = '1';
-            messageElement.style.color = '#202020';
-            messageElement.style.borderRadius = '15px';
-            messageElement.style.borderRadius = '15px';
-            messageElement.style.paddingLeft = '10px';
-            messageElement.style.paddingRight = '25px';
-            messageElement.style.paddingBottom = '5px';
-            messageElement.style.paddingTop = '5px';
-            messageElement.style.paddingLeft = '15px';
-
-            // Установка отступа в зависимости от роли
-            if (message.role === 'user') {
-                messageElement.style.backgroundColor = 'rgb(155 250 222)';
-                messageElement.style.marginLeft = '150px';
-            } else if (message.role === 'assistant') {
-                messageElement.style.backgroundColor = 'rgb(77,178,241)';
-                messageElement.style.marginRight = '150px';
-
-            }
-
-            messageElement.style.wordWrap = 'break-word';
-
-            chatMessages.appendChild(messageElement);
-        });
-
-        // Прокрутка вниз для отображения истории чата
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-
-    }
-</script>
