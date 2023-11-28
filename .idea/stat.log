@@ -8474,3 +8474,16 @@
 {"ts":1701197090826,"action":"IDE_ACTIVATED"}
 {"ts":1701197114303,"action":"FILE_CLOSED","file":"/home/api.py","tags":{"FILE_LINE_OF_CODE":"102"}}
 {"ts":1701197131341,"action":"FILE_OPENED","file":"/home/api.py","tags":{"FILE_LINE_OF_CODE":"102"}}
+{"ts":1701197143025,"action":"IDE_DEACTIVATED"}
+{"ts":1701197151622,"action":"IDE_ACTIVATED"}
+{"ts":1701197168889,"action":"IDE_DEACTIVATED"}
+{"ts":1701197292152,"action":"IDE_ACTIVATED"}
+{"ts":1701197304935,"action":"FILE_CLOSED","file":"/home/api.py","tags":{"FILE_LINE_OF_CODE":"98"}}
+{"ts":1701197304935,"action":"FILE_OPENED","file":"/templates/home/payment.html","tags":{"FILE_LINE_OF_CODE":"198"}}
+{"ts":1701197305972,"action":"IDE_DEACTIVATED"}
+{"ts":1701197321564,"action":"IDE_ACTIVATED"}
+{"ts":1701197324298,"action":"IDE_DEACTIVATED"}
+{"ts":1701197324653,"action":"IDE_ACTIVATED"}
+{"ts":1701197326055,"action":"IDE_DEACTIVATED"}
+{"ts":1701197329681,"action":"IDE_ACTIVATED"}
+{"ts":1701197329762,"action":"FILE_OPENED","file":"/home/api.py","tags":{"FILE_LINE_OF_CODE":"98"}}
