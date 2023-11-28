@@ -242,7 +242,7 @@ function saveData(mode, pipeline_id) {
         body: JSON.stringify(dataObject),
     };
     fetch(`/api/v1/update-mode/`, requestOptions).then(response => {
-            window.location.href = '/home';
+
         }
     )
 }

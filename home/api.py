@@ -11,14 +11,13 @@ def update_mode(request):
     data = json.loads(request.body.decode('utf-8'))
 
     bounded_situations_fields = data.get('bounded_situations_fields', {})
-
     pipeline = Pipelines.objects.get(p_id=int(data['pipeline_id']))
     pipeline.knowledge_mode.mode_messages.hi_message = bounded_situations_fields['hi_message']
     pipeline.knowledge_mode.mode_messages.openai_error_message = bounded_situations_fields['openai_error_message']
     pipeline.knowledge_mode.mode_messages.database_error_message = bounded_situations_fields['database_error_message']
-    pipeline.knowledge_mode.mode_messages.service_settings_error_message = bounded_situations_fields['service_settings_error_message']
-    pipeline.knowledge_mode.save()
-
+    pipeline.knowledge_mode.mode_messages.service_settings_error_message = bounded_situations_fields[
+        'service_settings_error_message']
+    pipeline.knowledge_mode.mode_messages.save()
     return redirect(f"/knowledge-mode/?pipeline={data['pipeline_id']}")
 
 
