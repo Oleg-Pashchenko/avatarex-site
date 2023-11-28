@@ -203,7 +203,7 @@ def prompt_mode(request):
 
     instance = Pipelines.objects.get(user=request.user, p_id=d['pipeline'])
     model_id, fine_tuned_id = instance.prompt_mode.model, ''
-    if 'gpt-3.5-turbo' not in model_id:
+    if 'gpt' not in model_id:
         fine_tuned_id = model_id
         model_id = 'gpt-3.5-turbo'
 
