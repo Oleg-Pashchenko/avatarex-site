@@ -165,6 +165,7 @@ class AmoConnect:
             'username': self.login,
             'password': self.password
         }, headers=self.headers)
+        print(response.text)
         if response.status_code != 200:
             return False
         self.access_token = response.cookies.get('access_token')
