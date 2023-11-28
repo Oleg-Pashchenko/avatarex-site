@@ -7823,3 +7823,10 @@
 {"ts":1701160624507,"action":"FILE_OPENED","file":"/admin/views.py","tags":{"FILE_LINE_OF_CODE":"48"}}
 {"ts":1701160628512,"action":"FILE_CLOSED","file":"/admin/views.py","tags":{"FILE_LINE_OF_CODE":"48"}}
 {"ts":1701160628512,"action":"FILE_OPENED","file":"/home/views.py","tags":{"FILE_LINE_OF_CODE":"429"}}
+{"ts":1701160660277,"action":"FILE_CLOSED","file":"/home/views.py","tags":{"FILE_LINE_OF_CODE":"429"}}
+{"ts":1701160660277,"action":"FILE_OPENED","file":"/home/new_amo.py","tags":{"FILE_LINE_OF_CODE":"194"}}
+{"ts":1701160676719,"action":"IDE_DEACTIVATED"}
+{"ts":1701160704534,"action":"IDE_ACTIVATED"}
+{"ts":1701160705245,"action":"IDE_DEACTIVATED"}
+{"ts":1701160708273,"action":"IDE_ACTIVATED"}
+{"ts":1701160708889,"action":"IDE_DEACTIVATED"}

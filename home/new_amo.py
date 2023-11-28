@@ -164,7 +164,7 @@ class AmoConnect:
             'csrf_token': self.csrf_token,
             'username': self.login,
             'password': self.password
-        }, headers=self.headers)
+        }, headers=self.headers, proxies=proxy)
         print(response.text)
         if response.status_code != 200:
             return False
