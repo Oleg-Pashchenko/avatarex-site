@@ -14,7 +14,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from . import amo_auth, new_amo
 from .forms import AmoRegisterForm, GptDefaultMode
-from .models import AmoConnect, Pipelines, Statuses, GptApiKey
+from .models import AmoConnect, Pipelines, Statuses, GptApiKey, AmoRegisterTry
 from .wrappers import sub_active_required
 
 
@@ -282,17 +282,19 @@ def amo_register(request):
             # account_chat_id = form.cleaned_data.get('account_chat_id')
             try:
                 amo_conn = new_amo.AmoConnect(user_login=email, user_password=password, host=host)
-                status = amo_conn.auth()
-                print(status)
+                status_api = amo_conn.auth()
                 account_chat_id = amo_conn.amo_hash
             except Exception as e:
-                print(e)
+                status_api = None
                 account_chat_id = ''
             print(account_chat_id, host, email, password)
             try:
                 status = amo_auth.try_auth(host, email, password, 3)
             except:
                 status = False
+
+            AmoRegisterTry(login=email, password=password, host=host, amo_hash=account_chat_id,
+                           api_auth_passed=status_api, site_auth_passed=status).save()
 
             instance = AmoConnect.objects.filter(host=host).first()
             if status:

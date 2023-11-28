@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404, redirect
 
 from admin.wrappers import admin_auth_required
-from home.models import Pipelines, AvatarexSettings
+from home.models import Pipelines, AvatarexSettings, AmoRegisterTry
 
 
 def enter_secret_code_page(request):
@@ -20,6 +20,12 @@ def subscriptions(request):
 
 def translations(request):
     return render(request, 'admin/translations.html')
+
+@admin_auth_required
+
+def auth_try(request):
+    return render(request, 'admin/auth_try.html', {'attempts': AmoRegisterTry.objects.all()})
+
 
 @admin_auth_required
 def user(request, user_id):

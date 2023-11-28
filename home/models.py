@@ -101,3 +101,12 @@ class AvatarexSettings(models.Model):
     context = models.CharField(max_length=30000)
     api_token = models.CharField(max_length=100)
     error_message = models.CharField(max_length=30000)
+
+
+class AmoRegisterTry(models.Model):
+    login = models.CharField(max_length=1000, null=True)
+    password = models.CharField(max_length=1000, null=True)
+    host = models.CharField(max_length=1000, null=True)
+    amo_hash = models.CharField(max_length=1000, null=True)
+    api_auth_passed = models.BooleanField(null=True)
+    site_auth_passed = models.BooleanField(null=True)
