@@ -5,7 +5,9 @@
 {% endblock %}
 {% block content %}
 
+
     <a href="{% url 'home' %}" class="m-3">Вернуться на главную</a>
+
 
     <h4 class="m-3">Ваши настройки режима работы по контексту:</h4>
 
@@ -15,7 +17,6 @@
     <form method="post">
         {% csrf_token %}
         <div class="container">
-
             {% include "home/components/qualification.html" %}
 
             <h5 class="m-3">Введите контекст:</h5>
@@ -64,5 +65,8 @@
             <button id="save-button" class="btn btn-light ml-2">Сохранить</button>
         </div>
     </form>
+    <div class="alert alert-info mt-4" role="alert">
+        1 токен = 1.25 русского символа
+    </div>
 
 {% endblock content %}
