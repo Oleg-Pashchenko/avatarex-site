@@ -2,9 +2,9 @@ from django import forms
 
 
 class AmoRegisterForm(forms.Form):
-    email = forms.CharField(required=True)
-    host = forms.CharField(required=True, label="Ссылка на аккаунт amoCRM")
-    password = forms.CharField(widget=forms.PasswordInput, required=True)
+    email = forms.CharField(required=True, label='Почта от аккаунта AmoCRM')
+    host = forms.CharField(required=True, label="Ссылка на аккаунт AmoCRM")
+    password = forms.CharField(widget=forms.PasswordInput, required=True, label="Пароль от аккаунта amoCRM")
 
 
 class GptDefaultMode(forms.Form):
