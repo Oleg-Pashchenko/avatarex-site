@@ -1,12 +1,10 @@
 .input-group-text {
     margin-right: 5px;
     color: white;
-    background-color: rgb(38, 47, 60);
+
+
     border-color: rgb(114, 119, 240);
 }
-
-
-
 
 
 .input-group-text :hover {
@@ -16,11 +14,12 @@
     border: 2px solid white;
 }
 
-.input-group-input  {
+.input-group-input {
     margin-right: 5px;
     color: white;
     border-color: rgb(114, 119, 240);
 }
+
 .input-group-input :hover {
     text-decoration: none;
     color: white;

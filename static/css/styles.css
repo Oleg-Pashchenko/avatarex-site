@@ -23,7 +23,7 @@ body {
 }
 
 .widget-container {
-    background-color: rgb(114, 119, 240);
+    background: rgb(114, 119, 240);
     position: fixed;
     z-index: 99999;
     bottom: 3%;
@@ -51,6 +51,22 @@ body {
     background-color: #004a9a; /* Цвет кнопки при наведении */
 }
 
+.input-group-text {
+    margin-right: 5px;
+    color: white;
+    /* fallback for old browsers */
+    background: rgb(76, 79, 161);
+
+    border-color: rgb(114, 119, 240);
+}
+
+.input-group-text :hover {
+    text-decoration: none;
+    color: white;
+    cursor: default;
+    background: rgb(90, 95, 241);
+
+}
 
 .header-container {
     border: 1px solid rgb(114, 119, 240);
@@ -75,7 +91,7 @@ body {
 
 .header-item:hover {
     text-decoration: none;
-    color: rgb(114, 119, 240);
+    background: rgb(114, 119, 240);
     cursor: default;
 }
 
@@ -86,11 +102,11 @@ body {
 }
 
 .change-work-mode {
-    border: 2px solid rgb(114, 119, 240);
+    border: 2px solid rgb(90, 95, 241);
     border-radius: 5px;
     margin-right: 5px;
     padding: 15px;
-    background-color: rgb(38, 47, 60);
+    background: rgb(90, 95, 241);
     color: white;
     text-align: center;
     display: inline-block;
@@ -101,10 +117,19 @@ body {
     text-decoration: none;
     color: white;
     cursor: default;
-    border: 2px solid white;
+    border: 2px solid rgb(114, 119, 240);
+    background: rgb(114, 119, 240);
 }
+
 .pipeline-item {
-    border: 1px solid rgb(114, 119, 240);
+    /* fallback for old browsers */
+    background: #fccb90;
+
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right, rgb(19, 20, 38), rgb(44, 20, 37));
+
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right, rgb(19, 20, 38), rgb(44, 20, 37));
     border-radius: 5px;
     margin: 5px;
     padding: 7px;
@@ -117,35 +142,78 @@ body {
     text-decoration: none;
     color: white;
     cursor: default;
-    border: 2px solid white;
+    /* fallback for old browsers */
+
+    background: rgb(90, 95, 241);
 }
 
 .selected-pipeline {
-    background-color: rgb(114, 119, 240);
+    background: rgb(90, 95, 241);
+}
+
+.selected-pipeline:hover {
+    text-decoration: none;
+    color: white;
+    cursor: default;
+    /* fallback for old browsers */
+
+    background: rgb(111, 114, 241);
 }
 
 .stage {
-    border: 1px solid rgb(114, 119, 240);
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: 0.375rem 0.75rem;
+    margin-bottom: 0;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+
+    text-align: center;
+    white-space: nowrap;
+    margin-right: 5px;
+
+    border: 1px solid rgb(76, 79, 161);
     border-radius: 5px;
-    background-color: rgb(38, 47, 60);
+    /* fallback for old browsers */
+    background: rgb(76, 79, 161);
     color: white;
     margin-top: 10px; /* Устанавливаем вертикальный отступ по вашему выбору */
 
 }
 
 .stage:hover {
+    background: #fccb90;
+
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right, rgb(19, 20, 38), rgb(27, 16, 35), rgb(61, 30, 63), rgb(44, 20, 37));
+
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right, rgb(19, 20, 38), rgb(27, 16, 35), rgb(61, 30, 63), rgb(44, 20, 37));
+
     text-decoration: none;
     color: white;
     cursor: default;
-    border: 2px solid white;
 }
 
 
 .selected-stage {
+    border: 1px solid rgb(80, 80, 80);
+    background: #fccb90;
 
-    background-color: rgb(114, 119, 240);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right, rgb(19, 20, 38), rgb(27, 16, 35), rgb(61, 30, 63), rgb(44, 20, 37));
+
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right, rgb(19, 20, 38), rgb(27, 16, 35), rgb(61, 30, 63), rgb(44, 20, 37));
 }
 
+.selected-stage:hover {
+
+    background: rgb(76, 79, 161);
+}
 
 .input-group-button {
     background-color: rgb(114, 119, 240);

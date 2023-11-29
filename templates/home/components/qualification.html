@@ -1,3 +1,11 @@
+<style>
+    .input-group-text ::placeholder {
+        color: white;
+    }
+    .input-group-text::-webkit-input-placeholder {color: #ffffff;}
+</style>
+
+
 <div class="mb-5">
     <h5 class="mt-5">Если вы хотите проводить квалификацию клиента, пожалуйста, добавьте поля:</h5>
     <legend class="border-bottom mb-4"></legend>
@@ -23,7 +31,8 @@
     </button>
 
     <h6 class="mt-5">Сообщение после прохождения квалификации:</h6>
-    <textarea style="min-height: 100px; background-color: rgb(26, 24, 22); color: white;" name="qualificationFinished" class="mt-2"
+    <textarea style="min-height: 100px; background-color: rgb(26, 24, 22); color: white;" name="qualificationFinished"
+              class="mt-2"
               id="qualificationFinished">{{ qualification_rules.qualification_finished }}</textarea>
 
 </div>
@@ -36,7 +45,7 @@
         var newInputField = document.createElement("div");
         newInputField.className = "rule input-group-prepend";
         newInputField.innerHTML = `<div class="col-3 p-0 pr-1 mb-2">
-                <input name="field-name" class="input-group-text" placeholder="Название поля" value="{{ k }}">
+                <input name="field-name"  class="input-group-text" placeholder="Название поля" value="{{ k }}">
             </div>
             <div class=" pl-1 pr-0 col-8">
                 <input class="form-control q" name="field-value" placeholder="Введите вопрос который нужно задать клиенту" value="{{ v }}">
