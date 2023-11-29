@@ -19,7 +19,7 @@ class GptDefaultMode(forms.Form):
                                                            'placeholder': 'Введите ваш контекст запроса'
                                                            }))
     max_tokens = forms.IntegerField(
-        min_value=100, required=True, widget=forms.NumberInput(attrs={'class': 'rounded-value blacked',
+        min_value=100, required=True, widget=forms.NumberInput(attrs={'class': 'rounded-value blacked ',
                                                                       'placeholder': 'от 100 токенов'
                                                                       })
     )
