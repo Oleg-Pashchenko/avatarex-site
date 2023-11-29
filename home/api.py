@@ -1,6 +1,8 @@
 import json
 
+import requests
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 from django.shortcuts import redirect
 from home.models import Pipelines, GptApiKey
 import gdown
@@ -95,3 +97,11 @@ def update_token(request):
         inst.save()
     else:
         GptApiKey(user=request.user, key=d['token']).save()
+
+
+def widget(request):
+    url = 'http://95.140.146.86:8083/widget-api'
+    data = json.loads(request.body)
+    response = requests.post(url, json=data, headers={'Content-Type': 'application/json'})
+    print(response.text)
+    return JsonResponse(response.json())
