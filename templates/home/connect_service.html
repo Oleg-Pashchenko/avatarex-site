@@ -1,35 +1,93 @@
 {% extends "core/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-    <div class="content-section">
-        <form method="POST">
-            {% csrf_token %}
-            <fieldset class="form-group mt-3">
-                <legend class="border-bottom mb-4">Привязать аккаунт AmoCRM</legend>
-                {{ form|crispy }}
-            </fieldset>
+    <style>
+        .gradient-custom-2 {
+            /* fallback for old browsers */
+            background: #fccb90;
 
-            <fieldset class="form-group mt-3">
-                <div class="description-block">
-                    <legend class="border-bottom mb-4">Простая настройка подключения в 3 шага:</legend>
+            /* Chrome 10-25, Safari 5.1-6 */
+            background: -webkit-linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
 
-                    <h6>1) Перейдите в Amo Market</h6>
-                    <h6>2) В правом верхнем углу нажмите на кнопку `+ WEB HOOKS` и в поле адрес укажите
-                        http://95.140.146.86:8000/api/v1/amocrm/{{ request.user.id }}</h6>
-                    <h6>3) В том же меню выберите события для обработки:</h6>
-                    <ul>
-                        <li>Сделка добавлена</li>
-                        <li>Неразобранное добавлено</li>
-                        <li>Входящее сообщение добавлено</li>
-                        <li>Сделка изменена</li>
-                        <li>Сделка удалена</li>
-                        <li>Неразобранное удалено</li>
-                    </ul>
-            </fieldset>
-    </div>
-    <div class="form-group">
-        <button class="btn btn-primary" type="submit">Привязать</button>
-    </div>
-    </form>
-    </div>
+            /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            background: linear-gradient(to right, rgb(114, 119, 240), rgb(179, 114, 240), rgb(232, 114, 240), rgb(240, 114, 200));
+        }
+
+        @media (min-width: 768px) {
+            .gradient-form {
+                height: 100vh !important;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .gradient-custom-2 {
+                border-top-right-radius: .3rem;
+                border-bottom-right-radius: .3rem;
+            }
+        }
+
+    </style>
+    <!-- rgb(114, 119, 240); -->
+    <section class="h-100 gradient-form" style="background-color: #202020;">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-xl-10">
+                    <div class="card rounded-3 text-black" style="border-radius: 25px; background-color: #202020">
+                        <div class="row g-0" style="border-radius: 25px; background-color: rgb(36,36,56);">
+                            <div class="col-lg-6" style="border-radius: 25px">
+                                <div class="card-body p-md-5 mx-md-4" style="border-radius: 25px">
+
+                                    <div class="text-center">
+                                        <img class="tn-atom__img t-img loaded"
+                                             data-original="https://static.tildacdn.com/tild3132-3636-4731-b661-326135346334/27ece840-2040-4416-8.png"
+                                             alt="" imgfield="tn_img_1694014492861"
+                                             src="https://thumb.tildacdn.com/tild3132-3636-4731-b661-326135346334/-/resize/66x/-/format/webp/27ece840-2040-4416-8.png">
+                                        <h4 class="mt-1 mb-5 pb-1">We are Avatarex Team</h4>
+                                    </div>
+                                    <form method="POST">
+                                        {% csrf_token %}
+                                        <fieldset class="form-group mt-3">
+                                            <legend class="border-bottom mb-4">Привязать аккаунт AmoCRM</legend>
+                                            {{ form|crispy }}
+                                        </fieldset>
+                                        <div class="text-center pt-1 mb-5 pb-1 form-group">
+                                            <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3"
+                                                    type="submit">Привязать
+                                            </button>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                            <div class="col-lg-6 d-flex align-items-center gradient-custom-2"
+                                 style="border-radius: 25px">
+                                <div class="text-white px-3 py-4">
+                                    <fieldset class="form-group mt-3">
+                                        <div class="description-block" style="border: 2px solid rgb(255,255,255);">
+                                            <legend class="border-bottom mb-4">Простая настройка подключения в 3 шага:
+                                            </legend>
+
+                                            <h6>1) Перейдите в Amo Market</h6>
+                                            <h6>2) В правом верхнем углу нажмите на кнопку <p style="font-weight: 600; margin: 0 0 0 0;">`+ WEB HOOKS`</p> и в поле адрес
+                                                укажите
+                                                <i style="">http://95.140.146.86:8000/api/v1/amocrm/{{ request.user.id }}</i> </h6>
+                                            <h6>3) В том же меню выберите события для обработки:</h6>
+                                            <ul>
+                                                <li>Сделка добавлена</li>
+                                                <li>Неразобранное добавлено</li>
+                                                <li>Входящее сообщение добавлено</li>
+                                                <li>Сделка изменена</li>
+                                                <li>Сделка удалена</li>
+                                                <li>Неразобранное удалено</li>
+                                            </ul>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock content %}
