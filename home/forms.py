@@ -3,7 +3,7 @@ from django import forms
 
 class AmoRegisterForm(forms.Form):
     email = forms.CharField(required=True)
-    host = forms.CharField(required=True)
+    host = forms.CharField(required=True, label="Ссылка на аккаунт amoCRM")
     password = forms.CharField(widget=forms.PasswordInput, required=True)
 
 
