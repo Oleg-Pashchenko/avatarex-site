@@ -26,6 +26,18 @@
             }
         }
 
+        .rounded-badge {
+            display: inline-block;
+            padding: 10px;
+            border-radius: 15px;
+            background-color: #233333; /* You can change the background color */
+        }
+
+        .rounded-badge i {
+
+            font-style: normal;
+        }
+
     </style>
     <!-- rgb(114, 119, 240); -->
     <section class="h-100 gradient-form" style="background-color: #202020;">
@@ -68,9 +80,16 @@
                                             </legend>
 
                                             <h6>1) Перейдите в Amo Market</h6>
-                                            <h6>2) В правом верхнем углу нажмите на кнопку <p style="font-weight: 600; margin: 0 0 0 0;">`+ WEB HOOKS`</p> и в поле адрес
+                                            <h6>2) В правом верхнем углу нажмите на кнопку <p
+                                                    style="font-weight: 600; margin: 0 0 0 0;">`+ WEB HOOKS`</p> <p>и в
+                                                поле адрес
                                                 укажите
-                                                <i style="">http://95.140.146.86:8000/api/v1/amocrm/{{ request.user.id }}</i> </h6>
+                                            </p>
+
+
+                                                <div class="rounded-badge"><i style="">http://95.140.146.86:8000/api/v1/amocrm/{{ request.user.id }}</i></div>
+                                            </h6>
+                                            <br/>
                                             <h6>3) В том же меню выберите события для обработки:</h6>
                                             <ul>
                                                 <li>Сделка добавлена</li>

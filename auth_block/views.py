@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.contrib import messages
 
@@ -48,7 +48,8 @@ def login_view(request):
     return render(request, 'auth/login.html', {'form': form})
 
 
-def logout(request):
+def logout_view(request):
+    logout(request)
     return redirect('/auth/login/')
 
 def amo(request):
