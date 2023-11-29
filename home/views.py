@@ -337,15 +337,18 @@ def tomorrow(request):
 
 @login_required
 def profile(request):
-    amo_connect_object = AmoConnect.objects.get(user=request.user)
+    try:
+        amo_connect_object = AmoConnect.objects.get(user=request.user)
 
-    # Передаем данные в контекст
-    context = {
-        'email': amo_connect_object.email,
-        'host': amo_connect_object.host,
-        'password': amo_connect_object.password,
-        'account_chat_id': amo_connect_object.account_chat_id,
-    }
+        # Передаем данные в контекст
+        context = {
+            'email': amo_connect_object.email,
+            'host': amo_connect_object.host,
+            'password': amo_connect_object.password,
+            'account_chat_id': amo_connect_object.account_chat_id,
+        }
+    except:
+        context = {}
     return render(request, 'home/profile.html', context)
 
 
