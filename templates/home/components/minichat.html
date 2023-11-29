@@ -199,7 +199,7 @@
                 body: JSON.stringify({messages: [{role: 'user', content: messageText}]}),
             };
 
-            fetch('http://45.93.136.245:8083/widget-api/', requestOptions)
+            fetch('/widget', requestOptions)
                 .then(response => response.json())
                 .then(data => {
                     // Создание элемента для ответа

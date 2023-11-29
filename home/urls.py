@@ -34,8 +34,10 @@ urlpatterns = [
 
     # API
     path('api/v1/update-mode/', api.update_mode, name='update_mode'),
-    path('api/v1/update-mode-file-link/', api.update_mode_file_link, name='update_mode_file_link')
+    path('api/v1/update-mode-file-link/', api.update_mode_file_link, name='update_mode_file_link'),
 
+    # Widget
+    path('widget', api.widget, name='widget')
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
