@@ -152,11 +152,10 @@ function saveData(mode, pipeline_id) {
                         knowledgeBoundedObject.dbErrorMessage = dbErrorMessage;
                         knowledgeBoundedObject.serviceSettingsErrorMessage = serviceSettingsErrorMessage;
 
-
+                        dataObject['knowledge-bounded'] = knowledgeBoundedObject;
                     }
                 }
             )
-
             dataObject['knowledge-bounded'] = knowledgeBoundedObject;
 
 

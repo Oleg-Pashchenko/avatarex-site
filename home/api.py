@@ -2,40 +2,30 @@ import json
 
 import requests
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpRequest
 from django.shortcuts import redirect
 from home.models import Pipelines, GptApiKey
 import gdown
 
 
 @login_required
-def update_mode(request):
+def update_mode(request: HttpRequest):
     data = json.loads(request.body.decode('utf-8'))
-    qualification_fields = data['qualification_fields']
-    print(qualification_fields)
-    qualification_finished = data['qualificationFinished']
-    print(qualification_finished)
 
-    # bounded_situations_fields = data['bounded_situations_fields']
-    prompt_data = data.get('prompt-data', {})
-    print(prompt_data)
-    checkbox = data['checkbox']
-    print(checkbox)
+    url = data.get('currentUrl', None)
+    pipeline_id = int(url.split('=')[1])
+    mode = url.split('/')[-2]
+    pipeline = Pipelines.objects.get(p_id=pipeline_id)
 
     know_bound = data.get('knowledge-bounded', {})
-    know_promt = data.get('knowledge-prompt', {})
-    print(know_bound)
-    print(know_promt)
 
     bounded_situations_fields = data.get('bounded_situations_fields', {})
-    pipeline = Pipelines.objects.get(p_id=int(data['pipeline_id']))
-    pipeline.knowledge_mode.mode_messages.hi_message = bounded_situations_fields['hi_message']
-    pipeline.knowledge_mode.mode_messages.openai_error_message = bounded_situations_fields['openai_error_message']
-    pipeline.knowledge_mode.mode_messages.database_error_message = bounded_situations_fields['database_error_message']
-    pipeline.knowledge_mode.mode_messages.service_settings_error_message = bounded_situations_fields[
-        'service_settings_error_message']
-    pipeline.knowledge_mode.mode_messages.save()
-    return redirect(f"/knowledge-mode/?pipeline={data['pipeline_id']}")
+    qualification_fields = data.get('qualification_fields', [])
+    qualification_finished = data.get('qualificationFinished', None)
+    prompt_data = data.get('prompt-data', {})
+
+    print(mode, pipeline_id, data)
+    return redirect('/home')
 
 
 @login_required
