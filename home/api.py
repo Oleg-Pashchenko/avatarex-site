@@ -17,6 +17,7 @@ def update_mode(request: HttpRequest):
     mode = url.split('/')[-2]
     pipeline = Pipelines.objects.get(p_id=pipeline_id)
 
+    know_prompt = data.get('knowledge-prompt', {})
     know_bound = data.get('knowledge-bounded', {})
 
     bounded_situations_fields = data.get('bounded_situations_fields', {})

@@ -68,99 +68,98 @@ function saveData(mode, pipeline_id) {
 
         });
 
-
-        const checkboxObject = {
-            mode: 'inactive' // По умолчанию чекбокс неактивен
-        };
-        if (window.location.href.includes('knowledge-mode')) {
-
-            var boundedSituationsFields = {};
-
-            dataObject['mode'] = mode;
-
-            console.log(dataObject);
-            boundedSituationsFields["hi_message"] = document.getElementById("hi-message").value;
-            boundedSituationsFields["database_error_message"] = document.getElementById("db-error-message").value;
-            boundedSituationsFields["openai_error_message"] = document.getElementById("openai-error-message").value;
-            boundedSituationsFields["service_settings_error_message"] = document.getElementById("service_settings_error_message").value;
-            dataObject["bounded_situations_fields"] = boundedSituationsFields;
-
-            const data = {};
-
-
-            const knowledgeObject = {};
-            const knowledgeBoundedObject = {};
-            const elements = document.querySelectorAll('.rule');
-            dataObject['qualificationFinished'] = document.getElementById("qualificationFinished").value;
-            elements.forEach((element) => {
-                    const checkboxObject = {};
-                    //const modeCheckbox = element.querySelector('[name="checkbox"]');
-                    // Проверяем, активен ли чекбокс
-                    //const isModeCheckboxChecked = modeCheckbox ? modeCheckbox.checked : false;
-
-
-                    if (modeCheckbox.checked === true) {
-                        // Чекбокс активен
-                        checkboxObject.mode = 'active';
-                        dataObject['checkbox'] = checkboxObject;
-                        // Чекбокс активен, считываем значения полей ввода и выбора
-
-                        // Чекбокс активен, считываем содержимое textarea и значения других полей
-                        const contextElement = document.getElementById('id_context');
-                        const context = contextElement ? contextElement.value : '';
-
-                        const maxTokensElement = document.getElementById('id_max_tokens');
-                        const maxTokens = maxTokensElement ? maxTokensElement.value : '';
-
-                        const temperatureElement = document.getElementById('id_temperature');
-                        const temperature = temperatureElement ? temperatureElement.value : '';
-
-                        const modelElement = document.getElementById('id_model');
-                        const model = modelElement ? modelElement.value : '';
-
-                        const fineTunelModelIdElement = document.getElementById('id_fine_tunel_model_id');
-                        const fineTunelModelId = fineTunelModelIdElement ? fineTunelModelIdElement.value : '';
-
-                        // Записываем в объект knowledgeObject
-                        knowledgeObject.context = context;
-                        knowledgeObject.maxTokens = maxTokens;
-                        knowledgeObject.temperature = temperature;
-                        knowledgeObject.model = model;
-                        knowledgeObject.fineTunelModelId = fineTunelModelId;
-                        dataObject['knowledge-prompt'] = knowledgeObject;
-                    }
-                    if (modeCheckbox.checked === false) {
-                        // Чекбокс неактивен
-                        checkboxObject.mode = 'inactive';
-                        dataObject['checkbox'] = checkboxObject;
-                        const hiMessageElement = document.getElementById('hi-message');
-                        const hiMessage = hiMessageElement ? hiMessageElement.value : '';
-
-                        const openaiErrorMessageElement = document.getElementById('openai-error-message');
-                        const openaiErrorMessage = openaiErrorMessageElement ? openaiErrorMessageElement.value : '';
-
-                        const dbErrorMessageElement = document.getElementById('db-error-message');
-                        const serviceSettingsErrorMessageElement = document.getElementById('service_settings_error_message');
-
-
-                        const dbErrorMessage = dbErrorMessageElement ? dbErrorMessageElement.value : '';
-                        const serviceSettingsErrorMessage = serviceSettingsErrorMessageElement ? serviceSettingsErrorMessageElement.value : '';
-
-                        // Записываем значения в объект
-                        knowledgeBoundedObject.hiMessage = hiMessage;
-                        knowledgeBoundedObject.openaiErrorMessage = openaiErrorMessage;
-                        knowledgeBoundedObject.dbErrorMessage = dbErrorMessage;
-                        knowledgeBoundedObject.serviceSettingsErrorMessage = serviceSettingsErrorMessage;
-
-                        dataObject['knowledge-bounded'] = knowledgeBoundedObject;
-                    }
-                }
-            )
-            dataObject['knowledge-bounded'] = knowledgeBoundedObject;
-
-
-        }
     }
+    const checkboxObject = {
+        mode: 'inactive' // По умолчанию чекбокс неактивен
+    };
+    if (window.location.href.includes('knowledge-mode')) {
+
+        var boundedSituationsFields = {};
+
+        dataObject['mode'] = mode;
+
+        console.log(dataObject);
+        boundedSituationsFields["hi_message"] = document.getElementById("hi-message").value;
+        boundedSituationsFields["database_error_message"] = document.getElementById("db-error-message").value;
+        boundedSituationsFields["openai_error_message"] = document.getElementById("openai-error-message").value;
+        boundedSituationsFields["service_settings_error_message"] = document.getElementById("service_settings_error_message").value;
+        dataObject["bounded_situations_fields"] = boundedSituationsFields;
+
+        const data = {};
+
+
+        const knowledgeObject = {};
+        const knowledgeBoundedObject = {};
+        const elements = document.querySelectorAll('.rule');
+        dataObject['qualificationFinished'] = document.getElementById("qualificationFinished").value;
+        elements.forEach((element) => {
+                const checkboxObject = {};
+                //const modeCheckbox = element.querySelector('[name="checkbox"]');
+                // Проверяем, активен ли чекбокс
+                //const isModeCheckboxChecked = modeCheckbox ? modeCheckbox.checked : false;
+
+
+                if (modeCheckbox.checked === true) {
+                    // Чекбокс активен
+                    checkboxObject.mode = 'active';
+                    dataObject['checkbox'] = checkboxObject;
+                    // Чекбокс активен, считываем значения полей ввода и выбора
+
+                    // Чекбокс активен, считываем содержимое textarea и значения других полей
+                    const contextElement = document.getElementById('id_context');
+                    const context = contextElement ? contextElement.value : '';
+
+                    const maxTokensElement = document.getElementById('id_max_tokens');
+                    const maxTokens = maxTokensElement ? maxTokensElement.value : '';
+
+                    const temperatureElement = document.getElementById('id_temperature');
+                    const temperature = temperatureElement ? temperatureElement.value : '';
+
+                    const modelElement = document.getElementById('id_model');
+                    const model = modelElement ? modelElement.value : '';
+
+                    const fineTunelModelIdElement = document.getElementById('id_fine_tunel_model_id');
+                    const fineTunelModelId = fineTunelModelIdElement ? fineTunelModelIdElement.value : '';
+
+                    // Записываем в объект knowledgeObject
+                    knowledgeObject.context = context;
+                    knowledgeObject.maxTokens = maxTokens;
+                    knowledgeObject.temperature = temperature;
+                    knowledgeObject.model = model;
+                    knowledgeObject.fineTunelModelId = fineTunelModelId;
+                    dataObject['knowledge-prompt'] = knowledgeObject;
+                }
+                if (modeCheckbox.checked === false) {
+                    // Чекбокс неактивен
+                    checkboxObject.mode = 'inactive';
+                    dataObject['checkbox'] = checkboxObject;
+                    const hiMessageElement = document.getElementById('hi-message');
+                    const hiMessage = hiMessageElement ? hiMessageElement.value : '';
+
+                    const openaiErrorMessageElement = document.getElementById('openai-error-message');
+                    const openaiErrorMessage = openaiErrorMessageElement ? openaiErrorMessageElement.value : '';
+
+                    const dbErrorMessageElement = document.getElementById('db-error-message');
+                    const serviceSettingsErrorMessageElement = document.getElementById('service_settings_error_message');
+
+
+                    const dbErrorMessage = dbErrorMessageElement ? dbErrorMessageElement.value : '';
+                    const serviceSettingsErrorMessage = serviceSettingsErrorMessageElement ? serviceSettingsErrorMessageElement.value : '';
+
+                    // Записываем значения в объект
+                    knowledgeBoundedObject.hiMessage = hiMessage;
+                    knowledgeBoundedObject.openaiErrorMessage = openaiErrorMessage;
+                    knowledgeBoundedObject.dbErrorMessage = dbErrorMessage;
+                    knowledgeBoundedObject.serviceSettingsErrorMessage = serviceSettingsErrorMessage;
+
+                    dataObject['knowledge-bounded'] = knowledgeBoundedObject;
+                }
+            }
+        )
+
+
+    }
+
 
     const elements = document.querySelectorAll('.rule');
 
