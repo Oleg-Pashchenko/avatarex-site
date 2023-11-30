@@ -29,6 +29,7 @@ class KnowledgeMode(models.Model):
     mode_messages = models.ForeignKey(ModeMessages, on_delete=models.CASCADE)
     database_link = models.CharField(default='')
     database_file_id = models.CharField(default='')
+    prompt_mode_id = models.IntegerField(default=None, null=True)
 
 
 class SearchAndKnowledgeMode(models.Model):
@@ -42,6 +43,8 @@ class PromptMode(models.Model):
     model = models.CharField(max_length=100, default="gpt-3.5-turbo")
     max_tokens = models.IntegerField(default=0)
     temperature = models.FloatField(default=1)
+    error_message = models.TextField(default='', null=True)
+    error_message_time = models.IntegerField(default=3, null=True)
 
 
 class AmoConnect(models.Model):

