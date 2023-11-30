@@ -11,6 +11,21 @@ import gdown
 @login_required
 def update_mode(request):
     data = json.loads(request.body.decode('utf-8'))
+    qualification_fields = data['qualification_fields']
+    print(qualification_fields)
+    qualification_finished = data['qualificationFinished']
+    print(qualification_finished)
+
+    # bounded_situations_fields = data['bounded_situations_fields']
+    prompt_data = data.get('prompt-data', {})
+    print(prompt_data)
+    checkbox = data['checkbox']
+    print(checkbox)
+
+    know_bound = data.get('knowledge-bounded', {})
+    know_promt = data.get('knowledge-prompt', {})
+    print(know_bound)
+    print(know_promt)
 
     bounded_situations_fields = data.get('bounded_situations_fields', {})
     pipeline = Pipelines.objects.get(p_id=int(data['pipeline_id']))

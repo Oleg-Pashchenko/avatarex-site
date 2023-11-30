@@ -5,16 +5,33 @@
 {% endblock %}
 {% block content %}
     <style>
-    .alert-info {
-        font-family: 'Montserrat', sans-serif;
-        font-size: 16px;
-        background-color: #212121;
-        color: #ddd;
-    }
-    .nohov:hover{
-        border: 2px solid rgb(114, 119, 240);
+        .alert-info {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            background-color: #212121;
+            color: #ddd;
+        }
 
-    }
+        .nohov:hover {
+            border: 2px solid rgb(114, 119, 240);
+
+        }
+
+        .select-dark {
+            color: white;
+            background-color: rgb(26, 24, 22);
+        }
+
+        .select-dark:focus {
+            color: white;
+            background-color: rgb(26, 24, 22);
+        }
+
+        select.select-dark option {
+            text-align: left;
+            color: white; /* Цвет текста в опциях */
+            background-color: rgb(26, 24, 22);; /* Цвет фона в опциях */
+        }
     </style>
 
 
@@ -71,25 +88,67 @@
                     </div>
                 </div>
             </div>
+            <h4 class=" mt-5" style="text-align: center; font-weight: 600;">Сообщение на случай возникновения ошибок</h4>
+            <select name=""
+                    class="form-control select-dark col-3 mt-3" id="number">
+                <option value="0" disabled selected style="text-align: center;  font-size: large;">Время до сообщения</option>
+                <option value="1" style="text-align: center; font-size: large;"
+                        {% if number == 1 %}selected{% endif %}>1 минута
+                </option>
+                <option value="2" style="text-align: center; font-size: large;"
+                        {% if umber == 2 %}selected{% endif %}>2 минуты
+                </option>
+                <option value="3" style="text-align: center; font-size: large;"
+                        {% if number == 3 %}selected{% endif %}>3 минуты
+                </option>
+                <option value="4" style="text-align: center; font-size: large;"
+                        {% if number == 4 %}selected{% endif %}>4 минуты
+                </option>
+                <option value="5" style="text-align: center; font-size: large;"
+                        {% if number == 5 %}selected{% endif %}>5 минут
+                </option>
+                <option value="6" style="text-align: center; font-size: large;"
+                        {% if number == 6 %}selected{% endif %}>6 минут
+                </option>
+                <option value="7" style="text-align: center; font-size: large;"
+                        {% if number == 7 %}selected{% endif %}>7 минут
+                </option>
+                <option value="8" style="text-align: center; font-size: large;"
+                        {% if number == 8 %}selected{% endif %}>8 минут
+                </option>
+                <option value="9" style="text-align: center; font-size: large;"
+                        {% if number == 9 %}selected{% endif %}>9 минут
+                </option>
+                <option value="10" style="text-align: center; font-size: large;"
+                        {% if number == 10 %}selected{% endif %}>10 минут
+                </option>
+                <!-- Добавьте остальные опции здесь -->
+            </select>
+            <textarea name="context" cols="40" rows="10" class="rounded-value blacked mt-2"
+                      placeholder="Введите текст на случай возникновения ошибки" required="" id="error_text"></textarea>
         </div>
         <div class="widget-container text-white rounded p-2" style="z-index: 1">
             <p class="d-inline-block m-0">После внесения изменений нажмите на кнопку.</p>
-            <button id="save-button" class="btn btn-light ml-2">Сохранить</button>
+            <button id="" class="btn btn-light ml-2" onclick="saveData('prompt', {{ pipeline_id }});">
+                Сохранить
+            </button>
         </div>
     </form>
     <div class="alert alert-info mt-4" role="alert">
-        Информация о расчете токенов:
+        <h3 class=" " style="text-align: center; font-weight: 600;">Информация о расчете токенов:</h3>
+        <p style="text-align:justify;">Токены делятся на 2 типа: для запроса и для ответа. Один токен приблизительно
+            равен 1.25 кириллическим символам.
+            Для примера рассмотрим модель GPT-3.5-turbo, которая включает в себя 4096 токенов.
 
-        Токены делятся на 2 типа: для запроса и для ответа. Один токен приблизительно равен 1.25 кириллическим символам.
-        Для примера рассмотрим модель GPT-3.5-turbo, которая включает в себя 4096 токенов.
+            Затраты токенов на запрос формируются следующим образом: токены на контекст + токены на историю сообщений.
 
-        Затраты токенов на запрос формируются следующим образом: токены на контекст + токены на историю сообщений.
+            Максимальные затраты токенов на ответ устанавливаются параметром на avatarex.net. Если вы хотите получить
+            примерно до 1000 кириллических символов в ответе, установите параметр max_tokens = 800.
 
-        Максимальные затраты токенов на ответ устанавливаются параметром на avatarex.net. Если вы хотите получить
-        примерно до 1000 кириллических символов в ответе, установите параметр max_tokens = 800.
+            Чем больше токенов вмещает модель, тем больше сообщений из взаимодействия с пользователем будет доступно
+            OpenAI
+            для анализа, и тем более точным будет ответ</p>
 
-        Чем больше токенов вмещает модель, тем больше сообщений из взаимодействия с пользователем будет доступно OpenAI
-        для анализа, и тем более точным будет ответ
     </div>
 
 {% endblock content %}

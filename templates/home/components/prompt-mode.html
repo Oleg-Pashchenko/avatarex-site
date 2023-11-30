@@ -1,0 +1,88 @@
+
+<form method="post">
+
+    {% csrf_token %}
+    <div class="container  ">
+        <h5 class="m-3">Введите контекст:</h5>
+        <legend class="border-bottom mb-4"></legend>
+        {{ form.context }}
+        <div class="row mt-3">
+            <div class="col-6">
+                <div class="description-block">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text pt-2 pb-0">{{ form.max_tokens.label_tag }}</span>
+                        {{ form.max_tokens }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="description-block">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text pt-2 pb-0">{{ form.temperature.label_tag }}</span>
+                        {{ form.temperature }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-3">
+                <div class="description-block">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text pt-2 pb-0">{{ form.model.label_tag }}</span>
+                        {{ form.model }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-9">
+                <div class="description-block">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text pt-2 pb-0">{{ form.fine_tunel_model_id.label_tag }}</span>
+                        {{ form.fine_tunel_model_id }}
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <h4 class=" mt-5" style="text-align: center; font-weight: 600;">Сообщение на случай возникновения ошибок</h4>
+        <select name=""
+                class="form-control select-dark col-3 mt-3" id="number">
+            <option value="0" disabled selected style="text-align: center;  font-size: large;">Время до сообщения
+            </option>
+            <option value="1" style="text-align: center; font-size: large;"
+                    {% if number == 1 %}selected{% endif %}>1 минута
+            </option>
+            <option value="2" style="text-align: center; font-size: large;"
+                    {% if umber == 2 %}selected{% endif %}>2 минуты
+            </option>
+            <option value="3" style="text-align: center; font-size: large;"
+                    {% if number == 3 %}selected{% endif %}>3 минуты
+            </option>
+            <option value="4" style="text-align: center; font-size: large;"
+                    {% if number == 4 %}selected{% endif %}>4 минуты
+            </option>
+            <option value="5" style="text-align: center; font-size: large;"
+                    {% if number == 5 %}selected{% endif %}>5 минут
+            </option>
+            <option value="6" style="text-align: center; font-size: large;"
+                    {% if number == 6 %}selected{% endif %}>6 минут
+            </option>
+            <option value="7" style="text-align: center; font-size: large;"
+                    {% if number == 7 %}selected{% endif %}>7 минут
+            </option>
+            <option value="8" style="text-align: center; font-size: large;"
+                    {% if number == 8 %}selected{% endif %}>8 минут
+            </option>
+            <option value="9" style="text-align: center; font-size: large;"
+                    {% if number == 9 %}selected{% endif %}>9 минут
+            </option>
+            <option value="10" style="text-align: center; font-size: large;"
+                    {% if number == 10 %}selected{% endif %}>10 минут
+            </option>
+            <!-- Добавьте остальные опции здесь -->
+        </select>
+        <textarea name="context" cols="40" rows="10" class="rounded-value blacked mt-5"
+                  placeholder="Введите текст на случай возникновения ошибки" required="" id="error_text"></textarea>
+    </div>
+
+</form>
