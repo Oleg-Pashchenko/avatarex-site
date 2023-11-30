@@ -323,3 +323,7 @@ def about(request):
 
 def faq(request):
     return render(request, 'home/faq.html')
+
+
+def conf_policy(request):
+    return render(request, 'home/conf_policy.html')

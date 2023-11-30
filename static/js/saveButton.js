@@ -1,6 +1,8 @@
 function saveData(mode, pipeline_id) {
     var dataObject = {};
     dataObject["currentUrl"] = window.location.href;
+
+    dataObject['pipeline_id'] = pipeline_id;
     /*
     var boundedSituationsFields = {};
 
@@ -75,7 +77,6 @@ function saveData(mode, pipeline_id) {
             var boundedSituationsFields = {};
 
             dataObject['mode'] = mode;
-            dataObject['pipeline_id'] = pipeline_id;
 
             console.log(dataObject);
             boundedSituationsFields["hi_message"] = document.getElementById("hi-message").value;

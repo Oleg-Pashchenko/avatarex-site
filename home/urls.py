@@ -6,7 +6,8 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('', views.main, name='main'),
     path('home/', views.home, name='home'),
-    path('faq/',new_views.faq, name='faq'),
+    path('faq/', new_views.faq, name='faq'),
+    path('policy/', new_views.conf_policy, name='policy'),
     path('payment/', new_views.payment, name='payment'),
     path('about/', new_views.about, name='about'),
     path('help/', views.tomorrow, name='help'),
@@ -28,6 +29,7 @@ urlpatterns = [
     # New handlers
     # VIEWS
     path('prompt-mode/', new_views.prompt_mode, name='prompt_mode_v1'),
+
     path('database-mode/', new_views.database_mode, name='database_mode_v1'),
     path('knowledge-mode/', new_views.knowledge_mode, name='knowledge_mode_v1'),
     path('database-and-knowledge-mode/', new_views.database_and_knowledge_mode, name='database_and_knowledge_mode'),
