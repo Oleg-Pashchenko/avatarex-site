@@ -45,6 +45,8 @@ class PromptMode(models.Model):
     temperature = models.FloatField(default=1)
     error_message = models.TextField(default='', null=True)
     error_message_time = models.IntegerField(default=3, null=True)
+    connected_to = models.IntegerField(null=True, default=None)
+    working_stages = models.JSONField(null=True, default=None)
 
 
 class AmoConnect(models.Model):
