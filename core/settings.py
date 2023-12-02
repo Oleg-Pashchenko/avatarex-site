@@ -10,6 +10,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     '127.0.0.1',
     '178.253.22.162',
+
     'avatarex.net'
 ]
 
