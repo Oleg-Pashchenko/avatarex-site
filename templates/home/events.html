@@ -1,0 +1,58 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+
+    <style>
+        .table-style {
+
+            background: #fccb90;
+
+            /* Chrome 10-25, Safari 5.1-6 */
+            background: -webkit-linear-gradient(180deg, rgba(79, 82, 169, 0.9), rgba(140, 74, 253, 0.2));
+
+            /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            background: linear-gradient(180deg, rgba(79, 82, 169, 0.9), rgba(140, 74, 253, 0.2));
+
+        }
+
+
+    </style>
+
+    <div class="contaier">
+
+        <h4 class="mt-5 mb-3">Выберите воронку:</h4>
+        <div class="pl-3 pr-3">
+            <div class="row p-2 rounded-value" style="background-color: rgb(26, 24, 22);">
+                {% for pipeline in pipelines %}
+                    <a class="pipeline-item " href="#"
+                       data-pipeline="{{ pipeline.p_id }}"> {{ pipeline.name }}</a>
+
+                {% endfor %}
+            </div>
+        </div>
+        <div class=" mt-2 " style="display: flex; justify-content: center;">
+            <table style="background-color: #2b2b2b;" class="table table-dark table-hover">
+                <thead class="table-style  ">
+
+                <tr>
+                    <th style="text-align: center" scope="col">#</th>
+                    <th style="text-align: center" scope="col">Название ошибки</th>
+                    <th style="text-align: center" scope="col">Количество повторов ошибки</th>
+                    <th style="text-align: center" scope="col">Время последней ошибки</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr>
+                    <th style="text-align: center" scope="row">1</th>
+                    <td style="text-align: center"> Подписка на 3 года</td>
+                    <td style="text-align: center">3</td>
+                    <td style="text-align: center">22.03.23</td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

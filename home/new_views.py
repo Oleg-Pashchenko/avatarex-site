@@ -327,3 +327,6 @@ def faq(request):
 
 def conf_policy(request):
     return render(request, 'home/conf_policy.html')
+
+def events(request):
+    return render(request, 'home/events.html')
