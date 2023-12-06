@@ -1,0 +1,92 @@
+{% extends "core/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <style>
+        .gradient-custom-2 {
+            /* fallback for old browsers */
+            background: #fccb90;
+
+            /* Chrome 10-25, Safari 5.1-6 */
+            background: -webkit-linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
+
+            /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            background: linear-gradient(to right, rgb(114, 119, 240), rgb(179, 114, 240), rgb(232, 114, 240), rgb(240, 114, 200));
+        }
+
+        @media (min-width: 768px) {
+            .gradient-form {
+                height: 100vh !important;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .gradient-custom-2 {
+                border-top-right-radius: .3rem;
+                border-bottom-right-radius: .3rem;
+            }
+        }
+
+    </style>
+    <!-- rgb(114, 119, 240); -->
+    <section class="h-100 gradient-form" style="background-color: #202020;">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-xl-10">
+                    <div class="card rounded-3 text-black" style="border-radius: 25px; background-color: #202020">
+                        <div class="row g-0" style="border-radius: 25px; background-color: rgb(36,36,56);">
+                            <div class="col-lg-6" style="border-radius: 25px">
+                                <div class="card-body p-md-5 mx-md-4" style="border-radius: 25px">
+
+                                    <div class="text-center">
+                                        <img class="tn-atom__img t-img loaded"
+                                             data-original="https://static.tildacdn.com/tild3132-3636-4731-b661-326135346334/27ece840-2040-4416-8.png"
+                                             alt="" imgfield="tn_img_1694014492861"
+                                             src="https://thumb.tildacdn.com/tild3132-3636-4731-b661-326135346334/-/resize/66x/-/format/webp/27ece840-2040-4416-8.png">
+                                        <h4 class="mt-1 mb-5 pb-1">We are Avatarex Team</h4>
+                                    </div>
+                                    <form method="POST">
+                                        {% csrf_token %}
+                                        <p>Введите вашу почту</p>
+                                        <fieldset class="form-outline mb-4 form-group">
+
+                                        </fieldset>
+                                        <div class="text-center pt-1 mb-5 pb-1 form-group">
+                                            <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3"
+                                                    type="submit">Восстановить пароль
+                                            </button>
+
+                                        </div>
+
+                                        <div class="d-flex align-items-center justify-content-center pb-2">
+                                            <p class="mb-0 me-2">Нет аккаунта?</p>
+                                        </div>
+                                        <div class="d-flex align-items-center justify-content-center pb-4">
+                                            <button type="button" class="btn btn-outline-danger"
+                                                    onclick="window.location.href='{% url 'register' %}'">Регистрация
+                                            </button>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                            <div class="col-lg-6 d-flex align-items-center gradient-custom-2"
+                                 style="border-radius: 25px">
+                                <div class="text-white px-3 py-4 p-md-5 mx-md-4">
+                                    <h4 class="mb-4" style="text-align: center">Мы больше чем просто компания</h4>
+                                    <p class="small mb-0" style="text-align: center">Мы - созидатели решений, творцы
+                                        инноваций и вдохновители
+                                        прогресса. В каждом проекте мы вкладываем не только профессионализм и опыт, но и
+                                        стремление к созданию уникальных и значимых решений, которые делают нас больше,
+                                        чем просто предприятие — они делают наше сотрудничество и продукты неповторимыми
+                                        и востребованными.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+{% endblock content %}

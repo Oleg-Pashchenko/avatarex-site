@@ -25,6 +25,22 @@
         cursor: pointer;
         z-index: 1;
         color: white;
+        animation: pulse 1s infinite alternate;
+    }
+
+    #chat-circle.active {
+        animation: none; /* Отключение анимации при активном состоянии */
+    }
+
+    @keyframes pulse {
+        0% {
+            transform: scale(1);
+            background-color: rgb(114, 119, 240); /* Начальный цвет */
+        }
+        100% {
+            transform: scale(1.2);
+            background-color: rgb(114, 119, 240); /* Начальный цвет */
+        }
     }
 
     #chat-box {
@@ -81,7 +97,6 @@
         width: calc(100% - 30px);
         display: flex;
         position: relative;
-        border: 2px rgba(43, 43, 43, 0.5) solid;
         border-radius: 15px;
 
         margin: auto auto 10px auto;
@@ -156,7 +171,9 @@
 
 <script>
     function toggleChat() {
+        var chatCircle = document.getElementById('chat-circle');
         var chatBox = document.getElementById('chat-box');
+        chatCircle.classList.toggle('active');
         chatBox.style.display = (chatBox.style.display === 'none' || chatBox.style.display === '') ? 'flex' : 'none';
 
 

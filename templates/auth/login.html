@@ -50,13 +50,18 @@
                                         <fieldset class="form-outline mb-4 form-group">
                                             {{ form|crispy }}
                                         </fieldset>
-                                        <div class="text-center pt-1 mb-5 pb-1 form-group">
+                                        <div class="text-center pt-1 mb-0 pb-1 form-group">
                                             <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3"
                                                     type="submit">Войти
                                             </button>
 
                                         </div>
+                                        <div class="text-center pt-1 mb-5 pb-1 form-group">
+                                            <a style="text-decoration: none; color: #727272" class=" mb-3" href="{% url 'passwrd_recover' %}"
+                                               type="">Забыли пароль?
+                                            </a>
 
+                                        </div>
                                         <div class="d-flex align-items-center justify-content-center pb-2">
                                             <p class="mb-0 me-2">Нет аккаунта?</p>
                                         </div>
@@ -73,7 +78,8 @@
                                  style="border-radius: 25px">
                                 <div class="text-white px-3 py-4 p-md-5 mx-md-4">
                                     <h4 class="mb-4" style="text-align: center">Мы больше чем просто компания</h4>
-                                    <p class="small mb-0" style="text-align: center">Мы - созидатели решений, творцы инноваций и вдохновители
+                                    <p class="small mb-0" style="text-align: center">Мы - созидатели решений, творцы
+                                        инноваций и вдохновители
                                         прогресса. В каждом проекте мы вкладываем не только профессионализм и опыт, но и
                                         стремление к созданию уникальных и значимых решений, которые делают нас больше,
                                         чем просто предприятие — они делают наше сотрудничество и продукты неповторимыми
